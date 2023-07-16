@@ -44,6 +44,7 @@ dependencies:
   # shared_preferences: ^2.1.2
   equatable: ^2.0.5
   http: 
+  
   shared_preferences: ^2.0.17
   google_fonts: ^4.0.4
   font_awesome_flutter: ^10.4.0
