@@ -23,7 +23,7 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
       },
     );
     if (response.statusCode == 200) {
-      final List decodedJson = jsonDecode(response.body);
+      final List decodedJson = jsonDecode(response.body) as List;
       final List<SchedulModel> postModels = decodedJson
           .map((jsonPostModel) => SchedulModel.formJson(jsonPostModel))
           .toList();

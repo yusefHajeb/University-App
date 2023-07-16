@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import '../../domain/entites/schedule.dart';
 
 class SchedulModel extends Schedule {
@@ -9,11 +7,7 @@ class SchedulModel extends Schedule {
       required String teacherName,
       required DateTime time})
       : super(
-          subject: subject,
-          type: type,
-          teacherName: teacherName,
-          time: time,
-        );
+            subject: subject, type: type, teacherName: teacherName, time: time);
 
   factory SchedulModel.formJson(Map<String, dynamic> json) {
     return SchedulModel(
