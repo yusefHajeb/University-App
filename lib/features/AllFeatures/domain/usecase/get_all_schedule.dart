@@ -5,7 +5,7 @@ import 'package:university/features/AllFeatures/domain/repositories/schedule_rep
 import '../../../../core/error/failure.dart';
 
 class GetAllScheduleUsecase {
-  final ClassScheduleRepository rerpository;
+  final ScheduleRepository rerpository;
 
   GetAllScheduleUsecase({required this.rerpository});
 
