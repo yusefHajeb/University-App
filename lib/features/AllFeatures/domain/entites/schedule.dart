@@ -8,7 +8,7 @@ class Schedule extends Equatable {
   bool isPassed = false;
   bool isHappening = false;
   bool isCansel = false;
-  Schedule(String subject, String subject, 
+  Schedule(
       {required this.subject,
       required this.type,
       required this.teacherName,
