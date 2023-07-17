@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 abstract class SchedulRemoteDataSource {
   Future<List<SchedulModel>> getAllSchedul();
+  Future<SchedulModel> getScheduleNotification();
 }
 
 const String baseUrl = "https://jsonplaceholder.typicode.com";
@@ -27,6 +28,24 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
       final List<SchedulModel> postModels = decodedJson
           .map((jsonPostModel) => SchedulModel.formJson(jsonPostModel))
           .toList();
+      return postModels;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<SchedulModel> getScheduleNotification() async {
+    final response = await client.get(
+      Uri.parse("$baseUrl/posts/"),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    );
+    if (response.statusCode == 200) {
+      final decodedJson = jsonDecode(response.body);
+      final SchedulModel postModels = decodedJson
+          .map((jsonPostModel) => SchedulModel.formJson(jsonPostModel));
       return postModels;
     } else {
       throw ServerException();

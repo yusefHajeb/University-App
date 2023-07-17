@@ -5,15 +5,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:university/core/error/execptions.dart';
 import 'package:university/features/AllFeatures/data/models/schedule_model.dart';
 
-abstract class SchedulLocalDataSource {
+abstract class ScheduleLocalDataSource {
   Future<List<SchedulModel>> getCachedSchedul();
   Future<Unit> cacheSchedul(List<SchedulModel> schedulModel);
+  Future<Unit> cacheSchedulNotifiction(SchedulModel schedulModel);
 }
 
-class ScedulLocaldataSourceImp implements SchedulLocalDataSource {
+class ScheduleLocalDataSourceImp implements ScheduleLocalDataSource {
   final SharedPreferences sharedPreferences;
 
-  ScedulLocaldataSourceImp({required this.sharedPreferences});
+  ScheduleLocalDataSourceImp({required this.sharedPreferences});
   @override
   Future<Unit> cacheSchedul(List<SchedulModel> schedulModel) async {
     final schedulModelToJson = await schedulModel
@@ -21,6 +22,7 @@ class ScedulLocaldataSourceImp implements SchedulLocalDataSource {
         .toList();
     sharedPreferences.setString(
         "CACHED_SCHEDUL", json.encode(schedulModelToJson));
+
     return Future.value(unit);
   }
 
@@ -37,5 +39,15 @@ class ScedulLocaldataSourceImp implements SchedulLocalDataSource {
     } else {
       throw EmptyCasheException();
     }
+  }
+
+  @override
+  Future<Unit> cacheSchedulNotifiction(SchedulModel schedulModel) async {
+    final schedulModelToJson = await schedulModel.toJson();
+
+    sharedPreferences.setString(
+        "CACHED_SCHEDUL", json.encode(schedulModelToJson));
+
+    return Future.value(unit);
   }
 }
