@@ -11,7 +11,7 @@ import '../datasource/SchedulDatatSource/shedul_remote_datasource.dart';
 
 class SchedulRepositoryImp implements ScheduleRepository {
   final SchedulRemoteDataSource remoteSchedul;
-  final SchedulLocalDataSource localSource;
+  final ScheduleLocalDataSource localSource;
   final NetworkInfo networkInfo;
   SchedulRepositoryImp({
     required this.networkInfo,
@@ -38,5 +38,28 @@ class SchedulRepositoryImp implements ScheduleRepository {
         return Left(EmptyCasheFailure());
       }
     }
+  }
+
+  @override
+  Future<Either<Failure, Schedule>> getNotification() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final SchedulModel remoteData =
+            await remoteSchedul.getScheduleNotification();
+        localSource.cacheSchedulNotifiction(remoteData);
+        return Right(remoteData);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(EmptyCasheFailure());
+    }
+    // } else {
+    //   try {
+
+    //   } on EmptyCasheException {
+    //     return Left(EmptyCasheFailure());
+    //   }
+    // }
   }
 }
