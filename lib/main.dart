@@ -15,13 +15,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => di.sl<SchedulBloc>()..add(GetAllScheduleEvent()),
-        ),
-      ],
-      child: MaterialApp(
+    return BlocProvider(
+      create: (context) => di.sl<SchedulBloc>()..add(GetAllScheduleEvent()),
+      child:
+
+          // MultiBlocProvider(
+          //   providers: BlocProvider(
+          //     create: (context) => di.sl<SchedulBloc>()..add(GetAllScheduleEvent()),
+          //   ),
+          MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
