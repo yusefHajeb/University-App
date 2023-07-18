@@ -56,7 +56,7 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
               //Buttons positioned below
               Column(children: [
                 Container(
-                    height: sizeHeight(context).height * 1.3,
+                    height: sizeHeight(context).width * 1.3 - 20,
                     child: PageView(
                         physics: ClampingScrollPhysics(),
                         controller: _pageController,
@@ -68,16 +68,16 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                         children: <Widget>[
                           SliderCaptionedImage(
                               index: 0,
-                              imageUrl: "assets/slider-background-1.png",
-                              caption: "Task,\nCalendar,\nChat"),
+                              imageUrl: "assets/images/slider-background-1.png",
+                              caption: "University,\nCalendar,\nChat"),
                           SliderCaptionedImage(
                               index: 1,
-                              imageUrl: "assets/slider-background-3.png",
-                              caption: "Work\nAnywhere\nEasily"),
+                              imageUrl: "assets/images/slider-background-3.png",
+                              caption: "University\nAnywhere\nEasily"),
                           SliderCaptionedImage(
                               index: 2,
-                              imageUrl: "assets/slider-background-2.png",
-                              caption: "Manage\nEverything\nOn Phone")
+                              imageUrl: "assets/images/slider-background-2.png",
+                              caption: "Manage\nUniversity\nOn Phone")
                         ])),
                 Padding(
                   padding:
@@ -122,11 +122,13 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                             children: [
                               Expanded(
                                   child: OutlinedButtonWithImage(
-                                      imageUrl: "assets/google_icon.png")),
+                                      imageUrl:
+                                          "assets/images/google_icon.png")),
                               SizedBox(width: 20),
                               Expanded(
                                   child: OutlinedButtonWithImage(
-                                      imageUrl: "assets/facebook_icon.png"))
+                                      imageUrl:
+                                          "assets/images/facebook_icon.png"))
                             ]),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
