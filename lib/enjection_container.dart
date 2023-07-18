@@ -6,7 +6,7 @@ import 'package:university/features/AllFeatures/data/datasource/SchedulDatatSour
 import 'package:university/features/AllFeatures/data/repositories/schudul_repository_imp.dart';
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
-import 'package:university/network/check_network.dart';
+import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
 
 import 'features/AllFeatures/domain/usecase/ScheduleUsecae/notificatin_schedule_usecase.dart';
