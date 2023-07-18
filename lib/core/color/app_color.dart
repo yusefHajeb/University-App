@@ -10,7 +10,11 @@ class AppColors {
   static const kLightBlackColor = Color(0xFF8F8F8F);
   static const kIconColor = Color(0xFFF48A37);
   static const kProgressIndicator = Color.fromARGB(255, 25, 140, 163);
-  final kShadowColor = Color.fromARGB(255, 115, 123, 122).withOpacity(.84);
+  static final backgroundPages = HexColor.fromHex("#181a1f");
+  static final colorgreen = HexColor.fromHex("3C3E49");
+  static final darkRadialBackground = HexColor.fromHex("1D192D");
+  final kShadowColor =
+      const Color.fromARGB(255, 115, 123, 122).withOpacity(.84);
 }
 
 extension HexColor on Color {

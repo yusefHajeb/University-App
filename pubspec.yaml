@@ -52,6 +52,7 @@ dependencies:
   flutter_svg: ^1.1.6
   localization: ^2.1.0
   flutter_localization: ^0.1.12
+  fluttertoast: ^8.2.2
   # flutter_localizations:
 
 
