@@ -1,11 +1,14 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:university/core/Utils/app_space.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/login.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/custom_textfiled.dart';
+import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
@@ -98,10 +101,54 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                               controller: _passwordStd,
                               icon: Icons.lock_outline,
                               hintText: 'Password...'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SubmitFormBtn(
+                                onPressed: validateFormLogin,
+                                btnName: 'LOGIN',
+                              ),
+                              SizedBox(width: sizeWidth / 25),
+                              Container(
+                                width: sizeWidth / 2.6,
+                                alignment: Alignment.center,
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: 'Forgotten password!',
+                                    style: TextStyle(color: Colors.blueAccent),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Fluttertoast.showToast(
+                                          msg:
+                                              'Forgotten password! button pressed',
+                                        );
+                                      },
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(),
+                          RichText(
+                            text: TextSpan(
+                              text: 'Create a new Account',
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: 15,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Fluttertoast.showToast(
+                                    msg: 'Create a new Account button pressed',
+                                  );
+                                },
+                            ),
+                          ),
+                          SizedBox(),
                         ])))));
   }
 
-  void validateFormtThenAupdateOrAdd() {
+  void validateFormLogin() {
     final isValid = _formKey.currentState!.validate();
     final Singin login = Singin(
         record: _recordStd.text,
@@ -112,6 +159,8 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
     if (isValid) {
       BlocProvider.of<AuthenticationBloc>(context)
           .add(SingInSuccessEvent(singIn: login));
+    } else {
+      BlocProvider.of<AuthenticationBloc>(context).add(AuthErrorSingInEvent());
     }
   }
 }

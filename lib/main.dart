@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/Utils/lang/app_localization.dart';
 import 'enjection_container.dart' as di;
+import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'features/AllFeatures/presentation/pages/Auth/login_page.dart';
 
 void main() async {
@@ -22,15 +23,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => di.sl<SchedulBloc>()..add(GetAllScheduleEvent()),
-      child:
-
-          // MultiBlocProvider(
-          //   providers: BlocProvider(
-          //     create: (context) => di.sl<SchedulBloc>()..add(GetAllScheduleEvent()),
-          //   ),
-          ScreenUtilInit(builder: (context, LoginPage) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => di.sl<SchedulBloc>()..add(GetAllScheduleEvent()),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<AuthenticationBloc>()..add(AuthGetStart()),
+        ),
+      ],
+      child: ScreenUtilInit(builder: (context, SingInPage) {
         return MaterialApp(
           title: 'Flutter Demo',
           localizationsDelegates: const [
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: LoginPage,
+          home: SingInPage,
         );
       }),
     );

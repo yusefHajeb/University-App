@@ -7,11 +7,11 @@ class Singin extends Equatable {
   final String? token;
   final String? record;
   Singin({
-    required this.username,
+    this.username,
     required this.password,
-    required this.token,
+    this.token,
     required this.record,
-    required this.email,
+    this.email,
   });
   @override
   List<Object?> get props => [username, password, token, record, email];
