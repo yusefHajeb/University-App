@@ -5,11 +5,13 @@ import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSour
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/shedul_remote_datasource.dart';
 
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
+import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 
+import 'features/AllFeatures/data/datasource/AuthDatatSource/auth_remote_database.dart';
 import 'features/AllFeatures/data/repositories/auth/singin_singup_repository_imp.dart';
 import 'features/AllFeatures/data/repositories/schudul_repository_imp.dart';
 import 'features/AllFeatures/domain/usecase/ScheduleUsecae/notificatin_schedule_usecase.dart';
@@ -20,16 +22,20 @@ Future<void> init() async {
   //bloc ===========================
   sl.registerFactory(() => SchedulBloc(
       schedlulenotificationUsecae: sl(), getAllScheduleUsecase: sl()));
-  sl.registerFactory(() => AuthenticationBloc());
+  sl.registerFactory(() => AuthenticationBloc(singInUsecase: sl()));
 
   //USECASE ========================
   sl.registerFactory(() => GetAllScheduleUsecase(rerpository: sl()));
   sl.registerFactory(
       () => GetNotificationScheduleUsecase(scheduleRepository: sl()));
-
+  //auth
+  sl.registerFactory(() => SingInUsecase(repository: sl()));
   //Repository Imp  ================
   sl.registerLazySingleton<SchedulRepositoryImp>(() => SchedulRepositoryImp(
       localSource: sl(), networkInfo: sl(), remoteSchedul: sl()));
+
+  sl.registerLazySingleton<StudentRepositoryImp>(
+      () => StudentRepositoryImp(networkInfo: sl(), remoteData: sl()));
 
   //Database =======================
   sl.registerLazySingleton<SchedulRemoteDataSource>(
@@ -37,6 +43,12 @@ Future<void> init() async {
       client: sl(),
     ),
   );
+  sl.registerLazySingleton<SingInOrSingUpRemoteDataSource>(
+    () => SingInOrSingUpRemoteDataSourceImp(
+      client: sl(),
+    ),
+  );
+
   sl.registerLazySingleton<ScheduleLocalDataSource>(
     () => ScheduleLocalDataSourceImp(
       sharedPreferences: sl(),
