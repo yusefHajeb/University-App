@@ -19,3 +19,8 @@ List<Color> progressCardGradientList = [
   //pink
   HexColor.fromHex("EEB2E8"),
 ];
+
+class AppLink {
+  static const baseUrl = "http://localhost:8012/university/";
+  static const singin = "$baseUrl/singup.php";
+}

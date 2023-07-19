@@ -9,6 +9,7 @@ import 'core/Utils/lang/app_localization.dart';
 import 'enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'features/AllFeatures/presentation/pages/Auth/login_page.dart';
+import 'features/AllFeatures/presentation/pages/Auth/sing_in_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
           create: (context) => di.sl<AuthenticationBloc>()..add(AuthGetStart()),
         ),
       ],
-      child: ScreenUtilInit(builder: (context, SingInPage) {
+      child: ScreenUtilInit(builder: (context, child) {
         return MaterialApp(
           title: 'Flutter Demo',
           localizationsDelegates: const [
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: SingInPage,
+          home: SingInPage(),
         );
       }),
     );

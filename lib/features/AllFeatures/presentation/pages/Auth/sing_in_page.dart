@@ -37,18 +37,25 @@ class SingInPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
-                  builder: (context, state) {
-                    if (state is AuthProgressState) {
-                      return FormLoginWidget();
-                    } else if (state is AuthErrorState)
-                      return Text(state.message.tr(context));
-                    return Center(
-                      child: Text("try again".tr(context)),
-                    );
-                  },
-                  listener: (context, state) {},
-                ),
+                child: FormLoginWidget(),
+                // child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+                //   builder: (context, state) {
+                //     print("===============bloc");
+                //     if (state is AuthProgressState) {
+                //       print("==============if");
+                //       return FormLoginWidget();
+                //     } else if (state is AuthErrorState)
+                //       return Text(state.message.tr(context));
+                //     print("==============else");
+                //     return Center(
+                //       child: Text(
+                //         "sdfg",
+                //         style: TextStyle(color: Colors.white),
+                //       ),
+                //     );
+                //   },
+                //   listener: (context, state) {},
+                // ),
               ),
             ))));
   }
