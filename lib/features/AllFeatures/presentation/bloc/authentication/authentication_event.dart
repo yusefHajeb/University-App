@@ -20,3 +20,5 @@ class SingInSuccessEvent extends AuthenticationEvent {
   @override
   List<Object> get props => [singIn];
 }
+
+class AuthErrorSingInEvent extends AuthenticationEvent {}

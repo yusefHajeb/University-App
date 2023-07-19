@@ -18,11 +18,13 @@ class AuthenticationBloc
     on<AuthenticationEvent>((event, emit) {
       if (event is AuthGetStart) {
         emit(AuthProgressState());
-        emit(AuthErrorState(message: ""));
+        Duration(minutes: 1);
+        emit(AuthErrorState(message: "Noo Internet"));
       } else if (event is LoginStudintEvent) {
         emit(LogingState());
-        
-      }else if(event is )
+        Duration(minutes: 1);
+        emit(AuthSuccessState(message: "Success"));
+      }
     });
   }
 
