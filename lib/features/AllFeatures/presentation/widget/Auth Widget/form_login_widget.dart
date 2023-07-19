@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:university/core/Utils/app_space.dart';
+import 'package:university/features/AllFeatures/domain/entites/auth_entites/login.dart';
+import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/custom_textfiled.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
@@ -82,7 +88,30 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                               fontWeight: FontWeight.w600,
                               color: Colors.black.withOpacity(.7),
                             ),
-                          )
+                          ),
+                          AppSpaces.verticalSpace10,
+                          CustomTextFilde(
+                              controller: _recordStd,
+                              icon: Icons.account_circle_outlined,
+                              hintText: 'Record Number'),
+                          CustomTextFilde(
+                              controller: _passwordStd,
+                              icon: Icons.lock_outline,
+                              hintText: 'Password...'),
                         ])))));
+  }
+
+  void validateFormtThenAupdateOrAdd() {
+    final isValid = _formKey.currentState!.validate();
+    final Singin login = Singin(
+        record: _recordStd.text,
+        password: _passwordStd.text,
+        email: null,
+        token: null,
+        username: null);
+    if (isValid) {
+      BlocProvider.of<AuthenticationBloc>(context)
+          .add(SingInSuccessEvent(singIn: login));
+    }
   }
 }

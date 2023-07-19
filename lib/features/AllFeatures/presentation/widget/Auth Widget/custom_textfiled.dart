@@ -3,22 +3,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFilde extends StatelessWidget {
   final IconData icon;
+  final TextEditingController controller;
   final String hintText;
-  final bool isPassword;
-  final bool isEmail;
+  final bool? isPassword;
+  final bool? isEmail;
   const CustomTextFilde(
       {super.key,
       required this.icon,
       required this.hintText,
-      required this.isPassword,
-      required this.isEmail});
+      this.isPassword,
+      this.isEmail,
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-
     final sizeWidth = ScreenUtil().screenWidth;
-
     return Container(
       height: sizeWidth / 8,
       width: sizeWidth / 1.22,
@@ -29,9 +29,12 @@ class CustomTextFilde extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
+        controller: controller,
         style: TextStyle(color: Colors.black.withOpacity(.8)),
-        obscureText: isPassword,
-        keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
+        obscureText: isPassword ?? false,
+        keyboardType: (isEmail ?? false)
+            ? TextInputType.emailAddress
+            : TextInputType.text,
         decoration: InputDecoration(
           prefixIcon: Icon(
             icon,
