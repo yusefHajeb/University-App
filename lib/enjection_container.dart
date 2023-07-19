@@ -3,12 +3,15 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/schedul_local_data_source.dart';
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/shedul_remote_datasource.dart';
-import 'package:university/features/AllFeatures/data/repositories/schudul_repository_imp.dart';
+
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
+import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 
+import 'features/AllFeatures/data/repositories/auth/singin_singup_repository_imp.dart';
+import 'features/AllFeatures/data/repositories/schudul_repository_imp.dart';
 import 'features/AllFeatures/domain/usecase/ScheduleUsecae/notificatin_schedule_usecase.dart';
 
 final sl = GetIt.instance;
@@ -17,6 +20,7 @@ Future<void> init() async {
   //bloc ===========================
   sl.registerFactory(() => SchedulBloc(
       schedlulenotificationUsecae: sl(), getAllScheduleUsecase: sl()));
+  sl.registerFactory(() => AuthenticationBloc());
 
   //USECASE ========================
   sl.registerFactory(() => GetAllScheduleUsecase(rerpository: sl()));
