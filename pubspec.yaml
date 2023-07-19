@@ -53,6 +53,7 @@ dependencies:
   localization: ^2.1.0
   flutter_localization: ^0.1.12
   fluttertoast: ^8.2.2
+  flutter_screenutil: ^5.7.0
   # flutter_localizations:
 
 
@@ -81,7 +82,8 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
-   
+    - assets/lang/
+    
 
  
   fonts:

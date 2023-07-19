@@ -6,8 +6,8 @@ import 'package:dartz/dartz.dart';
 import 'package:university/features/AllFeatures/domain/repositories/schedule_repository.dart';
 import 'package:university/core/network/check_network.dart';
 
-import '../datasource/SchedulDatatSource/schedul_local_data_source.dart';
-import '../datasource/SchedulDatatSource/shedul_remote_datasource.dart';
+import '../datasource/ScheduleDataSource/schedul_local_data_source.dart';
+import '../datasource/ScheduleDataSource/shedul_remote_datasource.dart';
 
 class SchedulRepositoryImp implements ScheduleRepository {
   final SchedulRemoteDataSource remoteSchedul;

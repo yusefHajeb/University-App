@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:university/features/AllFeatures/data/datasource/SchedulDatatSource/schedul_local_data_source.dart';
-import 'package:university/features/AllFeatures/data/datasource/SchedulDatatSource/shedul_remote_datasource.dart';
+import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/schedul_local_data_source.dart';
+import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/shedul_remote_datasource.dart';
 import 'package:university/features/AllFeatures/data/repositories/schudul_repository_imp.dart';
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';

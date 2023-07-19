@@ -2,6 +2,9 @@
 
     "Hellow _msg": "Hellow _msg",
     "Setting"    : " Setting ",
-    "main"       : "main"
-
+    "main"       : "main",
+    "try again" : "Please try again later",
+    "No Saved" : "No Data Saved",
+   "check internet" :"Please check your internet connection",
+   "Loggedsuccessfully": "Logged Successfully"
 }
