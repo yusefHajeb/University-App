@@ -5,11 +5,11 @@ import 'package:university/features/AllFeatures/domain/entites/auth_entites/sing
 
 class SinginModel extends Singin {
   SinginModel(
-      {required String username,
+      {String? username,
       required String password,
-      required String token,
+      String? token,
       required String record,
-      required String email})
+      String? email})
       : super(
             password: password,
             username: username,

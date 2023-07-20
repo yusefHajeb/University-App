@@ -29,17 +29,18 @@ class SingInOrSingUpRemoteDataSourceImp
     };
 
     final response =
-        await client.post(Uri.parse("${AppLink.singin}/"), body: requestBody);
-
+        await client.post(Uri.parse("${AppLink.singin}"), body: requestBody);
+    print("00000000000000000000000000 remote");
     if (response.statusCode == 200) {
-      // final List decodedJson = jsonDecode(response.body) as List;
-      // final List<SinginModel> postModels = decodedJson
-      //     .map((jsonPostModel) => SinginModel.fromJson(jsonPostModel))
-      //     .toList();
+      print("============================ remote");
+      final List decodedJson = jsonDecode(response.body) as List;
+      final List<SinginModel> postModels = decodedJson
+          .map((jsonPostModel) => SinginModel.fromJson(jsonPostModel))
+          .toList();
 
-      // final respons = postModels.firstWhere((student) =>
-      //     student.password == singin.password &&
-      //     student.record == singin.record);
+      final respons = postModels.firstWhere((student) =>
+          student.password == singin.password &&
+          student.record == singin.record);
       return Future.value(unit);
     } else {
       throw ServerException();

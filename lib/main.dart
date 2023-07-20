@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/pages/onboarding/onboarding_start.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'core/Utils/lang/app_localization.dart';
 import 'enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';

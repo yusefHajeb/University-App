@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:university/core/function/messages.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singup.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
+import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singup_usecase.dart';
 
 import '../../../../../core/error/failure.dart';
 import '../../../../../core/function/failure_to_message.dart';
@@ -14,27 +16,32 @@ part 'authentication_state.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final SingInUsecase singInUsecase;
-  AuthenticationBloc({required this.singInUsecase})
+  final SingUpUsecase singUpUsecase;
+  AuthenticationBloc({required this.singInUsecase, required this.singUpUsecase})
       : super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) async {
       if (event is AuthGetStart) {
         emit(AuthProgressState());
       } else if (event is LoginStudintEvent) {
         emit(LogingState());
-        Duration(minutes: 1);
-        emit(AuthSuccessState(message: "Success"));
-      } else if (event is SingInSuccessEvent) {
+        emit(AuthSuccessState());
+      } else if (event is SingInStudintEvent) {
         emit(LoadingAuthState());
         final singIn = await singInUsecase(event.singIn);
-        emit(_failureOrSingInState(singIn));
+        emit(_failureOrSingInState(singIn, singInSuccessfuly));
+      } else if (event is SingUpStudentEvent) {
+        emit(LoadingAuthState());
+        final singUp = await singUpUsecase(event.singUp);
+        emit(_failureOrSingInState(singUp, singInSuccessfuly));
       }
     });
   }
 
-  AuthenticationState _failureOrSingInState(Either<Failure, Singin> either) {
+  AuthenticationState _failureOrSingInState(
+      Either<Failure, Unit> either, String message) {
     return either.fold(
         (failure) => AuthErrorState(message: failureToMessage(failure)),
-        (login) => AuthSuccessState(message: ""));
+        (_) => AuthSuccessState());
   }
 
   // AuthenticationState _failureOrSingUpState()

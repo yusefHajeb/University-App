@@ -5,6 +5,7 @@ import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSour
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/shedul_remote_datasource.dart';
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
+import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singup_usecase.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +23,8 @@ Future<void> init() async {
   //bloc ===========================
   sl.registerFactory(() => SchedulBloc(
       schedlulenotificationUsecae: sl(), getAllScheduleUsecase: sl()));
-  sl.registerFactory(() => AuthenticationBloc(singInUsecase: sl()));
+  sl.registerFactory(
+      () => AuthenticationBloc(singInUsecase: sl(), singUpUsecase: sl()));
 
   //USECASE ========================
   sl.registerFactory(() => GetAllScheduleUsecase(rerpository: sl()));
@@ -31,6 +33,8 @@ Future<void> init() async {
 
   //auth
   sl.registerFactory(() => SingInUsecase(repository: sl()));
+  sl.registerFactory(() => SingUpUsecase(repository: sl()));
+
   //Repository Imp  ================
   sl.registerLazySingleton<ScheduleRepository>(() => SchedulRepositoryImp(
       localSource: sl(), networkInfo: sl(), remoteSchedul: sl()));

@@ -21,3 +21,7 @@ class EmptyCasheFailure extends Failure {
 class SingInFailure extends Failure {
   List<Object?> get props => [];
 }
+
+class SingUpFailure extends Failure {
+  List<Object?> get props => [];
+}

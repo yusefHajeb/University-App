@@ -11,7 +11,21 @@ class AuthGetStart extends AuthenticationEvent {}
 
 class LoginStudintEvent extends AuthenticationEvent {}
 
-class SingInStudintEvent extends AuthenticationEvent {}
+class SingUpStudentEvent extends AuthenticationEvent {
+  final SingUp singUp;
+
+  SingUpStudentEvent({required this.singUp});
+  @override
+  List<Object> get props => [singUp];
+}
+
+class SingInStudintEvent extends AuthenticationEvent {
+  final Singin singIn;
+
+  SingInStudintEvent({required this.singIn});
+  @override
+  List<Object> get props => [singIn];
+}
 
 class SingInSuccessEvent extends AuthenticationEvent {
   final Singin singIn;

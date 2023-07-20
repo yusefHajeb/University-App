@@ -7,5 +7,13 @@
     "No Saved" : "No Data Saved",
    "check internet" :"Please check your internet connection",
    "Loggedsuccessfully": "Logged Successfully",
-   "singInfailure" : "the record or password is kateah "
+   "singInfailure" : "the record or password is kateah ",
+   "AddedSingIn":"Login is Successfully",
+   "ErrorAdd":"Login is Errpr",
+   "singUpSuccess" : "SingUp is Successfully",
+   "SignUp" : "Sing Up",
+   "SignIn" : "Sing In"
+
+
+   
 }

@@ -23,12 +23,11 @@ class StudentRepositoryImp implements StudentRepository {
   @override
   Future<Either<Failure, Unit>> singInStuden(Singin singin) async {
     final singInModel = SinginModel(
-        username: singin.username!,
-        password: singin.password!,
-        token: singin.token!,
-        record: singin.record!,
-        email: singin.email!);
+      password: singin.password!,
+      record: singin.record!,
+    );
 
+    print("===========================$singInModel  repository");
     return await _getMessage(() => remoteData.singinStudent(singInModel));
   }
 
@@ -42,7 +41,7 @@ class StudentRepositoryImp implements StudentRepository {
         token: singUp.record!,
         username: singUp.username!,
       );
-      // final SingUpModel date = await remoteData.singUpStudent(singUp);
+      // final  date = await remoteData.singUpStudent(singUpModel);
       //     await remoteData.getScheduleNotification();
       // localSource.cacheSchedulNotifiction(remoteData);
       return await _getMessage(() => remoteData.singUpStudent(singUpModel));
@@ -56,8 +55,11 @@ class StudentRepositoryImp implements StudentRepository {
     if (await networkInfo.isConnected) {
       try {
         singinOrSingUpStudent;
+        print(
+            '=============================== success in repository and remote');
         return const Right(unit);
       } on ServerException {
+        print('=============================== Error in repo and remote');
         return Left(ServerFailure());
       }
     } else {
