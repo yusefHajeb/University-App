@@ -2,16 +2,38 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class Login extends Equatable {
-  final String? email;
-  final String? record;
-  final String? token;
-  Login({required this.email, required this.record, required this.token});
+import 'package:equatable/equatable.dart';
 
+class SingUp extends Equatable {
+  final String? username;
+  final String? password;
+  final String? email;
+  final String? token;
+  final String? record;
+  SingUp({
+    required this.username,
+    required this.password,
+    this.token,
+    required this.record,
+    required this.email,
+  });
   @override
-  // TODO: implement props
-  List<Object?> get props => [email, record, token];
+  List<Object?> get props => [username, password, token, record, email];
 }
+
+
+
+
+// class Login extends Equatable {
+//   final String? email;
+//   final String? record;
+//   final String? token;
+//   Login({required this.email, required this.record, required this.token});
+
+//   @override
+//   // TODO: implement props
+//   List<Object?> get props => [email, record, token];
+// }
 
 
 // class LoginResponse {

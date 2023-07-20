@@ -3,17 +3,17 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/schedul_local_data_source.dart';
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/shedul_remote_datasource.dart';
-
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
-
 import 'features/AllFeatures/data/datasource/AuthDatatSource/auth_remote_database.dart';
 import 'features/AllFeatures/data/repositories/auth/singin_singup_repository_imp.dart';
 import 'features/AllFeatures/data/repositories/schudul_repository_imp.dart';
+import 'features/AllFeatures/domain/repositories/auth_repositories/student_repository.dart';
+import 'features/AllFeatures/domain/repositories/schedule_repository.dart';
 import 'features/AllFeatures/domain/usecase/ScheduleUsecae/notificatin_schedule_usecase.dart';
 
 final sl = GetIt.instance;
@@ -28,13 +28,14 @@ Future<void> init() async {
   sl.registerFactory(() => GetAllScheduleUsecase(rerpository: sl()));
   sl.registerFactory(
       () => GetNotificationScheduleUsecase(scheduleRepository: sl()));
+
   //auth
   sl.registerFactory(() => SingInUsecase(repository: sl()));
   //Repository Imp  ================
-  sl.registerLazySingleton<SchedulRepositoryImp>(() => SchedulRepositoryImp(
+  sl.registerLazySingleton<ScheduleRepository>(() => SchedulRepositoryImp(
       localSource: sl(), networkInfo: sl(), remoteSchedul: sl()));
 
-  sl.registerLazySingleton<StudentRepositoryImp>(
+  sl.registerLazySingleton<StudentRepository>(
       () => StudentRepositoryImp(networkInfo: sl(), remoteData: sl()));
 
   //Database =======================

@@ -19,8 +19,6 @@ class AuthenticationBloc
     on<AuthenticationEvent>((event, emit) async {
       if (event is AuthGetStart) {
         emit(AuthProgressState());
-        Duration(minutes: 1);
-        emit(AuthErrorState(message: "Noo Internet"));
       } else if (event is LoginStudintEvent) {
         emit(LogingState());
         Duration(minutes: 1);
