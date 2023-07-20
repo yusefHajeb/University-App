@@ -6,6 +6,12 @@
     "No Saved" : " لاتوجد بيانات محفوظه",
    "check internet" :"يرجى فحص اتصالك بالإنترنت اولا",
    "Loggedsuccessfully": "تم الدخول بنجاح",
-   "singInfailure" : "رقم القيد او كلمة السر خاطئة"
+   "singInfailure" : "رقم القيد او كلمة السر خاطئة",
+"AddedSingIn" : "تم الدخول بنجاح",
+"ErrorAdd":" خطأ في تسجيل الدخول ",
+"singUpSuccess" : "تم انشاء الحساب بنجاح",
+"SignUp" : "انشاء حساب",
+"SignIn" : "تسجيل الدخول"
+
 
 }

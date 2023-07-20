@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:university/core/Utils/app_space.dart';
-import 'package:university/features/AllFeatures/domain/entites/auth_entites/singup.dart';
+import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/custom_textfiled.dart';
@@ -85,7 +85,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                         children: [
                           SizedBox(),
                           Text(
-                            'Sign In',
+                            'SignUp'.tr(context),
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
@@ -157,10 +157,9 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
         token: null,
         username: null);
     if (isValid) {
+      print("$login ============ filed Data");
       BlocProvider.of<AuthenticationBloc>(context)
-          .add(SingInSuccessEvent(singIn: login));
-    } else {
-      BlocProvider.of<AuthenticationBloc>(context).add(AuthErrorSingInEvent());
+          .add(SingInStudintEvent(singIn: login));
     }
   }
 }

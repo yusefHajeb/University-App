@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:university/core/Utils/lang/app_localization.dart';
+import 'package:university/core/function/messages.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/pages/onboarding/onboarding_start.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/form_login_widget.dart';
 
 import '../../../../../core/color/app_color.dart';
@@ -46,6 +47,10 @@ class SingInPage extends StatelessWidget {
                       return FormLoginWidget();
                     } else if (state is AuthErrorState)
                       return FormLoginWidget();
+                    else if (state is AuthSuccessState) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
                     print("==============else");
                     return Center(
                       child: Text(
@@ -54,7 +59,21 @@ class SingInPage extends StatelessWidget {
                       ),
                     );
                   },
-                  listener: (context, state) {},
+                  listener: (context, state) {
+                    if (state is AuthSuccessState) {
+                      Fluttertoast.showToast(
+                        msg: (singUpSuccessfuly).tr(context),
+                      );
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (_) => OnboardingCarousel()),
+                          (route) => false);
+                    } else if (state is AuthErrorState) {
+                      Fluttertoast.showToast(
+                        msg: (state.message).tr(context),
+                      );
+                    }
+                  },
                 ),
               ),
             ))));

@@ -9,9 +9,10 @@ String failureToMessage(Failure failure) {
       return emptyCacheFailureMessage;
     case OffLineFailure:
       return offlineFailureMessage;
-
     case SingInFailure:
-
+      return singInError;
+    case SingUpFailure:
+      return singInError;
     default:
       return "Unexpected Error, Please try again later.";
   }
