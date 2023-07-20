@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:university/features/AllFeatures/domain/entites/auth_entites/login.dart';
+import 'package:university/features/AllFeatures/domain/entites/auth_entites/singup.dart';
 
 class SingUpModel extends SingUp {
   SingUpModel(

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:university/features/AllFeatures/domain/entites/auth_entites/login.dart';
+import 'package:university/features/AllFeatures/domain/entites/auth_entites/singup.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
 
 import '../../../../../core/error/failure.dart';
