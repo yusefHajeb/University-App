@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:university/features/AllFeatures/domain/entites/auth_entites/login.dart';
+import 'package:university/features/AllFeatures/domain/entites/auth_entites/singup.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
 
 class SinginModel extends Singin {
@@ -39,4 +39,12 @@ class SinginModel extends Singin {
   }
 
   String toRawJson() => json.encode(toJson());
+}
+
+class LoginModelFields {
+  static const String username = "username";
+  static const String password = "password";
+  static const String token = "token";
+  static const String record = "record";
+  static const String email = "email";
 }
