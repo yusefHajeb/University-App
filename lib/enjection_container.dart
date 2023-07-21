@@ -6,6 +6,7 @@ import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSour
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singup_usecase.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/Onboarding/onboarding_cubit.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
@@ -25,7 +26,7 @@ Future<void> init() async {
       schedlulenotificationUsecae: sl(), getAllScheduleUsecase: sl()));
   sl.registerFactory(
       () => AuthenticationBloc(singInUsecase: sl(), singUpUsecase: sl()));
-
+  sl.registerFactory(() => OnboardingCubit());
   //USECASE ========================
   sl.registerFactory(() => GetAllScheduleUsecase(rerpository: sl()));
   sl.registerFactory(

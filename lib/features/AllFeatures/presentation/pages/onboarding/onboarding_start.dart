@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:university/core/constant/varibal.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/Onboarding/onboarding_cubit.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/widget/bakground_dark.dart';
 import '../../widget/onBoarding/image_outline.dart';
 import '../../widget/onBoarding/slider_image.dart';
+import '../Auth/singup_page.dart';
 
 class OnboardingCarousel extends StatefulWidget {
   @override
@@ -25,6 +28,7 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
     return list;
   }
 
+  final OnboardingCubit boardingCubit = OnboardingCubit();
   Widget _indicator(bool isActive) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 150),
@@ -57,28 +61,41 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
               Column(children: [
                 Container(
                     height: sizeHeight(context).width * 1.3 - 20,
-                    child: PageView(
-                        physics: ClampingScrollPhysics(),
-                        controller: _pageController,
-                        onPageChanged: (int page) {
-                          setState(() {
-                            _currentPage = page;
-                          });
-                        },
-                        children: <Widget>[
-                          SliderCaptionedImage(
-                              index: 0,
-                              imageUrl: "assets/images/slider-background-1.png",
-                              caption: "University,\nCalendar,\nChat"),
-                          SliderCaptionedImage(
-                              index: 1,
-                              imageUrl: "assets/images/slider-background-3.png",
-                              caption: "University\nAnywhere\nEasily"),
-                          SliderCaptionedImage(
-                              index: 2,
-                              imageUrl: "assets/images/slider-background-2.png",
-                              caption: "Manage\nUniversity\nOn Phone")
-                        ])),
+                    child: BlocConsumer<OnboardingCubit, OnboardingState>(
+                      listener: ((context, state) {
+                        if (state == OnboardingState.Complete) {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (_) => SingUpPage()),
+                              (route) => false);
+                        }
+                      }),
+                      bloc: boardingCubit,
+                      builder: ((context, state) {
+                        return PageView(
+                            physics: ClampingScrollPhysics(),
+                            controller: _pageController,
+                            onPageChanged: (int page) {
+                              boardingCubit.onChangePage(page);
+                            },
+                            children: <Widget>[
+                              SliderCaptionedImage(
+                                  index: 0,
+                                  imageUrl:
+                                      "assets/images/slider-background-1.png",
+                                  caption: "University,\nCalendar,\nChat"),
+                              SliderCaptionedImage(
+                                  index: 1,
+                                  imageUrl:
+                                      "assets/images/slider-background-3.png",
+                                  caption: "University\nAnywhere\nEasily"),
+                              SliderCaptionedImage(
+                                  index: 2,
+                                  imageUrl:
+                                      "assets/images/slider-background-2.png",
+                                  caption: "Manage\nUniversity\nOn Phone")
+                            ]);
+                      }),
+                    )),
                 Padding(
                   padding:
                       EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
@@ -95,10 +112,8 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                           height: 60,
                           child: ElevatedButton(
                               onPressed: () {
-                                if (_numPages < 3) {
-                                  _currentPage++;
-                                  print("$_currentPage ============");
-                                }
+                                BlocProvider.of<OnboardingCubit>(context)
+                                    .onChangePage(2);
                               },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(

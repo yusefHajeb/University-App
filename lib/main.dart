@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/Onboarding/onboarding_cubit.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
 import 'package:university/features/AllFeatures/presentation/pages/onboarding/onboarding_start.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => di.sl<AuthenticationBloc>()..add(AuthGetStart()),
         ),
+        BlocProvider(create: (context) => di.sl<OnboardingCubit>()),
       ],
       child: ScreenUtilInit(builder: (context, child) {
         return MaterialApp(
