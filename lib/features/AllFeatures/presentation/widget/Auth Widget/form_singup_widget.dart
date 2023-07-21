@@ -8,17 +8,18 @@ import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singup.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/custom_textfiled.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
 
-class FormLoginWidget extends StatefulWidget {
-  const FormLoginWidget({super.key});
+class FormSingUpWidget extends StatefulWidget {
+  const FormSingUpWidget({super.key});
 
   @override
-  State<FormLoginWidget> createState() => _FormLoginWidgetState();
+  State<FormSingUpWidget> createState() => _FormSingUpWidgetState();
 }
 
-class _FormLoginWidgetState extends State<FormLoginWidget>
+class _FormSingUpWidgetState extends State<FormSingUpWidget>
     with SingleTickerProviderStateMixin {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _recordStd = TextEditingController();
@@ -57,6 +58,14 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
     _formKey = GlobalKey<FormState>();
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _opacity.removeListener(() {});
+    _transform.isDismissed;
+    super.dispose();
   }
 
   @override
@@ -107,7 +116,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                               hintText: 'Username ..'),
                           CustomTextFilde(
                               controller: _recordStd,
-                              icon: Icons.record_voice_over_rounded,
+                              icon: Icons.numbers_outlined,
                               hintText: 'Record Number ..'),
                           CustomTextFilde(
                               controller: _passwordStd,
@@ -141,19 +150,40 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                             ],
                           ),
                           SizedBox(),
-                          RichText(
-                            text: TextSpan(
-                              text: 'Are You have account !',
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontSize: 15,
+                          InkWell(
+                            onTap: () {
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .add(SingUpEvent());
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (_) => SingUpPage()),
+                                  (route) => false);
+                            },
+                            child: InkWell(
+                              onTap: () {
+                                return BlocProvider.of<AuthenticationBloc>(
+                                        context)
+                                    .add(AuthGetStart());
+                              },
+                              child: RichText(
+                                text: TextSpan(
+                                  text: 'Are You have account !',
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      return BlocProvider.of<
+                                              AuthenticationBloc>(context)
+                                          .add(AuthGetStart());
+                                      Fluttertoast.showToast(
+                                        msg:
+                                            'Create a new Account button pressed',
+                                      );
+                                    },
+                                ),
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Fluttertoast.showToast(
-                                    msg: 'Create a new Account button pressed',
-                                  );
-                                },
                             ),
                           ),
                           SizedBox(),
@@ -169,7 +199,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
         token: "2",
         username: _username.text);
     if (isValid) {
-      print("$login ============ filed Data");
+      print("$login ============$isValid filed Data");
       BlocProvider.of<AuthenticationBloc>(context)
           .add(SingUpStudentEvent(singUp: login));
     }

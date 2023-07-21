@@ -11,7 +11,15 @@ class AuthenticationInitial extends AuthenticationState {}
 
 class AuthProgressState extends AuthenticationState {}
 
-class AuthSuccessState extends AuthenticationState {}
+class AuthSuccessState extends AuthenticationState {
+  final String message;
+
+  AuthSuccessState({required this.message});
+  @override
+  List<Object> get props => [message];
+}
+
+class SingUpSuccessState extends AuthenticationState {}
 
 class AuthErrorState extends AuthenticationState {
   final String message;
@@ -23,6 +31,8 @@ class AuthErrorState extends AuthenticationState {
 
 class LoadingAuthState extends AuthenticationState {}
 
-class LogingState extends AuthenticationState {}
-
 class ForgetPasswordSatet extends AuthenticationState {}
+
+class SingUpState extends AuthenticationState {}
+
+class SingInState extends AuthenticationState {}

@@ -28,8 +28,9 @@ class CustomTextFilde extends StatelessWidget {
         color: Colors.black.withOpacity(.05),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
+        validator: (val) => val!.isEmpty ? "Can/'t be empty" : null,
         style: TextStyle(color: Colors.black.withOpacity(.8)),
         obscureText: isPassword ?? false,
         keyboardType: (isEmail ?? false)

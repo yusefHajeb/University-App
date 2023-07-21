@@ -35,4 +35,6 @@ class SingInSuccessEvent extends AuthenticationEvent {
   List<Object> get props => [singIn];
 }
 
+class SingUpEvent extends AuthenticationEvent {}
+
 class AuthErrorSingInEvent extends AuthenticationEvent {}

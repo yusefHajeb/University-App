@@ -94,7 +94,12 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                           width: double.infinity,
                           height: 60,
                           child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (_numPages < 3) {
+                                  _currentPage++;
+                                  print("$_currentPage ============");
+                                }
+                              },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       HexColor.fromHex("246CFE")),
@@ -110,26 +115,13 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.email, color: Colors.white),
-                                  Text('   Continue with Email',
+                                  Text('   Continue ',
                                       style: GoogleFonts.lato(
                                           fontSize: 20, color: Colors.white)),
                                 ],
                               )),
                         ),
                         SizedBox(height: 10.0),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                  child: OutlinedButtonWithImage(
-                                      imageUrl:
-                                          "assets/images/google_icon.png")),
-                              SizedBox(width: 20),
-                              Expanded(
-                                  child: OutlinedButtonWithImage(
-                                      imageUrl:
-                                          "assets/images/facebook_icon.png"))
-                            ]),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Text(

@@ -10,6 +10,8 @@ import 'package:university/features/AllFeatures/presentation/bloc/authentication
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/custom_textfiled.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
 
+import '../../pages/Auth/singup_page.dart';
+
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
 
@@ -53,6 +55,14 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
     _formKey = GlobalKey<FormState>();
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _opacity.removeListener(() {});
+    _transform.isDismissed;
+    super.dispose();
   }
 
   @override
@@ -129,19 +139,37 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                             ],
                           ),
                           SizedBox(),
-                          RichText(
-                            text: TextSpan(
-                              text: 'Create a new Account',
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontSize: 15,
+                          InkWell(
+                            onTap: () {
+                              return BlocProvider.of<AuthenticationBloc>(
+                                      context)
+                                  .add(SingUpEvent());
+
+                              // Navigator.of(context).pushAndRemoveUntil(
+                              //     MaterialPageRoute(
+                              //         builder: (_) => SingUpPage()),
+                              //     (route) => false);
+                            },
+                            child: RichText(
+                              text: TextSpan(
+                                text: 'Create a new Account',
+                                style: TextStyle(
+                                  color: Colors.blueAccent,
+                                  fontSize: 15,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    BlocProvider.of<AuthenticationBloc>(context)
+                                        .add(SingUpEvent());
+                                    // Navigator.of(context).pushAndRemoveUntil(
+                                    //     MaterialPageRoute(
+                                    //         builder: (_) => SingUpPage()),
+                                    //     (route) => false);
+                                    Fluttertoast.showToast(
+                                      msg: 'Create a new SingUp Now ',
+                                    );
+                                  },
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Fluttertoast.showToast(
-                                    msg: 'Create a new Account button pressed',
-                                  );
-                                },
                             ),
                           ),
                           SizedBox(),
@@ -157,7 +185,8 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
         token: null,
         username: null);
     if (isValid) {
-      print("$login ============ filed Data");
+      print("$login ============$isValid filed Data");
+
       BlocProvider.of<AuthenticationBloc>(context)
           .add(SingInStudintEvent(singIn: login));
     }
