@@ -106,11 +106,11 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                           CustomTextFilde(
                               controller: _recordStd,
                               icon: Icons.account_circle_outlined,
-                              hintText: 'Record Number'),
+                              hintText: 'Record Number..'.tr(context)),
                           CustomTextFilde(
                               controller: _passwordStd,
                               icon: Icons.lock_outline,
-                              hintText: 'Password...'),
+                              hintText: 'Password...'.tr(context)),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
