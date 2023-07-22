@@ -79,7 +79,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                 scale: _transform.value,
                 child: Container(
                     width: sizeWidth * .9,
-                    height: sizeWidth * 1.1,
+                    height: sizeWidth * .9,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
@@ -116,7 +116,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                             children: [
                               SubmitFormBtn(
                                 onPressed: validateFormLogin,
-                                btnName: 'LOGIN',
+                                btnName: 'LOGIN'.tr(context),
                               ),
                               SizedBox(width: sizeWidth / 25),
                               Container(
@@ -124,7 +124,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                                 alignment: Alignment.center,
                                 child: RichText(
                                   text: TextSpan(
-                                    text: 'Forgotten password!',
+                                    text: 'Forgotten password!'.tr(context),
                                     style: TextStyle(color: Colors.blueAccent),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {

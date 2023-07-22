@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'dart:math' as math;
 
+import '../../../../../core/Utils/lang/app_localization.dart';
+
 class SliderCaptionedImage extends StatelessWidget {
   final int index;
   final String caption;
@@ -19,18 +21,28 @@ class SliderCaptionedImage extends StatelessWidget {
     return Stack(children: [
       Positioned(
           top: 0,
-          child: Image(
-              image: AssetImage(this.imageUrl),
-              fit: BoxFit.contain,
-              height: 450)),
+          child: AppLocalizations.of(context)!.local == Locale('ar')
+              ? Transform(
+                  transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0),
+                  alignment: Alignment.center,
+                  child: Image(
+                      image: AssetImage(this.imageUrl),
+                      fit: BoxFit.fill,
+                      height: 450),
+                )
+              : Image(
+                  image: AssetImage(this.imageUrl),
+                  fit: BoxFit.contain,
+                  height: 450)),
       Positioned(
           bottom: 20,
-          left: 20,
+          left: AppLocalizations.of(context)!.local == Locale('ar') ? 0 : 20,
+          right: AppLocalizations.of(context)!.local == Locale('ar') ? 20 : 0,
           child: Text(caption,
               style: GoogleFonts.raleway(
                   fontWeight: FontWeight.bold,
-                  fontSize: 50,
-                  color: Colors.white))),
+                  fontSize: 40,
+                  color: Color.fromARGB(255, 255, 251, 252)))),
       index == 0
           ? Positioned(
               bottom: 70,

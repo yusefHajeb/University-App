@@ -12,8 +12,14 @@
    "ErrorAdd":"Login is Errpr",
    "singUpSuccess" : "SingUp is Successfully",
    "SignUp" : "Sing Up",
-   "SignIn" : "Sing In"
+   "SignIn" : "Sing In",
+    "Forgotten password!": "Forgotten password!",
+   "LOGIN": "LOGIN",
+   "onBoarding1":"University,\n Schedul,\n Show",
 
-
+    "onBoarding2": "University\nAnywhere\nEasily",
+    "onBoarding3": "Manage Task\n University\n On Phone",
+    "By continuing you agree University Terms of Services & Privacy Policy.," :"By continuing you agree University Terms of Services & Privacy Policy.,",
+    "   Continue " : "   Continue "
    
 }

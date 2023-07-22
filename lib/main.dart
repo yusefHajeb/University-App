@@ -9,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/Utils/lang/app_localization.dart';
 import 'enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
+import 'features/AllFeatures/presentation/cubit/localization/local_cubit_cubit.dart';
 import 'features/AllFeatures/presentation/pages/Auth/login_page.dart';
 import 'features/AllFeatures/presentation/pages/Auth/sing_in_page.dart';
 
@@ -28,6 +29,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          //..to access methode
+          create: (context) => LocaleCubit()..getSavedLanguage(),
+        ),
+        BlocProvider(
           create: (context) => di.sl<SchedulBloc>()..add(GetAllScheduleEvent()),
         ),
         BlocProvider(
@@ -35,9 +40,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (context) => di.sl<OnboardingCubit>()),
       ],
-      child: ScreenUtilInit(builder: (context, child) {
+      child:
+          BlocBuilder<LocaleCubit, ChangeLocalState>(builder: (context, state) {
         return MaterialApp(
-          title: 'Flutter Demo',
+          locale: state.locale,
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -48,6 +54,21 @@ class MyApp extends StatelessWidget {
             Locale('en'),
             Locale('ar'),
           ],
+
+          //return and change local lunguage , supportedLocal that phon support
+          localeResolutionCallback: (deviceLocal, supportedLocal) {
+            for (var local in supportedLocal) {
+              // if my phone support deviceLocal
+              if (deviceLocal != null &&
+                  deviceLocal.languageCode == local.languageCode) {
+                return deviceLocal;
+              }
+            }
+
+            return supportedLocal
+                .first; //covert eng when no support luanguage deviceLocal
+          },
+          title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,

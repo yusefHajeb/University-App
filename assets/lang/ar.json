@@ -6,12 +6,19 @@
     "No Saved" : " لاتوجد بيانات محفوظه",
    "check internet" :"يرجى فحص اتصالك بالإنترنت اولا",
    "Loggedsuccessfully": "تم الدخول بنجاح",
-   "singInfailure" : "رقم القيد او كلمة السر خاطئة",
+"singInfailure" : "رقم القيد او كلمة السر خاطئة",
 "AddedSingIn" : "تم الدخول بنجاح",
 "ErrorAdd":" خطأ في تسجيل الدخول ",
 "singUpSuccess" : "تم انشاء الحساب بنجاح",
 "SignUp" : "انشاء حساب",
-"SignIn" : "تسجيل الدخول"
-
+"SignIn" : "تسجيل الدخول",
+"Forgotten password!": "!نسيت رقم المرور ",
+"LOGIN": "دخول",
+"onBoarding1":"  عرض الجدول ,\n  الدراسي ,\n الجامعي",
+"onBoarding2": "  إستعلم ودردش   \n مع زملائك \n  بكل سهولة ويسر",
+"onBoarding3": " كل مهامك\n الجامعيه\n في تطبيق",
+"By continuing you agree University Terms of Services & Privacy Policy.," : "من خلال الاستمرار فإنك توافق على شروط الخدمات وسياسة الخصوصية الخاصة بجامعتي"
+, 
+"   Continue " : "   استمر "
 
 }
