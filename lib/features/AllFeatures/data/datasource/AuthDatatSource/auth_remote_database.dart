@@ -27,17 +27,17 @@ class SingInOrSingUpRemoteDataSourceImp
       LoginModelFields.password: singin.password,
       LoginModelFields.record: singin.record,
     };
+    print("00000000000000000000000000 remote");
 
     final response =
         await client.post(Uri.parse("${AppLink.singin}"), body: requestBody);
-    print("00000000000000000000000000 remote");
     if (response.statusCode == 200) {
-      print("============================ remote");
+      print("============================ remote + response");
       final List decodedJson = jsonDecode(response.body) as List;
       final List<SinginModel> postModels = decodedJson
           .map((jsonPostModel) => SinginModel.fromJson(jsonPostModel))
           .toList();
-
+      print("------------------------------ the data is = $postModels ");
       final respons = postModels.firstWhere((student) =>
           student.password == singin.password &&
           student.record == singin.record);

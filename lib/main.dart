@@ -12,6 +12,7 @@ import 'features/AllFeatures/presentation/bloc/authentication/authentication_blo
 import 'features/AllFeatures/presentation/cubit/localization/local_cubit_cubit.dart';
 import 'features/AllFeatures/presentation/pages/Auth/login_page.dart';
 import 'features/AllFeatures/presentation/pages/Auth/sing_in_page.dart';
+import 'features/AllFeatures/presentation/pages/schedule_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,7 +74,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: SingInPage(),
+          home: SchedulePage(),
         );
       }),
     );

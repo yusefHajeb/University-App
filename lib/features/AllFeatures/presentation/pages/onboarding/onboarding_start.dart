@@ -141,12 +141,12 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               if (newValue != null) {
-                                // BlocProvider.of<LocaleCubit>(context)
-                                //     .changeLanguage(newValue);
-
-                                context
-                                    .read<LocaleCubit>()
+                                BlocProvider.of<LocaleCubit>(context)
                                     .changeLanguage(newValue);
+
+                                // context
+                                //     .read<LocaleCubit>()
+                                //     .changeLanguage(newValue);
                                 // Navigator.pop(context);
                               }
                             });
