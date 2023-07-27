@@ -15,6 +15,7 @@ class AppColors {
   static final darkRadialBackground = HexColor.fromHex("1D192D");
   final kShadowColor =
       const Color.fromARGB(255, 115, 123, 122).withOpacity(.84);
+  static final gray = Color(0xFF737477);
 }
 
 extension HexColor on Color {

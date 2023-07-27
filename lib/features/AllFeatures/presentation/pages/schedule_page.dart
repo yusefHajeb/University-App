@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/widget/loading_widget.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
@@ -79,7 +80,7 @@ class SchedulePage extends StatelessWidget {
     int _selectedRepeat = 0;
     String _selectedHour = '13:30';
     List<int> _selectedExteraCleaning = [];
-
+    //  final List<String> weekdays = DateFormat.E().narrow;
     return NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -87,7 +88,7 @@ class SchedulePage extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(top: 120.0, right: 20.0, left: 20.0),
                 child: Text(
-                  'Select Date \nand Time',
+                  ' Today lectures \nand Time',
                   style: TextStyle(
                     fontSize: 35,
                     color: Colors.grey.shade900,
@@ -98,72 +99,75 @@ class SchedulePage extends StatelessWidget {
             )
           ];
         },
-        body: Column(children: <Widget>[
-          Row(
-            children: [
-              Text("October 2023"),
-              Spacer(),
-              IconButton(
-                padding: EdgeInsets.all(0),
-                onPressed: () {},
-                icon: Icon(
-                  Icons.arrow_drop_down_circle_outlined,
-                  color: Colors.grey.shade700,
-                ),
-              )
-            ],
-          ),
-          Container(
-            height: 80,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-              border: Border.all(width: 1.5, color: Colors.grey.shade200),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(children: <Widget>[
+            Row(
+              children: [
+                Text("October 2023"),
+                Spacer(),
+                IconButton(
+                  padding: EdgeInsets.all(0),
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.arrow_drop_down_circle_outlined,
+                    color: Colors.grey.shade700,
+                  ),
+                )
+              ],
             ),
-            child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: _days.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
-                      width: 62,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: _selectedDay == _days[index][0]
-                            ? Colors.blue.shade100.withOpacity(0.5)
-                            : Colors.blue.withOpacity(0),
-                        border: Border.all(
+            Container(
+              height: 80,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                border: Border.all(width: 1.5, color: Colors.grey.shade200),
+              ),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _days.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {},
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        width: 62,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
                           color: _selectedDay == _days[index][0]
-                              ? Colors.blue
-                              : Colors.white.withOpacity(0),
-                          width: 1.5,
+                              ? Colors.blue.shade100.withOpacity(0.5)
+                              : Colors.blue.withOpacity(0),
+                          border: Border.all(
+                            color: _selectedDay == _days[index][0]
+                                ? Colors.blue
+                                : Colors.white.withOpacity(0),
+                            width: 1.5,
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _days[index][0].toString(),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              _days[index][1],
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
                         ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            _days[index][0].toString(),
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            _days[index][1],
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-          )
-        ]));
+                    );
+                  }),
+            )
+          ]),
+        ));
   }
 
   Future<void> _onRefresh(BuildContext context) async {
