@@ -4,7 +4,7 @@ class FontConstannts {
   static const String fontFamily = "Poppins";
 }
 
-class FontApp {
+class FontWeightManager {
   static const FontWeight black = FontWeight.w900;
   static const FontWeight extraBold = FontWeight.w800;
   static const FontWeight bold = FontWeight.w700;
