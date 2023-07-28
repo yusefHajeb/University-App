@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/Utils/app_space.dart';
+import '../../../../../core/value/app_space.dart';
 import '../../../../../core/color/app_color.dart';
 import 'loading_stack_bar.dart';
 

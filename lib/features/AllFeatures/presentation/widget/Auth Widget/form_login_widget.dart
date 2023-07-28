@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:university/core/Utils/app_space.dart';
+import 'package:university/core/value/app_space.dart';
 import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/custom_textfiled.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
-
-import '../../pages/Auth/singup_page.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});

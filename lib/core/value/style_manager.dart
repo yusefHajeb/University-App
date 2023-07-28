@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:university/core/fonts/app_fonts.dart';
 
 TextStyle _getTextStyleEn(double fontsize, FontWeight fontWeight, Color color) {
@@ -42,4 +43,15 @@ TextStyle getSemiBoldStyleEn(
 TextStyle getBlackStyleEn(
     {double fontSize = FontSize.s12, required Color color}) {
   return _getTextStyleEn(fontSize, FontWeightManager.black, color);
+}
+
+TextStyle bigHeaderEn({double fontSize = FontSize.s12, required Color color}) {
+  return GoogleFonts.lato(
+      fontSize: fontSize, color: color, fontWeight: FontWeightManager.bold);
+}
+
+TextStyle smallHeaderEn(
+    {double fontSize = FontSize.s14, required Color color}) {
+  return GoogleFonts.lato(
+      fontSize: fontSize, color: color, fontWeight: FontWeightManager.medium);
 }

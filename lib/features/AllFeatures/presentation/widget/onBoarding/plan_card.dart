@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../../../core/Utils/app_space.dart';
+import '../../../../../core/value/app_space.dart';
 import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/constant/varibal.dart';
