@@ -6,10 +6,7 @@ import '../color/app_color.dart';
 class DarkRadialBackground extends StatelessWidget {
   final String position;
   final Color color;
-  var list = List.generate(
-    3,
-    (index) => HexColor.fromHex("1D192D"),
-  );
+  var list = List.generate(3, (index) => AppColors.darkRadialBackground);
   DarkRadialBackground({required this.color, required this.position});
   @override
   Widget build(BuildContext context) {
