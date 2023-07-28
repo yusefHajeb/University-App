@@ -100,7 +100,7 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                               },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
-                                      AppColors.blueColor),
+                                      AppColors.primaryColor),
                                   shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
