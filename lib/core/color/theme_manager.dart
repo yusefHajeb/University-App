@@ -42,8 +42,6 @@ ThemeData getAppTheme() {
             )),
       ),
       textTheme: TextTheme(
-          displayLarge:
-              getLightStyleEn(color: AppColors.white, fontSize: AppSize.s18),
           headline1: getSemiBoldStyleEn(
               color: AppColors.darkGrey, fontSize: AppSize.s16),
           subtitle1: getMediumStyleEn(

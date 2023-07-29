@@ -6,6 +6,7 @@ import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/fonts/app_fonts.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/Onboarding/onboarding_cubit.dart';
+import 'package:university/features/AllFeatures/presentation/widget/onBoarding/custom_slider.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/style_manager.dart';
 import '../../../../../core/widget/bakground_dark.dart';
@@ -13,6 +14,7 @@ import '../../cubit/localization/local_cubit_cubit.dart';
 import '../../widget/onBoarding/custom_change_lang.dart';
 import '../../widget/onBoarding/slider_image.dart';
 import '../Auth/singup_page.dart';
+import '../schedule_page.dart';
 
 class OnboardingCarousel extends StatefulWidget {
   @override
@@ -24,7 +26,6 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
-  final OnboardingCubit boardingCubit = OnboardingCubit();
   final LocaleCubit localCubit = LocaleCubit();
 
   @override
@@ -41,43 +42,8 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
               ),
               Column(children: [
                 Container(
-                  height: sizeHeight(context).width * 1.3 - 20,
-                  child: BlocConsumer<OnboardingCubit, OnboardingState>(
-                    listener: ((context, state) {
-                      if (state == OnboardingState.Complete) {
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (_) => SingUpPage()),
-                            (route) => false);
-                      }
-                    }),
-                    bloc: boardingCubit,
-                    builder: ((context, state) {
-                      return PageView(
-                          physics: ClampingScrollPhysics(),
-                          controller: _pageController,
-                          onPageChanged: (int page) {
-                            boardingCubit.onChangePage(page);
-                          },
-                          children: <Widget>[
-                            SliderCaptionedImage(
-                                index: 0,
-                                imageUrl:
-                                    "assets/images/slider-background-1.png",
-                                caption: "onBoarding1".tr(context)),
-                            SliderCaptionedImage(
-                                index: 1,
-                                imageUrl:
-                                    "assets/images/slider-background-3.png",
-                                caption: "onBoarding2".tr(context)),
-                            SliderCaptionedImage(
-                                index: 2,
-                                imageUrl:
-                                    "assets/images/slider-background-2.png",
-                                caption: "onBoarding3".tr(context))
-                          ]);
-                    }),
-                  ),
-                ),
+                    height: sizeHeight(context).width * 1.3 - 20,
+                    child: CustomSlider()),
                 ChangeLang(localCubit: localCubit),
                 Padding(
                   padding:
@@ -95,8 +61,15 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                           height: 60,
                           child: ElevatedButton(
                               onPressed: () {
-                                BlocProvider.of<OnboardingCubit>(context)
-                                    .onChangePage(2);
+                                final current =
+                                    BlocProvider.of<OnboardingCubit>(context)
+                                        .state;
+                                if (current == 2) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => SchedulePage()));
+                                }
                               },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(

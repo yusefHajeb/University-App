@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +27,7 @@ Future<void> init() async {
       schedlulenotificationUsecae: sl(), getAllScheduleUsecase: sl()));
   sl.registerFactory(
       () => AuthenticationBloc(singInUsecase: sl(), singUpUsecase: sl()));
-  sl.registerFactory(() => OnboardingCubit());
+  sl.registerFactory(() => OnboardingCubit(pageController: sl()));
   //USECASE ========================
   sl.registerFactory(() => GetAllScheduleUsecase(rerpository: sl()));
   sl.registerFactory(
@@ -68,6 +69,8 @@ Future<void> init() async {
   //ext
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
+
   sl.registerLazySingleton(() => http.Client());
   sl.registerLazySingleton(() => InternetConnectionChecker());
+  sl.registerLazySingleton(() => PageController());
 }

@@ -14,6 +14,7 @@ import 'features/AllFeatures/presentation/cubit/localization/local_cubit_cubit.d
 import 'features/AllFeatures/presentation/pages/Auth/login_page.dart';
 import 'features/AllFeatures/presentation/pages/Auth/sing_in_page.dart';
 import 'features/AllFeatures/presentation/pages/schedule_page.dart';
+import 'features/AllFeatures/presentation/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,6 +72,8 @@ class MyApp extends StatelessWidget {
                 .first; //covert eng when no support luanguage deviceLocal
           },
           title: 'Flutter Demo',
+          onGenerateRoute: RouteGenerator.getRoutes,
+          initialRoute: Routes.singin,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
