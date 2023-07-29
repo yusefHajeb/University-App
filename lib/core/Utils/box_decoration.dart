@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:university/core/Utils/schape.dart';
 
 import '../color/app_color.dart';
 
@@ -19,6 +20,6 @@ class BoxDecorationStyles {
   );
 
   static final BoxDecoration fadingInnerDecor = BoxDecoration(
-      color: HexColor.fromHex("181A1F"),
+      color: HexColor.fromHex("#eeeeee"),
       borderRadius: BorderRadius.circular(20));
 }

@@ -1,12 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
-import 'package:university/core/constant/varibal.dart';
-import 'package:university/core/widget/loading_widget.dart';
+import 'package:university/core/value/app_space.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
+import '../../../../core/Utils/box_decoration.dart';
+import '../../../../core/widget/animate_in_effect.dart';
 import '../../domain/entites/schedule.dart';
-import '../widget/Schedul/appbar_widget.dart';
 
 class SchedulePage extends StatelessWidget {
   const SchedulePage({super.key});
@@ -100,7 +99,7 @@ class SchedulePage extends StatelessWidget {
           ];
         },
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(children: <Widget>[
             Row(
               children: [
@@ -165,6 +164,62 @@ class SchedulePage extends StatelessWidget {
                       ),
                     );
                   }),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                width: double.infinity - 20,
+                height: double.infinity - 20,
+                decoration: BoxDecorationStyles.fadingGlory,
+                child: Padding(
+                  padding: EdgeInsets.all(3),
+                  child: DecoratedBox(
+                    decoration: BoxDecorationStyles.fadingGlory,
+                    child: ListView(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      children: [
+                        AppSpaces.verticalSpace10,
+                        AnimateInEffect(
+                          child: Container(
+                              width: double.infinity,
+                              height: 200,
+                              decoration: BoxDecorationStyles.fadingInnerDecor),
+                        ),
+                        AppSpaces.verticalSpace10,
+                        AnimateInEffect(
+                          child: Container(
+                              width: double.infinity,
+                              height: 200,
+                              decoration: BoxDecorationStyles.fadingInnerDecor),
+                        ),
+                        AppSpaces.verticalSpace10,
+                        AnimateInEffect(
+                          child: Container(
+                              width: double.infinity,
+                              height: 200,
+                              decoration: BoxDecorationStyles.fadingInnerDecor),
+                        ),
+                        AppSpaces.verticalSpace10,
+                        Container(
+                            width: double.infinity,
+                            height: 200,
+                            child: Padding(
+                              padding: EdgeInsets.all(3.0),
+                              child: DecoratedBox(
+                                decoration:
+                                    BoxDecorationStyles.fadingInnerDecor,
+                                child: Padding(padding: EdgeInsets.all(20)),
+                              ),
+                            ),
+                            decoration: BoxDecorationStyles.fadingInnerDecor),
+                        AppSpaces.verticalSpace10,
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             )
           ]),
         ));

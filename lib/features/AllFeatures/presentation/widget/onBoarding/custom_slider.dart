@@ -44,7 +44,7 @@ class CustomSlider extends StatelessWidget {
               print("$page ========");
               OnboardingDirection dirction;
               if (page >= 0) {
-                if (page > currentIndex) {
+                if (page >= currentIndex) {
                   dirction = OnboardingDirection.forward;
                 } else {
                   dirction = OnboardingDirection.reverse;

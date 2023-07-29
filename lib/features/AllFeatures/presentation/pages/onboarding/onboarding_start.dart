@@ -61,7 +61,11 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                           height: 60,
                           child: ElevatedButton(
                               onPressed: () {
+                                OnboardingDirection dirction;
                                 final current =
+                                    BlocProvider.of<OnboardingCubit>(context)
+                                        .state;
+                                final old =
                                     BlocProvider.of<OnboardingCubit>(context)
                                         .state;
                                 if (current == 2) {
@@ -69,6 +73,8 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (_) => SchedulePage()));
+                                } else {
+                                  dirction = OnboardingDirection.forward;
                                 }
                               },
                               style: ButtonStyle(

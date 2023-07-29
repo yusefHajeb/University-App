@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university/core/color/app_color.dart';
 import 'package:university/core/value/margin_manager.dart';
-
 import '../../../../../core/value/style_manager.dart';
 import '../../cubit/localization/local_cubit_cubit.dart';
 

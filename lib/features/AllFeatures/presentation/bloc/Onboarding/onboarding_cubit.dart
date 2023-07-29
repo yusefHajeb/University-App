@@ -12,7 +12,7 @@ enum OnboardingDirection { forward, reverse }
 class OnboardingCubit extends Cubit<int> {
   OnboardingCubit({required this.pageController}) : super(0);
   PageController pageController;
-  int currentPage = 0;
+  // int currentPage = 0;
   // void loadOnboardingData() async {
   //   emit(OnboardingDirection.Loading);
   // }
@@ -26,7 +26,7 @@ class OnboardingCubit extends Cubit<int> {
     print("==============$state state");
     if (direction == OnboardingDirection.forward) {
       if (state < 3) {
-        emit(index + 1);
+        emit(index);
       }
     } else if (direction == OnboardingDirection.reverse) {
       if (index > 0) emit(index - 1);
