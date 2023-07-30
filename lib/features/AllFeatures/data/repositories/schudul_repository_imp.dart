@@ -19,11 +19,12 @@ class SchedulRepositoryImp implements ScheduleRepository {
     required this.localSource,
   });
   @override
-  Future<Either<Failure, List<Schedule>>> getAllTodos() async {
+  Future<Either<Failure, List<Schedule>>> getALLSchedule() async {
     if (await networkInfo.isConnected) {
       try {
         final List<SchedulModel> remoteData =
             await remoteSchedul.getAllSchedul();
+        print(remoteData);
         localSource.cacheSchedul(remoteData);
         return Right(remoteData);
       } on ServerException {
@@ -46,9 +47,12 @@ class SchedulRepositoryImp implements ScheduleRepository {
       try {
         final SchedulModel remoteData =
             await remoteSchedul.getScheduleNotification();
+        print('=============================== schedul  in repository ');
         localSource.cacheSchedulNotifiction(remoteData);
         return Right(remoteData);
       } on ServerException {
+        print('===============================ERROR schedul  in repository ');
+
         return Left(ServerFailure());
       }
     } else {
