@@ -19,7 +19,7 @@ class SchedulRepositoryImp implements ScheduleRepository {
     required this.localSource,
   });
   @override
-  Future<Either<Failure, List<Schedule>>> getAllTodos() async {
+  Future<Either<Failure, List<Schedule>>> getALLSchedule() async {
     if (await networkInfo.isConnected) {
       try {
         final List<SchedulModel> remoteData =

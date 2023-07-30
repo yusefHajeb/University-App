@@ -10,6 +10,6 @@ class GetAllScheduleUsecase {
   GetAllScheduleUsecase({required this.rerpository});
 
   Future<Either<Failure, List<Schedule>>> call() async {
-    return await rerpository.getAllTodos();
+    return await rerpository.getALLSchedule();
   }
 }

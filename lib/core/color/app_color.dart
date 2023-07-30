@@ -10,12 +10,14 @@ class AppColors {
   static final darkGrey = Color(0xFFa7a7a7);
   static final primaryColor = HexColor.fromHex("246CFE");
   static final greyColor = HexColor.fromHex("8F8F8F");
+  static final casheColor = HexColor.fromHex("#1abc9c");
   //============================================== mybe Changes
   static final primaryDarkColor = Color(0x80246CFE);
   static final primaryLightColor = Color(0xCC246CFE);
   static final white = Color(0xFFFFFFFF);
   static const kCardColor = Color(0xFF282B30);
   static const kBGColor = Color(0xFF343537);
+
 //=========================================== //cashed
   static const kTextColor = Color.fromARGB(255, 143, 149, 152);
   static const kBlackColor = Color.fromARGB(255, 39, 68, 78);

@@ -23,9 +23,16 @@ class SchedulBloc extends Bloc<SchedulEvent, SchedulState> {
     on<SchedulEvent>((event, emit) async {
       if (event is GetAllScheduleEvent) {
         emit(LoadingSchedulState());
+
+        print("-----------------");
         final schedulOrError = await getAllScheduleUsecase();
-        emit(_failureOrSchedualToState(schedulOrError));
+        schedulOrError.fold(
+          (failure) => ErrorSchedulState(message: failureToMessage(failure)),
+          (schedula) => LoadedSchedulState(schedule: schedula),
+        );
+        // emit(_failureOrSchedualToState(schedulOrError));
       } else if (event is RefreshScheduleEvent) {
+        print("-----------------");
         emit(LoadingSchedulState());
         final schedulOrError = await getAllScheduleUsecase();
         emit(_failureOrSchedualToState(schedulOrError));

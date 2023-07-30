@@ -5,6 +5,7 @@ import 'package:university/core/value/app_space.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import '../../../../core/Utils/box_decoration.dart';
 import '../../../../core/widget/animate_in_effect.dart';
+import '../../../../core/widget/loading_widget.dart';
 import '../../domain/entites/schedule.dart';
 
 class SchedulePage extends StatelessWidget {
@@ -54,24 +55,29 @@ class SchedulePage extends StatelessWidget {
     String _selectedHour = '13:30';
     List<int> _selectedExteraCleaning = [];
 
-    // return Container(
-    //     child: BlocConsumer<SchedulBloc, SchedulState>(
-    //   builder: (context, state) {
-    //     if (state is LoadingSchedulState) {
-    //       return RefreshIndicator(
-    //           onRefresh: () => _onRefresh(context),
-    //           child: _showSchedule(_days));
-    //     } else if (state is LoadedSchedulState) {
-    //       return RefreshIndicator(
-    //           onRefresh: () => _onRefresh(context),
-    //           child: _showSchedule(_days));
-    //     }
-    //     return const LoadingWidget();
-    //   },
-    //   listener: (context, state) {},
-    // ));
+    return Container(
+        child: BlocConsumer<SchedulBloc, SchedulState>(
+      builder: (context, state) {
+        if (state is LoadedSchedulState) {
+          print("Loading $state");
+          return LoadingWidget();
+        } else if (state is ErrorSchedulState) {
+          return Center(
+            child: Text("${state.message}"),
+          );
+        } else if (state is LoadedSchedulState) {
+          print("$state ================");
+          return RefreshIndicator(
+              onRefresh: () => _onRefresh(context),
+              child: _showSchedule(_days));
+        }
+        print("Loading $state");
+        return const LoadingWidget();
+      },
+      listener: (context, state) {},
+    ));
 
-    return _showSchedule(_days);
+    // return _showSchedule(_days);
   }
 
   _showSchedule(List<dynamic> _days) {
@@ -227,6 +233,8 @@ class SchedulePage extends StatelessWidget {
 
   Future<void> _onRefresh(BuildContext context) async {
     BlocProvider.of<SchedulBloc>(context).add(RefreshScheduleEvent());
+    final x = BlocProvider.of<SchedulBloc>(context).getAllScheduleUsecase;
+    print("$x");
     return Future.value(Unit);
   }
 }
