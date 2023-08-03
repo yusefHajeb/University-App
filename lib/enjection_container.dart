@@ -23,8 +23,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   //bloc ===========================
-  sl.registerFactory(() => SchedulBloc(
-      schedlulenotificationUsecae: sl(), getAllScheduleUsecase: sl()));
+  sl.registerFactory(() => SchedulBloc(getAllScheduleUsecase: sl()));
   sl.registerFactory(
       () => AuthenticationBloc(singInUsecase: sl(), singUpUsecase: sl()));
   sl.registerFactory(() => OnboardingCubit(pageController: sl()));
@@ -34,8 +33,8 @@ Future<void> init() async {
       () => GetNotificationScheduleUsecase(scheduleRepository: sl()));
 
   //auth
-  sl.registerFactory(() => SingInUsecase(repository: sl()));
-  sl.registerFactory(() => SingUpUsecase(repository: sl()));
+  sl.registerLazySingleton(() => SingInUsecase(repository: sl()));
+  sl.registerLazySingleton(() => SingUpUsecase(repository: sl()));
 
   //Repository Imp  ================
   sl.registerLazySingleton<ScheduleRepository>(() => SchedulRepositoryImp(

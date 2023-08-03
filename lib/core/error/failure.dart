@@ -15,13 +15,16 @@ class ServerFailure extends Failure {
 }
 
 class EmptyCasheFailure extends Failure {
+  @override
   List<Object?> get props => [];
 }
 
 class SingInFailure extends Failure {
+  @override
   List<Object?> get props => [];
 }
 
 class SingUpFailure extends Failure {
+  @override
   List<Object?> get props => [];
 }

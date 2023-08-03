@@ -22,8 +22,9 @@ class SchedulRepositoryImp implements ScheduleRepository {
   Future<Either<Failure, List<Schedule>>> getALLSchedule() async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteData = await remoteSchedul.getAllSchedul();
-        print(remoteData);
+        final List<SchedulModel> remoteData =
+            await remoteSchedul.getAllSchedul();
+        print("$remoteData ============ Data");
         // localSource.cacheSchedul(remoteData);
         return Right(remoteData);
       } on ServerException {

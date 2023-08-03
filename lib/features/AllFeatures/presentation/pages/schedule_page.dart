@@ -88,15 +88,5 @@ class SchedulePage extends StatelessWidget {
   }
 }
 
-_getStatus(Schedule c) {
-  DateTime now = DateTime.now();
-  DateTime finishedTime = c.time!.add(Duration(hours: 1));
-  if (now.difference(c.time!).inMinutes >= 59) {
-    c.isPassed = true;
-  } else if (now.difference(c.time!).inMinutes <= 59 &&
-      now.difference(finishedTime).inMinutes >= -59) {
-    c.isHappening = true;
-  }
   // print(c.time.toString());
   // print(c.isHappening.toString());
-}

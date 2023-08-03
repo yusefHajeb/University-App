@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/Onboarding/onboarding_cubit.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/helpers/bloc_observer.dart';
 import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
 import 'package:university/features/AllFeatures/presentation/pages/onboarding/onboarding_start.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -19,6 +20,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   await di.init();
+  Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
 }
 

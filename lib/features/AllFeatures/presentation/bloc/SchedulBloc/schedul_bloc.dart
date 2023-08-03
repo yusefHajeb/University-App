@@ -15,42 +15,28 @@ part 'schedul_state.dart';
 
 class SchedulBloc extends Bloc<SchedulEvent, SchedulState> {
   final GetAllScheduleUsecase getAllScheduleUsecase;
-  final GetNotificationScheduleUsecase schedlulenotificationUsecae;
-  SchedulBloc(
-      {required this.schedlulenotificationUsecae,
-      required this.getAllScheduleUsecase})
-      : super(SchedulInitial()) {
+  // final GetNotificationScheduleUsecase schedlulenotificationUsecae;
+  SchedulBloc({required this.getAllScheduleUsecase}) : super(SchedulInitial()) {
     on<SchedulEvent>((event, emit) async {
       if (event is GetAllScheduleEvent) {
-        // emit(LoadingSchedulState());
-        final List<Schedule> x = [
-          Schedule(
-              subject: "x",
-              type: "0",
-              teacherName: "Yousef",
-              time: DateTime.now())
-        ];
-        emit(LoadedSchedulState(schedule: x));
-        print("----------------- GetALL EVEMT in Bloc");
+        emit(LoadingSchedulState());
         final schedulOrError = await getAllScheduleUsecase();
-        schedulOrError.fold(
-          (failure) => ErrorSchedulState(message: failureToMessage(failure)),
-          (schedula) => LoadedSchedulState(schedule: schedula),
-        );
         emit(_failureOrSchedualToState(schedulOrError));
       } else if (event is RefreshScheduleEvent) {
         print("----------------- Refreshe");
-        // emit(LoadingSchedulState());
+        emit(LoadingSchedulState());
         final schedulOrError = await getAllScheduleUsecase();
         emit(_failureOrSchedualToState(schedulOrError));
-      } else if (event is NotificationScheduleEvent) {
-        emit(LoadingSchedulState());
-        final notification = await schedlulenotificationUsecae();
-        notification.fold(
-          (failure) => ErrorSchedulState(message: failureToMessage(failure)),
-          (schedula) => NotificationScheduleState(schedule: schedula),
-        );
       }
+
+      // else if (event is NotificationScheduleEvent) {
+      //   emit(LoadingSchedulState());
+      //   final notification = await schedlulenotificationUsecae();
+      //   notification.fold(
+      //     (failure) => ErrorSchedulState(message: failureToMessage(failure)),
+      //     (schedula) => NotificationScheduleState(schedule: schedula),
+      //   );
+      // }
     });
   }
   SchedulState _failureOrSchedualToState(

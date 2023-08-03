@@ -19,8 +19,8 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
   SchedulRemoteDataSourceImp({required this.client});
   @override
   Future<List<SchedulModel>> getAllSchedul() async {
-    final response = await client.get(
-      Uri.parse("http://192.168.1.10:8012/university/schedule/schedule.php"),
+    final response = await client.post(
+      Uri.parse("http:localhost:8012/university/schedule/schedule.php/"),
       headers: {
         "Content-Type": "application/json",
       },

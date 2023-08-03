@@ -1,20 +1,34 @@
 import 'package:equatable/equatable.dart';
 
 class Schedule extends Equatable {
-  final String subject;
-  final String? type;
-  final String? teacherName;
-  final DateTime? time;
-  bool isPassed = false;
-  bool isHappening = false;
-  bool isCansel = false;
-  Schedule(
-      {required this.subject,
-      required this.type,
-      required this.teacherName,
-      required this.time});
+  String? coures;
+  String? instructor;
+  String? dept;
+  String? level;
+  String? classroom;
+  String? time;
+  String? days;
+  String? batch;
+  Schedule({
+    this.coures,
+    this.instructor,
+    this.dept,
+    this.level,
+    this.classroom,
+    this.time,
+    this.days,
+    this.batch,
+  });
 
   @override
-  List<Object?> get props =>
-      [subject, type, teacherName, time, isPassed, isHappening, isCansel];
+  List<Object?> get props => [
+        coures,
+        instructor,
+        dept,
+        level,
+        classroom,
+        time,
+        days,
+        batch,
+      ];
 }

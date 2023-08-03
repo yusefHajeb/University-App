@@ -21,9 +21,6 @@ class SingUp extends Equatable {
   List<Object?> get props => [username, password, token, record, email];
 }
 
-
-
-
 // class Login extends Equatable {
 //   final String? email;
 //   final String? record;
@@ -34,7 +31,6 @@ class SingUp extends Equatable {
 //   // TODO: implement props
 //   List<Object?> get props => [email, record, token];
 // }
-
 
 // class LoginResponse {
 //   String token;
