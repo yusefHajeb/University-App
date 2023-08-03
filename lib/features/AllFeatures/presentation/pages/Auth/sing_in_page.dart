@@ -5,14 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/core/function/messages.dart';
-import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
 import 'package:university/features/AllFeatures/presentation/pages/onboarding/onboarding_start.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/form_login_widget.dart';
-
 import '../../../../../core/color/app_color.dart';
-import '../../widget/Auth Widget/form_singup_widget.dart';
 
 class SingInPage extends StatelessWidget {
   const SingInPage({super.key});

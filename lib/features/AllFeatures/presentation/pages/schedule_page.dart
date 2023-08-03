@@ -7,6 +7,8 @@ import '../../../../core/Utils/box_decoration.dart';
 import '../../../../core/widget/animate_in_effect.dart';
 import '../../../../core/widget/loading_widget.dart';
 import '../../domain/entites/schedule.dart';
+import '../widget/Schedul/cards_schedule.dart';
+import '../widget/Schedul/loaded_schedule.dart';
 
 class SchedulePage extends StatelessWidget {
   const SchedulePage({super.key});
@@ -55,12 +57,11 @@ class SchedulePage extends StatelessWidget {
     String _selectedHour = '13:30';
     List<int> _selectedExteraCleaning = [];
 
-    return Container(
-        child: BlocConsumer<SchedulBloc, SchedulState>(
+    return Container(child: BlocBuilder<SchedulBloc, SchedulState>(
       builder: (context, state) {
         if (state is LoadedSchedulState) {
           print("Loading $state");
-          return LoadingWidget();
+          return showSchedule(_days, state.schedule);
         } else if (state is ErrorSchedulState) {
           return Center(
             child: Text("${state.message}"),
@@ -69,172 +70,20 @@ class SchedulePage extends StatelessWidget {
           print("$state ================");
           return RefreshIndicator(
               onRefresh: () => _onRefresh(context),
-              child: _showSchedule(_days));
+              child: showSchedule(_days, state.schedule));
         }
         print("Loading $state");
-        return const LoadingWidget();
+        return Center(child: Text("${state.toString()}"));
       },
-      listener: (context, state) {},
     ));
 
     // return _showSchedule(_days);
   }
 
-  _showSchedule(List<dynamic> _days) {
-    int _selectedDay = 2;
-    int _selectedRepeat = 0;
-    String _selectedHour = '13:30';
-    List<int> _selectedExteraCleaning = [];
-    //  final List<String> weekdays = DateFormat.E().narrow;
-    return NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.only(top: 120.0, right: 20.0, left: 20.0),
-                child: Text(
-                  ' Today lectures \nand Time',
-                  style: TextStyle(
-                    fontSize: 35,
-                    color: Colors.grey.shade900,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            )
-          ];
-        },
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(children: <Widget>[
-            Row(
-              children: [
-                Text("October 2023"),
-                Spacer(),
-                IconButton(
-                  padding: EdgeInsets.all(0),
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.arrow_drop_down_circle_outlined,
-                    color: Colors.grey.shade700,
-                  ),
-                )
-              ],
-            ),
-            Container(
-              height: 80,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-                border: Border.all(width: 1.5, color: Colors.grey.shade200),
-              ),
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _days.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {},
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
-                        width: 62,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: _selectedDay == _days[index][0]
-                              ? Colors.blue.shade100.withOpacity(0.5)
-                              : Colors.blue.withOpacity(0),
-                          border: Border.all(
-                            color: _selectedDay == _days[index][0]
-                                ? Colors.blue
-                                : Colors.white.withOpacity(0),
-                            width: 1.5,
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              _days[index][0].toString(),
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              _days[index][1],
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-            ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                width: double.infinity - 20,
-                height: double.infinity - 20,
-                decoration: BoxDecorationStyles.fadingGlory,
-                child: Padding(
-                  padding: EdgeInsets.all(3),
-                  child: DecoratedBox(
-                    decoration: BoxDecorationStyles.fadingGlory,
-                    child: ListView(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        AppSpaces.verticalSpace10,
-                        AnimateInEffect(
-                          child: Container(
-                              width: double.infinity,
-                              height: 200,
-                              decoration: BoxDecorationStyles.fadingInnerDecor),
-                        ),
-                        AppSpaces.verticalSpace10,
-                        AnimateInEffect(
-                          child: Container(
-                              width: double.infinity,
-                              height: 200,
-                              decoration: BoxDecorationStyles.fadingInnerDecor),
-                        ),
-                        AppSpaces.verticalSpace10,
-                        AnimateInEffect(
-                          child: Container(
-                              width: double.infinity,
-                              height: 200,
-                              decoration: BoxDecorationStyles.fadingInnerDecor),
-                        ),
-                        AppSpaces.verticalSpace10,
-                        Container(
-                            width: double.infinity,
-                            height: 200,
-                            child: Padding(
-                              padding: EdgeInsets.all(3.0),
-                              child: DecoratedBox(
-                                decoration:
-                                    BoxDecorationStyles.fadingInnerDecor,
-                                child: Padding(padding: EdgeInsets.all(20)),
-                              ),
-                            ),
-                            decoration: BoxDecorationStyles.fadingInnerDecor),
-                        AppSpaces.verticalSpace10,
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ]),
-        ));
-  }
-
   Future<void> _onRefresh(BuildContext context) async {
-    BlocProvider.of<SchedulBloc>(context).add(RefreshScheduleEvent());
-    final x = BlocProvider.of<SchedulBloc>(context).getAllScheduleUsecase;
-    print("$x");
+    BlocProvider.of<SchedulBloc>(context).add(GetAllScheduleEvent());
+    // final x = BlocProvider.of<SchedulBloc>(context).getAllScheduleUsecase;
+    // print("$x");
     return Future.value(Unit);
   }
 }

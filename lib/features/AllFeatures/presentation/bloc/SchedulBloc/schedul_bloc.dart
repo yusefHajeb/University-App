@@ -22,18 +22,25 @@ class SchedulBloc extends Bloc<SchedulEvent, SchedulState> {
       : super(SchedulInitial()) {
     on<SchedulEvent>((event, emit) async {
       if (event is GetAllScheduleEvent) {
-        emit(LoadingSchedulState());
-
-        print("-----------------");
+        // emit(LoadingSchedulState());
+        final List<Schedule> x = [
+          Schedule(
+              subject: "x",
+              type: "0",
+              teacherName: "Yousef",
+              time: DateTime.now())
+        ];
+        emit(LoadedSchedulState(schedule: x));
+        print("----------------- GetALL EVEMT in Bloc");
         final schedulOrError = await getAllScheduleUsecase();
         schedulOrError.fold(
           (failure) => ErrorSchedulState(message: failureToMessage(failure)),
           (schedula) => LoadedSchedulState(schedule: schedula),
         );
-        // emit(_failureOrSchedualToState(schedulOrError));
+        emit(_failureOrSchedualToState(schedulOrError));
       } else if (event is RefreshScheduleEvent) {
-        print("-----------------");
-        emit(LoadingSchedulState());
+        print("----------------- Refreshe");
+        // emit(LoadingSchedulState());
         final schedulOrError = await getAllScheduleUsecase();
         emit(_failureOrSchedualToState(schedulOrError));
       } else if (event is NotificationScheduleEvent) {

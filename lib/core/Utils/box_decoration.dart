@@ -9,10 +9,10 @@ class BoxDecorationStyles {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          HexColor.fromHex("625B8B"),
-          Color.fromRGBO(98, 99, 102, 1),
-          HexColor.fromHex("#181a1f"),
-          HexColor.fromHex("#181a1f")
+          HexColor.fromHex("#EBF5EE"),
+          Color.fromRGBO(218, 223, 255, 1),
+          HexColor.fromHex("#EBF5EE"),
+          HexColor.fromHex("#EBF5EE")
         ]),
     borderRadius: BorderRadius.only(
         topLeft: Radius.circular(20), topRight: Radius.circular(20)),

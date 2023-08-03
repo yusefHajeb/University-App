@@ -19,7 +19,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => SingInPage());
       case Routes.singup:
         return MaterialPageRoute(builder: (_) => SingUpPage());
-      case Routes.singin:
+      case Routes.schedul:
         return MaterialPageRoute(builder: (_) => SchedulePage());
 
       default:

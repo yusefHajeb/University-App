@@ -21,7 +21,7 @@ List<Color> progressCardGradientList = [
 ];
 
 class AppLink {
-  static const baseUrl = "http://localhost:8012/university";
+  static const baseUrl = "http://192.168.1.10:8012/university";
   static const singin = "$baseUrl/auth/singup.php";
-  static const schedule = "$baseUrl/auth/singup.php";
+  static const schedule = "$baseUrl/schedule/schedule.php";
 }

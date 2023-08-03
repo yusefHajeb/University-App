@@ -20,7 +20,7 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
   @override
   Future<List<SchedulModel>> getAllSchedul() async {
     final response = await client.get(
-      Uri.parse("${AppLink.schedule}/"),
+      Uri.parse("http://192.168.1.10:8012/university/schedule/schedule.php"),
       headers: {
         "Content-Type": "application/json",
       },

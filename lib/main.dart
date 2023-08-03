@@ -7,12 +7,11 @@ import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_p
 import 'package:university/features/AllFeatures/presentation/pages/onboarding/onboarding_start.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/Utils/lang/app_localization.dart';
-import 'core/widget/animation/animation.dart';
+
 import 'enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'features/AllFeatures/presentation/cubit/localization/local_cubit_cubit.dart';
 import 'features/AllFeatures/presentation/pages/Auth/login_page.dart';
-import 'features/AllFeatures/presentation/pages/Auth/sing_in_page.dart';
 import 'features/AllFeatures/presentation/pages/schedule_page.dart';
 import 'features/AllFeatures/presentation/routes.dart';
 
@@ -73,12 +72,12 @@ class MyApp extends StatelessWidget {
           },
           title: 'Flutter Demo',
           onGenerateRoute: RouteGenerator.getRoutes,
-          initialRoute: Routes.singin,
+          initialRoute: Routes.schedul,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: SchedulePage(),
+          // home: const LoginPage(),
         );
       }),
     );

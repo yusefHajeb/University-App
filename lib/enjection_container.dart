@@ -29,8 +29,8 @@ Future<void> init() async {
       () => AuthenticationBloc(singInUsecase: sl(), singUpUsecase: sl()));
   sl.registerFactory(() => OnboardingCubit(pageController: sl()));
   //USECASE ========================
-  sl.registerFactory(() => GetAllScheduleUsecase(rerpository: sl()));
-  sl.registerFactory(
+  sl.registerLazySingleton(() => GetAllScheduleUsecase(rerpository: sl()));
+  sl.registerLazySingleton(
       () => GetNotificationScheduleUsecase(scheduleRepository: sl()));
 
   //auth
