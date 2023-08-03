@@ -1,28 +1,48 @@
 import '../../domain/entites/schedule.dart';
 
 class SchedulModel extends Schedule {
-  SchedulModel(
-      {required String subject,
-      required String type,
-      required String teacherName,
-      required DateTime time})
-      : super(
-            subject: subject, type: type, teacherName: teacherName, time: time);
+  SchedulModel({
+    String? coures,
+    String? instructor,
+    String? dept,
+    String? level,
+    String? classroom,
+    String? time,
+    String? days,
+    String? batch,
+  }) : super(
+          coures: coures,
+          days: days,
+          instructor: instructor,
+          time: time,
+          classroom: classroom,
+          batch: batch,
+          level: level,
+          dept: dept,
+        );
 
-  factory SchedulModel.formJson(Map<String, dynamic> json) {
+  factory SchedulModel.formJson(Map<String, dynamic> data) {
     return SchedulModel(
-        subject: json['subject'],
-        type: json['type'],
-        teacherName: json['teacherName'],
-        time: json['time']);
+        coures: data['coures'] as String?,
+        instructor: data['instructor'] as String?,
+        dept: data['dept'] as String?,
+        level: data['level'] as String?,
+        classroom: data['classroom'] as String?,
+        time: data['time'] as String?,
+        days: data['days'] as String?,
+        batch: data['batch'] as String?);
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'subject': subject,
-      'type': type,
-      'teacherName': teacherName,
-      'time': time
+      'coures': coures,
+      'instructor': instructor,
+      'dept': dept,
+      'level': level,
+      'classroom': classroom,
+      'time': time,
+      'days': days,
+      'batch': batch,
     };
   }
 }
