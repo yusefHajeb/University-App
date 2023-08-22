@@ -4,13 +4,9 @@ abstract class BaseVMInputs {
   Sink get inputState;
 }
 
-abstract class BaseViewModelInputas {}
-
 abstract class BaseVMOutputs {
+// later
   // Stream<FlowState> get outputState;
-
 }
 
-abstract class BaseVM extends BaseVMInputs with BaseVMOutputs {
-  final StreamController _inputSC = StreamController<FlowState>.broadcast();
-}
+abstract class BaseVM extends BaseVMInputs with BaseVMOutputs {}
