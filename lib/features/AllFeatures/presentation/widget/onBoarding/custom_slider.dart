@@ -40,17 +40,21 @@ class CustomSlider extends StatelessWidget {
         return PageView(
             physics: ClampingScrollPhysics(),
             controller: boardingCubit.pageController,
-            onPageChanged: (page) {
-              print("$page ========");
+            onPageChanged: (state) {
+              print("$state ========");
               OnboardingDirection dirction;
-              if (page >= 0) {
-                if (page >= currentIndex) {
+              if (state >= 0) {
+                if (state >= currentIndex) {
                   dirction = OnboardingDirection.forward;
+                  BlocProvider.of<OnboardingCubit>(context)
+                      .changePage(state + 1, dirction);
                 } else {
                   dirction = OnboardingDirection.reverse;
+                  BlocProvider.of<OnboardingCubit>(context)
+                      .changePage(state - 1, dirction);
                 }
                 BlocProvider.of<OnboardingCubit>(context)
-                    .changePage(page, dirction);
+                    .changePage(state, dirction);
               }
             },
             children: <Widget>[

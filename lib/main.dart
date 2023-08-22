@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/Onboarding/onboarding_cubit.dart';
+
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/helpers/bloc_observer.dart';
-import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
-import 'package:university/features/AllFeatures/presentation/pages/onboarding/onboarding_start.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/Utils/lang/app_localization.dart';
 
 import 'enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'features/AllFeatures/presentation/cubit/localization/local_cubit_cubit.dart';
-import 'features/AllFeatures/presentation/pages/Auth/login_page.dart';
-import 'features/AllFeatures/presentation/pages/schedule_page.dart';
 import 'features/AllFeatures/presentation/routes.dart';
 
 void main() async {
@@ -70,11 +67,11 @@ class MyApp extends StatelessWidget {
             }
 
             return supportedLocal
-                .first; //covert eng when no support luanguage deviceLocal
+                .first; //covert eng when no support lunguage deviceLocal
           },
           title: 'Flutter Demo',
           onGenerateRoute: RouteGenerator.getRoutes,
-          initialRoute: Routes.schedul,
+          initialRoute: Routes.onBoarding,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,

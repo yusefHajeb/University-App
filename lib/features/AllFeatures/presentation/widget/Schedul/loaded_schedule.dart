@@ -59,37 +59,42 @@ showSchedule(List<dynamic> _days, List<Schedule> data) {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {},
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
-                      width: 62,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: _selectedDay == _days[index][0]
-                            ? Colors.blue.shade100.withOpacity(0.5)
-                            : Colors.blue.withOpacity(0),
-                        border: Border.all(
+                    child: InkWell(
+                      onTap: () {
+                        print("$index ===");
+                      },
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        width: 62,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
                           color: _selectedDay == _days[index][0]
-                              ? Colors.blue
-                              : Colors.white.withOpacity(0),
-                          width: 1.5,
+                              ? Colors.blue.shade100.withOpacity(0.5)
+                              : Colors.blue.withOpacity(0),
+                          border: Border.all(
+                            color: _selectedDay == _days[index][0]
+                                ? Colors.blue
+                                : Colors.white.withOpacity(0),
+                            width: 1.5,
+                          ),
                         ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            _days[index][0].toString(),
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            _days[index][1],
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _days[index][0].toString(),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              _days[index][1],
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

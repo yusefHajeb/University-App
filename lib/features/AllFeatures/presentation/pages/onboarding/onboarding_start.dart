@@ -68,13 +68,21 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                                 final old =
                                     BlocProvider.of<OnboardingCubit>(context)
                                         .state;
-                                if (current == 2) {
+
+                                print(old);
+                                if (BlocProvider.of<OnboardingCubit>(context)
+                                        .state ==
+                                    2) {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (_) => SchedulePage()));
                                 } else {
                                   dirction = OnboardingDirection.forward;
+                                  BlocProvider.of<OnboardingCubit>(context)
+                                      .changePage(current + 1, dirction);
+                                  print(
+                                      "${BlocProvider.of<OnboardingCubit>(context).state} ====");
                                 }
                               },
                               style: ButtonStyle(

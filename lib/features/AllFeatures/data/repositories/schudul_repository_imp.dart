@@ -25,7 +25,7 @@ class SchedulRepositoryImp implements ScheduleRepository {
         final List<SchedulModel> remoteData =
             await remoteSchedul.getAllSchedul();
         print("$remoteData ============ Data");
-        // localSource.cacheSchedul(remoteData);
+        localSource.cacheSchedul(remoteData);
         return Right(remoteData);
       } on ServerException {
         return Left(ServerFailure());

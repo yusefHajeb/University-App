@@ -19,12 +19,11 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
   SchedulRemoteDataSourceImp({required this.client});
   @override
   Future<List<SchedulModel>> getAllSchedul() async {
-    final response = await client.post(
-      Uri.parse("http:localhost:8012/university/schedule/schedule.php/"),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    final response = await client.get(
+      // Uri.parse("http://10.0.2.2:8012/university/schedule/schedule.php"),
+      Uri.parse("http://172.25.224.1:8012/university/schedule/schedule.php"),
     );
+
     if (response.statusCode == 200) {
       final List decodedJson = jsonDecode(response.body) as List;
       final List<SchedulModel> postModels = decodedJson
@@ -33,6 +32,7 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
       print("$postModels ==== schedul ");
       return postModels;
     } else {
+      print("error ===== ");
       throw ServerException();
     }
   }
