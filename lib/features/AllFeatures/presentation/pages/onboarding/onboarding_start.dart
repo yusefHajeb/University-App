@@ -5,7 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/fonts/app_fonts.dart';
+import 'package:university/core/value/app_space.dart';
+import 'package:university/features/AllFeatures/domain/entites/onboarding_model/slider_object.dart';
+import 'package:university/features/AllFeatures/domain/entites/onboarding_model/slider_view_object.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/Onboarding/onboarding_cubit.dart';
+import 'package:university/features/AllFeatures/presentation/pages/onboarding/view/onboarding_vm.dart';
 import 'package:university/features/AllFeatures/presentation/widget/onBoarding/custom_slider.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/style_manager.dart';
@@ -15,6 +19,7 @@ import '../../widget/onBoarding/custom_change_lang.dart';
 import '../../widget/onBoarding/slider_image.dart';
 import '../Auth/singup_page.dart';
 import '../schedule_page.dart';
+import 'dart:math' as math;
 
 class OnboardingCarousel extends StatefulWidget {
   @override
@@ -25,11 +30,31 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
   final int _numPages = 3;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
+  OnBoardingVM viewMoldel = OnBoardingVM();
+
+  _bind() {
+    viewMoldel.start();
+  }
+
+  @override
+  void initState() {
+    _bind();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewMoldel.dispose();
+    super.dispose();
+  }
 
   final LocaleCubit localCubit = LocaleCubit();
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _getContentWidget(SliderViewObject? sliderViewObject) {
+    if (sliderViewObject == null) {
+      return Container();
+    }
+
     return Scaffold(
         body: AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle.light,
@@ -42,8 +67,22 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
               ),
               Column(children: [
                 Container(
-                    height: sizeHeight(context).width * 1.3 - 20,
-                    child: CustomSlider()),
+                  height: sizeHeight(context).width * 1.3 - 20,
+                  child: PageView.builder(
+                    physics: ClampingScrollPhysics(),
+                    controller: _pageController,
+                    onPageChanged: (index) {
+                      viewMoldel.onPageChanged(index);
+                      if (viewMoldel.currentPageIndex == 3) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => SchedulePage()));
+                      }
+                    },
+                    itemBuilder: (context, index) {
+                      return OnBoardingPage(sliderViewObject.sliderObject);
+                    },
+                  ),
+                ),
                 ChangeLang(localCubit: localCubit),
                 Padding(
                   padding:
@@ -61,28 +100,11 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                           height: 60,
                           child: ElevatedButton(
                               onPressed: () {
-                                OnboardingDirection dirction;
-                                final current =
-                                    BlocProvider.of<OnboardingCubit>(context)
-                                        .state;
-                                final old =
-                                    BlocProvider.of<OnboardingCubit>(context)
-                                        .state;
-
-                                print(old);
-                                if (BlocProvider.of<OnboardingCubit>(context)
-                                        .state ==
-                                    2) {
+                                if (viewMoldel.currentPageIndex == 3) {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (_) => SchedulePage()));
-                                } else {
-                                  dirction = OnboardingDirection.forward;
-                                  BlocProvider.of<OnboardingCubit>(context)
-                                      .changePage(current + 1, dirction);
-                                  print(
-                                      "${BlocProvider.of<OnboardingCubit>(context).state} ====");
                                 }
                               },
                               style: ButtonStyle(
@@ -121,5 +143,15 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                 ),
               ])
             ])));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: viewMoldel.outputSliderViewObjeect,
+      builder: (context, snapshot) {
+        return _getContentWidget(snapshot.data);
+      },
+    );
   }
 }
