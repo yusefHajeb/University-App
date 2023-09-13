@@ -177,11 +177,9 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
   void validateFormLogin() {
     final isValid = _formKey.currentState!.validate();
     final Singin login = Singin(
-        record: _recordStd.text,
-        password: _passwordStd.text,
-        email: null,
-        token: null,
-        username: null);
+      record: _recordStd.text,
+      password: _passwordStd.text,
+    );
     if (isValid) {
       print("$login ============$isValid filed Data");
 

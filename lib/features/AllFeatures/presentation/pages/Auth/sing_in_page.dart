@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:university/core/Utils/lang/app_localization.dart';
+import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/function/messages.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
-import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
-import 'package:university/features/AllFeatures/presentation/pages/onboarding/onboarding_start.dart';
+import 'package:university/features/AllFeatures/presentation/pages/application_page.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/form_login_widget.dart';
 import '../../../../../core/color/app_color.dart';
+import '../../../../../core/value/global.dart';
+import '../schedule_page.dart';
 
 class SingInPage extends StatelessWidget {
   const SingInPage({super.key});
@@ -63,9 +64,10 @@ class SingInPage extends StatelessWidget {
                       Fluttertoast.showToast(
                         msg: (singInSuccessfuly).tr(context),
                       );
+                      Global.storgeServece
+                          .setBool(Constants.STORGE_USER_LOGED_FIRST, true);
                       Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (_) => OnboardingCarousel()),
+                          MaterialPageRoute(builder: (_) => SchedulePage()),
                           (route) => false);
                     } else if (state is AuthErrorState) {
                       Fluttertoast.showToast(
@@ -73,7 +75,7 @@ class SingInPage extends StatelessWidget {
                       );
                     } else if (state is SingUpState) {
                       Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (_) => SingUpPage()),
+                          MaterialPageRoute(builder: (_) => LadingPage()),
                           (route) => false);
                     }
                   },

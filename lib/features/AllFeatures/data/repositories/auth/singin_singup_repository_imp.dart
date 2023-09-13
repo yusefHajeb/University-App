@@ -21,18 +21,28 @@ class StudentRepositoryImp implements StudentRepository {
     required this.remoteData,
   });
   @override
-  Future<Either<Failure, Unit>> singInStuden(Singin singin) async {
-    final singInModel = SinginModel(
-      password: singin.password!,
-      record: singin.record!,
-    );
+  Future<Either<Failure, Singin>> singInStuden(Singin singin) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final SinginModel singInModel = SinginModel(
+          password: singin.password,
+          record: singin.record,
+        );
+        final SinginModel remote = await remoteData.singinStudent(singInModel);
 
-    print("===========================$singInModel  repository");
-    return await _getMessage(() => remoteData.singinStudent(singInModel));
+        print("===========================$singInModel  repository");
+        // return await _getMessage(() => remoteData.singinStudent(singInModel));
+        return Right(remote);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(OffLineFailure());
+    }
   }
 
   @override
-  Future<Either<Failure, Unit>> singUpStudent(SingUp singUp) async {
+  Future<Either<Failure, SingUp>> singUpStudent(SingUp singUp) async {
     if (await networkInfo.isConnected) {
       final SingUpModel singUpModel = SingUpModel(
         password: singUp.password!,
@@ -44,7 +54,8 @@ class StudentRepositoryImp implements StudentRepository {
       // final  date = await remoteData.singUpStudent(singUpModel);
       //     await remoteData.getScheduleNotification();
       // localSource.cacheSchedulNotifiction(remoteData);
-      return await _getMessage(() => remoteData.singUpStudent(singUpModel));
+      // return await _getMessage(() => remoteData.singUpStudent(singUpModel));
+      return Right(singUpModel);
     } else {
       return Left(OffLineFailure());
     }

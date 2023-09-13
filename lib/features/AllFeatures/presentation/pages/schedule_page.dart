@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:university/core/color/app_color.dart';
 import 'package:university/core/value/app_space.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import '../../../../core/Utils/box_decoration.dart';
@@ -59,9 +60,8 @@ class SchedulePage extends StatelessWidget {
 
     return Container(child: BlocBuilder<SchedulBloc, SchedulState>(
       builder: (context, state) {
-        if (state is LoadedSchedulState) {
-          print("Loading $state");
-          return showSchedule(_days, state.schedule);
+        if (state is LoadingSchedulState) {
+          return LoadingWidget();
         } else if (state is ErrorSchedulState) {
           return Center(
             child: Text("${state.message}"),
@@ -72,7 +72,7 @@ class SchedulePage extends StatelessWidget {
               onRefresh: () => _onRefresh(context),
               child: showSchedule(_days, state.schedule));
         }
-        print("Loading $state");
+
         return Center(child: Text("${state.toString()}"));
       },
     ));
@@ -81,12 +81,13 @@ class SchedulePage extends StatelessWidget {
   }
 
   Future<void> _onRefresh(BuildContext context) async {
-    BlocProvider.of<SchedulBloc>(context).add(GetAllScheduleEvent());
+    BlocProvider.of<SchedulBloc>(context).add(RefreshScheduleEvent());
     // final x = BlocProvider.of<SchedulBloc>(context).getAllScheduleUsecase;
     // print("$x");
     return Future.value(Unit);
   }
 }
 
-  // print(c.time.toString());
-  // print(c.isHappening.toString());
+// print(c.time.toString());
+// print(c.isHappening.toString());
+

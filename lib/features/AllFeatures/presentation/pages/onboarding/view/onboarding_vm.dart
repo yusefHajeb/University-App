@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:university/features/AllFeatures/presentation/base/base_view_model.dart';
 import 'package:university/features/AllFeatures/presentation/resources/assets_mananger.dart';
 
@@ -10,10 +11,11 @@ class OnBoardingVM extends BaseVM with OnBoardingVMInputs, OnBoardingVMOutputs {
   final StreamController _streamController =
       StreamController<SliderViewObject>();
   late final List<SliderObject> _list;
-  int _currentPageIndex = 0;
+  int currentPageIndex = 0;
   @override
   void start() {
     _list = _getSliderData();
+    _postDataToView();
   }
 
   @override
@@ -23,16 +25,16 @@ class OnBoardingVM extends BaseVM with OnBoardingVMInputs, OnBoardingVMOutputs {
 
   @override
   int goNext() {
-    int previousIndex = ++_currentPageIndex;
-    if (previousIndex == _list.length) {
-      previousIndex = 0;
-    }
+    int previousIndex = ++currentPageIndex;
+    // if (previousIndex == _list.length) {
+    //   previousIndex = 0;
+    // }
     return previousIndex;
   }
 
   @override
   int goPrevious() {
-    int previousIndex = --_currentPageIndex;
+    int previousIndex = --currentPageIndex;
     if (previousIndex == -1) {
       previousIndex = _list.length - 1;
     }
@@ -49,15 +51,16 @@ class OnBoardingVM extends BaseVM with OnBoardingVMInputs, OnBoardingVMOutputs {
 
   @override
   void onPageChanged(int pageIndex) {
-    _currentPageIndex = pageIndex;
+    currentPageIndex = pageIndex;
+    print('+++============== $currentPageIndex');
     _postDataToView();
   }
 
   void _postDataToView() {
     inputSliderViewObject.add(SliderViewObject(
-      sliderObject: _list[_currentPageIndex],
+      sliderObject: _list[currentPageIndex],
       slidesCount: _list.length,
-      curretPageIndex: _currentPageIndex,
+      curretPageIndex: currentPageIndex,
     ));
   }
 
@@ -65,10 +68,11 @@ class OnBoardingVM extends BaseVM with OnBoardingVMInputs, OnBoardingVMOutputs {
   // TODO: implement outputSliderViewObjeect
   Stream<SliderViewObject> get outputSliderViewObjeect =>
       _streamController.stream.map((slider) => slider);
+
   List<SliderObject> _getSliderData() => [
-        SliderObject(ImageAssets.imageOne, ""),
-        SliderObject(ImageAssets.imageTow, ""),
-        SliderObject(ImageAssets.imageThree, ""),
+        SliderObject(ImageAssets.imageOne, "onBoarding1"),
+        SliderObject(ImageAssets.imageTow, "onBoarding2"),
+        SliderObject(ImageAssets.imageThree, "onBoarding3"),
       ];
 }
 

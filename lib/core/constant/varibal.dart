@@ -20,8 +20,15 @@ List<Color> progressCardGradientList = [
   HexColor.fromHex("EEB2E8"),
 ];
 
-class AppLink {
-  static const baseUrl = "http://192.168.1.10:8012/university";
-  static const singin = "$baseUrl/auth/singup.php";
-  static const schedule = "$baseUrl/schedule/schedule.php";
+class Constants {
+  static const String empty = "";
+  static const STORGE_DEVICE_OPEN_FIRST_TIME = "stroge_device_open_time";
+  static const STORGE_USER_LOGED_FIRST = 'storge_loged_user';
+  // static const baseUrl = "http://192.168.1.10:8012/university";
+  static const baseUrl = "https://q97wg.wiremockapi.cloud";
+
+  // static const singin = "$baseUrl/auth/singup.php";
+  static const singin = "$baseUrl/login/student";
+
+  static const schedule = "$baseUrl/university/schedule";
 }

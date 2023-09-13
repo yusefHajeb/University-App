@@ -6,6 +6,6 @@ import '../../../../../core/error/failure.dart';
 import '../../entites/auth_entites/singin.dart';
 
 abstract class StudentRepository {
-  Future<Either<Failure, Unit>> singInStuden(Singin singin);
-  Future<Either<Failure, Unit>> singUpStudent(SingUp singUp);
+  Future<Either<Failure, Singin>> singInStuden(Singin singin);
+  Future<Either<Failure, SingUp>> singUpStudent(SingUp singUp);
 }

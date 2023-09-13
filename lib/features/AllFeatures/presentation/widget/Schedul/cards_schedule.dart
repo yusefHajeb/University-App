@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:university/features/AllFeatures/domain/entites/schedule.dart';
 import '../../../../../core/Utils/box_decoration.dart';
+import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
 
 class CardSchedule extends StatelessWidget {
-  const CardSchedule({
+  final List<Schedule> data;
+  CardSchedule(
+    this.data, {
     Key? key,
   }) : super(key: key);
 
@@ -22,37 +25,17 @@ class CardSchedule extends StatelessWidget {
           padding: EdgeInsets.all(1),
           child: DecoratedBox(
             decoration: BoxDecorationStyles.fadingGlory,
-            child: ListView(
+            child: ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              children: [
-                AppSpaces.verticalSpace10,
-                AnimateInEffect(
-                  child: CardShedeulWidget(),
-                ),
-                AppSpaces.verticalSpace10,
-                AnimateInEffect(
-                  child: CardShedeulWidget(),
-                ),
-                AppSpaces.verticalSpace10,
-                AnimateInEffect(
-                  child: CardShedeulWidget(),
-                ),
-                AppSpaces.verticalSpace10,
-                Container(
-                    width: double.infinity,
-                    height: 200,
-                    child: Padding(
-                      padding: EdgeInsets.all(3.0),
-                      child: DecoratedBox(
-                        decoration: BoxDecorationStyles.fadingInnerDecor,
-                        child: Padding(padding: EdgeInsets.all(20)),
-                      ),
-                    ),
-                    decoration: BoxDecorationStyles.fadingInnerDecor),
-                AppSpaces.verticalSpace10,
-              ],
+              itemCount: data.length,
+              itemBuilder: ((context, index) {
+                return AnimateInEffect(child: Card2(data[index]));
+              }),
+              separatorBuilder: (BuildContext context, int index) {
+                return AppSpaces.verticalSpace20;
+              },
             ),
           ),
         ),
@@ -164,4 +147,71 @@ class CardShedeulWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget Card2(Schedule schedule) {
+  return Container(
+    padding: EdgeInsets.all(10.0),
+    height: 150,
+    decoration: BoxDecorationStyles.fadingInnerDecor,
+    child: Row(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(schedule.time.toString(),
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text("AM",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: AppColors.greyColor)),
+          ],
+        ),
+        AppSpaces.horizontalSpace10,
+        Column(
+          children: [
+            Icon(
+              FontAwesomeIcons.circleCheck,
+              color: AppColors.greyColor,
+            ),
+            Container(
+              height: 100,
+              width: 1,
+              color: AppColors.greyColor.withOpacity(0.5),
+            ),
+          ],
+        ),
+        AppSpaces.horizontalSpace10,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(schedule.coures ?? ""),
+            Row(
+              children: [
+                Icon(
+                  Icons.location_on,
+                  color: AppColors.greyColor,
+                  size: 20,
+                ),
+                AppSpaces.horizontalSpace10,
+                Text(schedule.classroom ?? "",
+                    style: TextStyle(color: AppColors.greyColor, fontSize: 13)),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.person_outline,
+                  color: AppColors.greyColor,
+                  size: 20,
+                ),
+                AppSpaces.horizontalSpace10,
+                Text(schedule.instructor ?? "",
+                    style: TextStyle(color: AppColors.greyColor, fontSize: 13)),
+              ],
+            )
+          ],
+        )
+      ],
+    ),
+  );
 }

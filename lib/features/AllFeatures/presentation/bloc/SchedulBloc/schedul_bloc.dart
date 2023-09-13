@@ -19,32 +19,48 @@ class SchedulBloc extends Bloc<SchedulEvent, SchedulState> {
   SchedulBloc({required this.getAllScheduleUsecase}) : super(SchedulInitial()) {
     on<SchedulEvent>((event, emit) async {
       if (event is GetAllScheduleEvent) {
-        // emit(LoadingSchedulState());
+        emit(LoadingSchedulState());
         print("========================");
 
         var cahsed = [
           Schedule(
               batch: "1",
-              classroom: 'ds',
-              instructor: "Rasheed",
+              time: '8:00',
+              classroom: 'الرازي',
+              instructor: "رشيد الشعيبي",
+              coures: " أنظمة خبيرة ",
+              days: "Thrusday"),
+          Schedule(
+              batch: "1",
+              time: "10:00",
+              classroom: 'قاعة ابن الهيثم',
+              instructor: "ندى الحميدي ",
               coures: " Prograaming",
               days: "Thrusday"),
           Schedule(
               batch: "1",
-              classroom: 'ds',
-              instructor: "Rasheed",
+              time: "10:00",
+              classroom: 'قاعة ابن الهيثم',
+              instructor: "ندى الحميدي ",
+              coures: " Prograaming",
+              days: "Thrusday"),
+          Schedule(
+              batch: "1",
+              time: "10:00",
+              classroom: 'قاعة ابن الهيثم',
+              instructor: "ندى الحميدي ",
               coures: " Prograaming",
               days: "Thrusday"),
         ];
 
-        // final schedulOrError = await getAllScheduleUsecase();
+        final schedulOrError = await getAllScheduleUsecase();
         // schedulOrError.fold(
         //   (failure) =>
         //       emit(ErrorSchedulState(message: failureToMessage(failure))),
         //   (schedula) => emit(LoadedSchedulState(schedule: schedula)),
         // );
-        emit(LoadedSchedulState(schedule: cahsed));
-        // emit(_failureOrSchedualToState(schedulOrError));
+        // emit(LoadedSchedulState(schedule: cahsed));
+        emit(_failureOrSchedualToState(schedulOrError));
       } else if (event is RefreshScheduleEvent) {
         print("----------------- Refreshe");
         emit(LoadingSchedulState());

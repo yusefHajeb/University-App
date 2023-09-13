@@ -13,10 +13,10 @@ class AuthProgressState extends AuthenticationState {}
 
 class AuthSuccessState extends AuthenticationState {
   final String message;
-
-  AuthSuccessState({required this.message});
+  final Singin singIn;
+  AuthSuccessState({required this.singIn, required this.message});
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [message, singIn];
 }
 
 class SingUpSuccessState extends AuthenticationState {}

@@ -22,9 +22,10 @@ class AuthenticationBloc
     on<AuthenticationEvent>((event, emit) async {
       if (event is AuthGetStart) {
         emit(AuthProgressState());
+        // emit(AuthSuccessState(message: "Login "));
       } else if (event is LoginStudintEvent) {
         emit(LoadingAuthState());
-        emit(AuthSuccessState(message: "Login "));
+        // emit(AuthSuccessState(message: "Login "));
       } else if (event is SingInStudintEvent) {
         emit(LoadingAuthState());
         final singIn = await singInUsecase(event.singIn);
@@ -32,7 +33,7 @@ class AuthenticationBloc
       } else if (event is SingUpStudentEvent) {
         emit(LoadingAuthState());
         final singUp = await singUpUsecase(event.singUp);
-        emit(_failureOrSingInState(singUp, singUpSuccessfuly));
+        // emit(_failureOrSingInState(singUp, singUpSuccessfuly));
       } else if (event is SingUpEvent) {
         emit(SingUpState());
       }
@@ -40,10 +41,10 @@ class AuthenticationBloc
   }
 
   AuthenticationState _failureOrSingInState(
-      Either<Failure, Unit> either, String message) {
+      Either<Failure, Singin> either, String message) {
     return either.fold(
         (failure) => AuthErrorState(message: failureToMessage(failure)),
-        (_) => AuthSuccessState(message: message));
+        (singIn) => AuthSuccessState(message: message, singIn: singIn));
   }
 
   // AuthenticationState _failureOrSingUpState()

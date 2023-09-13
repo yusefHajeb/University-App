@@ -8,7 +8,7 @@ class SingUpUsecase {
   final StudentRepository repository;
 
   SingUpUsecase({required this.repository});
-  Future<Either<Failure, Unit>> call(SingUp singUp) async {
+  Future<Either<Failure, SingUp>> call(SingUp singUp) async {
     return await repository.singUpStudent(singUp);
   }
 }

@@ -17,7 +17,7 @@ showSchedule(List<dynamic> _days, List<Schedule> data) {
             child: Padding(
               padding: EdgeInsets.only(top: 120.0, right: 20.0, left: 20.0),
               child: Text(
-                ' Today lectures \nand Time',
+                'محاضرات اليوم',
                 style: TextStyle(
                   fontSize: 35,
                   color: Colors.grey.shade900,
@@ -100,7 +100,7 @@ showSchedule(List<dynamic> _days, List<Schedule> data) {
                   );
                 }),
           ),
-          CardSchedule()
+          CardSchedule(data)
         ]),
       ));
 }

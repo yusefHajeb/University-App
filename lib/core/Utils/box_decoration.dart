@@ -19,6 +19,24 @@ class BoxDecorationStyles {
     //border: Border.all(color: Colors.red, width: 5)
   );
 
+  static final BoxDecoration backgroundBlack = BoxDecoration(
+    gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          // AppColors.backgroundPages,
+          Color.fromARGB(255, 5, 8, 9),
+          Color.fromARGB(255, 255, 156, 156),
+
+          // Color.fromRGBO(218, 223, 255, 1),
+          // HexColor.fromHex("#EBF5EE"),
+          // HexColor.fromHex("#EBF5EE")
+        ]),
+    borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+    //border: Border.all(color: Colors.red, width: 5)
+  );
+
   static final BoxDecoration fadingInnerDecor = BoxDecoration(
       color: HexColor.fromHex("#eeeeee"),
       borderRadius: BorderRadius.circular(20));
