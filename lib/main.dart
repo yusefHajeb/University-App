@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:university/features/AllFeatures/presentation/bloc/Onboarding/onboarding_cubit.dart';
+import 'package:university/core/value/global.dart';
 
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
-import 'package:university/features/AllFeatures/presentation/helpers/bloc_observer.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/Utils/lang/app_localization.dart';
-
-import 'enjection_container.dart' as di;
+import 'app/enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
+import 'features/AllFeatures/presentation/bloc/bloc/on_boarding_bloc_bloc.dart';
+import 'features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
+import 'features/AllFeatures/presentation/bloc/services_bloc/services_bloc.dart';
 import 'features/AllFeatures/presentation/cubit/localization/local_cubit_cubit.dart';
 import 'features/AllFeatures/presentation/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await ScreenUtil.ensureScreenSize();
-  await di.init();
-  Bloc.observer = MyBlocObserver();
+  // await ScreenUtil.ensureScreenSize();
+  // await di.init();
+  // Bloc.observer = MyBlocObserver();
+
+  await Global.init();
   runApp(const MyApp());
 }
 
@@ -39,7 +41,13 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => di.sl<AuthenticationBloc>()..add(AuthGetStart()),
         ),
-        BlocProvider(create: (context) => di.sl<OnboardingCubit>()),
+        BlocProvider(
+            create: (context) =>
+                di.sl<ServicesBloc>()..add(ServiceCurentEvent())),
+        BlocProvider(
+            create: (context) =>
+                di.sl<OnBoardingBlocBloc>()..add(OnBoardingBlocEvent())),
+        BlocProvider(create: (context) => di.sl<LadingPageBloc>())
       ],
       child:
           BlocBuilder<LocaleCubit, ChangeLocalState>(builder: (context, state) {
