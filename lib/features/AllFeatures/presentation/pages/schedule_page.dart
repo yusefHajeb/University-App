@@ -16,77 +16,83 @@ class SchedulePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _buildBody(context));
-  }
-
-  Widget _buildBody(BuildContext context) {
-    final List<dynamic> _days = [
-      [1, 'Fri'],
-      [2, 'Sat'],
-      [3, 'Sun'],
-      [4, 'Mon'],
-      [5, 'Tue'],
-      [6, 'Wed'],
-      [7, 'Thu'],
-      [8, 'Fri'],
-      [9, 'Sat'],
-      [10, 'Sun'],
-      [11, 'Mon'],
-      [12, 'Tue'],
-      [13, 'Wed'],
-      [14, 'Thu'],
-      [15, 'Fri'],
-      [16, 'Sat'],
-      [17, 'Sun'],
-      [18, 'Mon'],
-      [19, 'Tue'],
-      [20, 'Wed'],
-      [21, 'Thu'],
-      [22, 'Fri'],
-      [23, 'Sat'],
-      [24, 'Sun'],
-      [25, 'Mon'],
-      [26, 'Tue'],
-      [27, 'Wed'],
-      [28, 'Thu'],
-      [29, 'Fri'],
-      [30, 'Sat'],
-      [31, 'Sun']
-    ];
-    int _selectedDay = 2;
-    int _selectedRepeat = 0;
-    String _selectedHour = '13:30';
-    List<int> _selectedExteraCleaning = [];
-
-    return Container(child: BlocBuilder<SchedulBloc, SchedulState>(
-      builder: (context, state) {
-        if (state is LoadingSchedulState) {
-          return LoadingWidget();
-        } else if (state is ErrorSchedulState) {
-          return Center(
-            child: Text("${state.message}"),
-          );
-        } else if (state is LoadedSchedulState) {
-          print("$state ================");
-          return RefreshIndicator(
-              onRefresh: () => _onRefresh(context),
-              child: showSchedule(_days, state.schedule));
-        }
-
-        return Center(child: Text("${state.toString()}"));
-      },
-    ));
-
-    // return _showSchedule(_days);
-  }
-
-  Future<void> _onRefresh(BuildContext context) async {
-    BlocProvider.of<SchedulBloc>(context).add(RefreshScheduleEvent());
-    // final x = BlocProvider.of<SchedulBloc>(context).getAllScheduleUsecase;
-    // print("$x");
-    return Future.value(Unit);
+    return Scaffold(body: buildBody(context));
   }
 }
+
+Future<void> _onRefresh(BuildContext context) async {
+  BlocProvider.of<SchedulBloc>(context).add(RefreshScheduleEvent());
+  // final x = BlocProvider.of<SchedulBloc>(context).getAllScheduleUsecase;
+  // print("$x");
+  return Future.value(Unit);
+}
+
+Widget buildBody(BuildContext context) {
+  // List<String> getMonthDayList() {
+  //   final now = DateTime.now();
+  //   final dayesInMonth = DateTime(now.year, now.month + 1, 0).day;
+  //   final monthDayList =
+  //       List<String>.generate(dayesInMonth, (index) => (index + 1).toString());
+  //   return monthDayList;
+  // }
+
+  // final List<String> weekDaysEn = ['Sat', 'San', 'Mon', 'Tue', 'Wed', 'Thu'];
+  // final List<String> weekDaysAr = [
+  //   'السبت',
+  //   'الاحد',
+  //   'الإثنين',
+  //   'الثلاثاء',
+  //   'الأربعاء',
+  //   'الخميس'
+  // ];
+  // String getDay(int dayIndex) {
+  //   final now = DateTime.now();
+  //   final firstDay = DateTime(now.year, now.month, 1);
+  //   final weekday = (firstDay.weekday + dayIndex - 1) % 7;
+  //   return weekDaysEn[weekday];
+  // }
+
+  int _selectedDay = 2;
+  int _selectedRepeat = 0;
+  String _selectedHour = '13:30';
+  List<int> _selectedExteraCleaning = [];
+
+  return BlocBuilder<SchedulBloc, SchedulState>(
+    builder: (context, state) {
+      // print(getMonthDayList());
+      if (state is LoadingSchedulState) {
+        return LoadingCircularProgress();
+      } else if (state is LoadedSchedulState) {
+        print("${state.index} ================");
+        return showSchedule(
+            state.schedule, state.index == 0 ? null : state.index);
+
+        // RefreshIndicator(
+        //     onRefresh: () => _onRefresh(context),
+        //     child: showSchedule(_days, state.schedule));
+      } else if (state is ErrorSchedulState) {
+        return Center(
+          child: Column(
+            children: [
+              Text("${state.message}"),
+              ElevatedButton(
+                  onPressed: () {
+                    BlocProvider.of<SchedulBloc>(context)
+                        .add(GetAllScheduleEvent(index: 0));
+                  },
+                  child: Text("try again"))
+            ],
+          ),
+        );
+      } else {
+        return Center(child: CircularProgressIndicator());
+      }
+    },
+  );
+
+  // return _showSchedule(_days);
+}
+
 
 // print(c.time.toString());
 // print(c.isHappening.toString());
