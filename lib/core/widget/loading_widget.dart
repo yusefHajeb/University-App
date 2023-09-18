@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({Key? key}) : super(key: key);
+class LoadingCircularProgress extends StatelessWidget {
+  const LoadingCircularProgress({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: CircularProgressIndicator(),
-    );
+        child: CircularProgressIndicator(
+            backgroundColor: Color.fromARGB(255, 0, 0, 0)));
   }
 }

@@ -6,10 +6,12 @@ import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/function/messages.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
 import 'package:university/features/AllFeatures/presentation/pages/application_page.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/form_login_widget.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/global.dart';
+import '../../../../../core/widget/loading_widget.dart';
 import '../schedule_page.dart';
 
 class SingInPage extends StatelessWidget {
@@ -50,32 +52,34 @@ class SingInPage extends StatelessWidget {
                     }
                     if (state is SingUpState) {
                       print("======== you in state singup ==============");
-                      // return FormSingUpWidget();
+                      // return SizedBox();
                     } else if (state is AuthSuccessState) {
-                      return Center(child: CircularProgressIndicator());
+                      return LoadingCircularProgress();
                     }
-                    print("==============else");
-                    return Center(
-                        child: CircularProgressIndicator(
-                            backgroundColor: Color.fromARGB(0, 239, 140, 87)));
+                    return LoadingCircularProgress();
                   },
                   listener: (context, state) {
-                    if (state is AuthSuccessState) {
+                    if (state is AuthSuccessState ||
+                        state is SingUpSuccessState) {
                       Fluttertoast.showToast(
                         msg: (singInSuccessfuly).tr(context),
                       );
                       Global.storgeServece
                           .setBool(Constants.STORGE_USER_LOGED_FIRST, true);
                       Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (_) => SchedulePage()),
+                          MaterialPageRoute(builder: (_) => ApplicationPage()),
                           (route) => false);
                     } else if (state is AuthErrorState) {
                       Fluttertoast.showToast(
                         msg: (state.message).tr(context),
                       );
+                      // Navigator.pushAndRemoveUntil(
+                      //     context,
+                      //     MaterialPageRoute(builder: (_) => SchedulePage()),
+                      //     (route) => false);
                     } else if (state is SingUpState) {
                       Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (_) => LadingPage()),
+                          MaterialPageRoute(builder: (_) => SingUpPage()),
                           (route) => false);
                     }
                   },

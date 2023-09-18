@@ -29,11 +29,12 @@ class AuthenticationBloc
       } else if (event is SingInStudintEvent) {
         emit(LoadingAuthState());
         final singIn = await singInUsecase(event.singIn);
+
         emit(_failureOrSingInState(singIn, singInSuccessfuly));
       } else if (event is SingUpStudentEvent) {
         emit(LoadingAuthState());
         final singUp = await singUpUsecase(event.singUp);
-        // emit(_failureOrSingInState(singUp, singUpSuccessfuly));
+        emit(_failureOrSingUpnState(singUp, singUpSuccessfuly));
       } else if (event is SingUpEvent) {
         emit(SingUpState());
       }
@@ -45,6 +46,13 @@ class AuthenticationBloc
     return either.fold(
         (failure) => AuthErrorState(message: failureToMessage(failure)),
         (singIn) => AuthSuccessState(message: message, singIn: singIn));
+  }
+
+  AuthenticationState _failureOrSingUpnState(
+      Either<Failure, SingUp> either, String message) {
+    return either.fold(
+        (failure) => AuthErrorState(message: failureToMessage(failure)),
+        (singUp) => SingUpSuccessState(message: message, singUp: singUp));
   }
 
   // AuthenticationState _failureOrSingUpState()

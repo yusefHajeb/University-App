@@ -1,4 +1,4 @@
-import '../../../domain/entites/books_entites.dart';
+import '../../../domain/entites/header_books_entites.dart';
 
 class LibraryModel extends BookDetaile {
   LibraryModel(
@@ -42,4 +42,9 @@ class LibraryModel extends BookDetaile {
       'write_book': write_book,
     };
   }
+}
+
+class BookTitleModel extends CategoryBooks {
+  BookTitleModel({String? book_title, int? bookId})
+      : super(book_title: book_title, book_id: bookId);
 }

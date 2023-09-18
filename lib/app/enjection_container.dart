@@ -12,6 +12,7 @@ import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/sc
 import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/bloc/library_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
 import '../features/AllFeatures/data/datasource/AuthDatatSource/auth_remote_database.dart';
 import '../features/AllFeatures/data/repositories/auth/singin_singup_repository_imp.dart';
@@ -19,8 +20,7 @@ import '../features/AllFeatures/data/repositories/schudul_repository_imp.dart';
 import '../features/AllFeatures/domain/repositories/auth_repositories/student_repository.dart';
 import '../features/AllFeatures/domain/repositories/schedule_repository.dart';
 import '../features/AllFeatures/domain/usecase/ScheduleUsecae/notificatin_schedule_usecase.dart';
-import '../features/AllFeatures/presentation/bloc/bloc/on_boarding_bloc_bloc.dart';
-import '../features/AllFeatures/presentation/bloc/services_bloc/services_bloc.dart';
+import '../features/AllFeatures/presentation/bloc/onboarding_bloc/on_boarding_bloc_bloc.dart';
 import '../features/AllFeatures/presentation/helpers/bloc_observer.dart';
 
 final sl = GetIt.instance;
@@ -32,7 +32,7 @@ Future<void> init() async {
   sl.registerFactory(() => OnBoardingBlocBloc());
   sl.registerFactory(
       () => AuthenticationBloc(singInUsecase: sl(), singUpUsecase: sl()));
-  sl.registerFactory(() => ServicesBloc());
+  sl.registerFactory(() => LibraryBloc());
   sl.registerFactory(() => Bloc.observer = MyBlocObserver());
   //USECASE ========================
   sl.registerLazySingleton(() => GetAllScheduleUsecase(rerpository: sl()));

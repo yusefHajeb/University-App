@@ -20,9 +20,9 @@ class CardSchedule extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecorationStyles.fadingGlory,
+        // decoration: BoxDecorationStyles.fadingGlory,
         child: Padding(
-          padding: EdgeInsets.all(1),
+          padding: EdgeInsets.all(0),
           child: DecoratedBox(
             decoration: BoxDecorationStyles.fadingGlory,
             child: ListView.separated(
@@ -30,12 +30,12 @@ class CardSchedule extends StatelessWidget {
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemCount: data.length,
-              itemBuilder: ((context, index) {
-                return AnimateInEffect(child: Card2(data[index]));
-              }),
               separatorBuilder: (BuildContext context, int index) {
                 return AppSpaces.verticalSpace20;
               },
+              itemBuilder: ((context, index) {
+                return AnimateInEffect(child: Card2(data[index]));
+              }),
             ),
           ),
         ),
@@ -95,53 +95,54 @@ class CardShedeulWidget extends StatelessWidget {
                   color: Colors.green,
                 )),
             Positioned.fill(
-                top: 80,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Row(
-                          children: [
-                            Icon(FontAwesomeIcons.bookOpen),
-                            AppSpaces.horizontalSpace20,
-                            Text(
-                              "OOP ",
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ],
-                        ),
+              top: 80,
+              child: Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Row(
+                        children: [
+                          Icon(FontAwesomeIcons.bookOpen),
+                          AppSpaces.horizontalSpace20,
+                          Text(
+                            "OOP ",
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.person_outline_sharp),
-                            AppSpaces.horizontalSpace20,
-                            Text(
-                              "فهد الاغبري",
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ],
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.person_outline_sharp),
+                          AppSpaces.horizontalSpace20,
+                          Text(
+                            "فهد الاغبري",
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Row(
-                          children: [
-                            Icon(FontAwesomeIcons.locationDot),
-                            AppSpaces.horizontalSpace20,
-                            Text(
-                              "الرازي",
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ],
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Row(
+                        children: [
+                          Icon(FontAwesomeIcons.locationDot),
+                          AppSpaces.horizontalSpace20,
+                          Text(
+                            "الرازي",
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ))
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -152,7 +153,7 @@ class CardShedeulWidget extends StatelessWidget {
 Widget Card2(Schedule schedule) {
   return Container(
     padding: EdgeInsets.all(10.0),
-    height: 150,
+    height: 130,
     decoration: BoxDecorationStyles.fadingInnerDecor,
     child: Row(
       children: [
@@ -174,7 +175,7 @@ Widget Card2(Schedule schedule) {
               color: AppColors.greyColor,
             ),
             Container(
-              height: 100,
+              height: 80,
               width: 1,
               color: AppColors.greyColor.withOpacity(0.5),
             ),
@@ -184,6 +185,7 @@ Widget Card2(Schedule schedule) {
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            AppSpaces.verticalSpace20,
             Text(schedule.coures ?? ""),
             Row(
               children: [

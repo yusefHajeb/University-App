@@ -6,7 +6,7 @@ PreferredSize appBarSceduleWidget(BuildContext context) {
   return PreferredSize(
     preferredSize: Size(
       double.infinity,
-      sizeHeight(context).height / 3.9,
+      appSize(context).height / 3.9,
     ),
     //Container Photo Home Pag..
     child: Container(

@@ -1,22 +1,41 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:university/core/constant/varibal.dart';
+import 'package:university/features/AllFeatures/presentation/pages/schedule_page.dart';
 
+import '../../features/AllFeatures/presentation/pages/application_page.dart';
+import '../../features/AllFeatures/presentation/pages/library/library_pages.dart';
+import '../../features/AllFeatures/presentation/pages/profile/profile_page.dart';
+import '../../features/AllFeatures/presentation/resources/assets_mananger.dart';
 import '../color/app_color.dart';
 
-Widget buildPage(int index) {
-  List<Widget> __widget = const [
-    Center(
-      child: Text("Home"),
+Widget buildPage(int index, BuildContext context) {
+  List libraryCarouslImg = [
+    ImageAssets.imageOne,
+    ImageAssets.imageTow,
+    ImageAssets.imageThree
+  ];
+  final sizeWidth = ScreenUtil().screenWidth;
+  final sizeHeight = ScreenUtil().scaleHeight;
+  List<Widget> __widget = [
+    Container(
+      height: appSize(context).height,
+      color: AppColors.white,
+      child: Library_page(
+        libraryCarouslImg: libraryCarouslImg,
+        sizeHeight: sizeHeight,
+        sizeWidth: sizeWidth,
+      ),
     ),
-    Center(
-      child: Text("Login"),
-    ),
+    Center(child: buildBody(context)),
     Center(
       child: Text("schedule"),
     ),
     Center(
       child: Text("None"),
-    )
+    ),
+    MyProfie(tabSpace: "\t\t")
   ];
   return __widget[index];
 }

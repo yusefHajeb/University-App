@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university/core/value/global.dart';
-
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/Utils/lang/app_localization.dart';
 import 'app/enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
-import 'features/AllFeatures/presentation/bloc/bloc/on_boarding_bloc_bloc.dart';
+import 'features/AllFeatures/presentation/bloc/bloc/library_bloc.dart';
 import 'features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
-import 'features/AllFeatures/presentation/bloc/services_bloc/services_bloc.dart';
+import 'features/AllFeatures/presentation/bloc/onboarding_bloc/on_boarding_bloc_bloc.dart';
 import 'features/AllFeatures/presentation/cubit/localization/local_cubit_cubit.dart';
 import 'features/AllFeatures/presentation/routes.dart';
 
@@ -20,6 +20,11 @@ void main() async {
   // Bloc.observer = MyBlocObserver();
 
   await Global.init();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.light,
+    statusBarIconBrightness: Brightness.light,
+  ));
   runApp(const MyApp());
 }
 
@@ -36,14 +41,15 @@ class MyApp extends StatelessWidget {
           create: (context) => LocaleCubit()..getSavedLanguage(),
         ),
         BlocProvider(
-          create: (context) => di.sl<SchedulBloc>()..add(GetAllScheduleEvent()),
+          create: (context) =>
+              di.sl<SchedulBloc>()..add(GetAllScheduleEvent(index: 0)),
         ),
         BlocProvider(
           create: (context) => di.sl<AuthenticationBloc>()..add(AuthGetStart()),
         ),
         BlocProvider(
             create: (context) =>
-                di.sl<ServicesBloc>()..add(ServiceCurentEvent())),
+                di.sl<LibraryBloc>()..add(GetHeaderBooksLibraryEvent(0))),
         BlocProvider(
             create: (context) =>
                 di.sl<OnBoardingBlocBloc>()..add(OnBoardingBlocEvent())),
@@ -81,8 +87,12 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: RouteGenerator.getRoutes,
           initialRoute: Routes.onBoarding,
           debugShowCheckedModeBanner: false,
+
           theme: ThemeData(
             primarySwatch: Colors.blue,
+            appBarTheme: AppBarTheme(
+              systemOverlayStyle: SystemUiOverlayStyle.light,
+            ),
           ),
           // home: const LoginPage(),
         );

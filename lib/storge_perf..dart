@@ -1,8 +1,10 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:university/core/constant/varibal.dart';
 
 import 'app/enjection_container.dart' as di;
+import 'features/AllFeatures/presentation/helpers/bloc_observer.dart';
 
 class StorgeServece {
   late final SharedPreferences _pref;
@@ -10,6 +12,8 @@ class StorgeServece {
     await di.init();
     _pref = di.sl<SharedPreferences>();
     // _pref = await SharedPreferences.getInstance();
+    Bloc.observer = MyBlocObserver();
+
     return this;
   }
 

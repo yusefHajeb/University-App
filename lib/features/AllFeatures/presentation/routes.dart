@@ -42,7 +42,7 @@ class RouteGenerator {
         }
 
       case Routes.onBoarding:
-        return MaterialPageRoute(builder: (_) => const LadingPage());
+        return MaterialPageRoute(builder: (_) => const ApplicationPage());
 
       default:
         return unDefineRoute();

@@ -24,10 +24,10 @@ class SubmitFormBtn extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         height: sizeWidth / 8,
-        width: sizeWidth / 2.6,
+        width: sizeWidth / 4,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Color(0xff4796ff),
+          color: AppColors.backgrounfContent,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Text(

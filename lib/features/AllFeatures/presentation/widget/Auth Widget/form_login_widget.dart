@@ -7,8 +7,12 @@ import 'package:university/core/value/app_space.dart';
 import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/pages/application_page.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/custom_textfiled.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
+
+import '../../../../../core/constant/varibal.dart';
+import '../../../../../core/value/global.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
@@ -130,6 +134,14 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                                           msg:
                                               'Forgotten password! button pressed',
                                         );
+                                        Global.storgeServece.setBool(
+                                            Constants.STORGE_USER_LOGED_FIRST,
+                                            false);
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  ApplicationPage()),
+                                        );
                                       },
                                   ),
                                 ),
@@ -139,9 +151,13 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                           SizedBox(),
                           InkWell(
                             onTap: () {
-                              return BlocProvider.of<AuthenticationBloc>(
-                                      context)
-                                  .add(SingUpEvent());
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (_) => ApplicationPage()),
+                              );
+                              // return BlocProvider.of<AuthenticationBloc>(
+                              //         context)
+                              //     .add(SingUpEvent());
 
                               // Navigator.of(context).pushAndRemoveUntil(
                               //     MaterialPageRoute(

@@ -7,7 +7,7 @@ import 'package:university/core/constant/varibal.dart';
 // import 'package:university/features/AllFeatures/presentation/bloc/services_bloc/services_bloc.dart';
 
 import '../../../data/models/library_models/library_model.dart';
-import '../../../domain/entites/books_entites.dart';
+import '../../../domain/entites/header_books_entites.dart';
 
 part 'library_event.dart';
 part 'library_state.dart';
@@ -37,11 +37,11 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 // LibraryState _loadedOrErrorBooksState()
 
 List<BookTitleModel> titles = [
-  BookTitleModel(book_title: "NetWork", bookId: 1),
-  BookTitleModel(book_title: "AI", bookId: 2),
+  BookTitleModel(book_title: "All", bookId: 1),
+  BookTitleModel(book_title: "Flutter", bookId: 2),
   BookTitleModel(book_title: "OOP", bookId: 3),
   BookTitleModel(book_title: "web", bookId: 4),
-  BookTitleModel(book_title: "OOP", bookId: 3),
+  BookTitleModel(book_title: "Tech", bookId: 3),
   BookTitleModel(book_title: "web", bookId: 4),
   BookTitleModel(book_title: "OOP", bookId: 3),
   // BookTitleModel(book_title: "web", bookId: 4),
@@ -50,7 +50,7 @@ List<BookTitleModel> titles = [
 List<BookDetaile> books = const [
   BookDetaile(
       id: 2,
-      category_id: 2,
+      category_id: 1,
       patch_id: 2,
       subject: "network",
       img_book: "assets/images/7.jpg",
@@ -59,7 +59,7 @@ List<BookDetaile> books = const [
       pdfUrl: "pdfUrl"),
   BookDetaile(
       id: 2,
-      category_id: 2,
+      category_id: 3,
       patch_id: 2,
       subject: "AI",
       img_book: "assets/images/5.jpg",
@@ -68,7 +68,7 @@ List<BookDetaile> books = const [
       pdfUrl: "pdfUrl"),
   BookDetaile(
       id: 2,
-      category_id: 2,
+      category_id: 3,
       patch_id: 2,
       subject: "web",
       img_book: "assets/images/4.jpg",
@@ -77,7 +77,7 @@ List<BookDetaile> books = const [
       pdfUrl: "pdfUrl"),
   BookDetaile(
       id: 2,
-      category_id: 2,
+      category_id: 1,
       patch_id: 2,
       subject: "network",
       img_book: "assets/images/2.jpg",
@@ -88,8 +88,17 @@ List<BookDetaile> books = const [
       id: 2,
       category_id: 2,
       patch_id: 2,
-      subject: "network",
-      img_book: "assets/images/2.jpg",
+      subject: "OOP",
+      img_book: "assets/images/11.jpg",
+      name_book: "Network form begnersn to advanced",
+      write_book: "Yousef Hajeb",
+      pdfUrl: "pdfUrl"),
+  BookDetaile(
+      id: 2,
+      category_id: 2,
+      patch_id: 2,
+      subject: "OOP",
+      img_book: "assets/images/10.jpg",
       name_book: "Network form begnersn to advanced",
       write_book: "Yousef Hajeb",
       pdfUrl: "pdfUrl"),

@@ -26,7 +26,7 @@ class BoxDecorationStyles {
         colors: [
           // AppColors.backgroundPages,
           Color.fromARGB(255, 5, 8, 9),
-          Color.fromARGB(255, 255, 156, 156),
+          AppColors.primaryAccentColor
 
           // Color.fromRGBO(218, 223, 255, 1),
           // HexColor.fromHex("#EBF5EE"),

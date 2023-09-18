@@ -21,56 +21,76 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
   SchedulRemoteDataSourceImp({required this.client});
   @override
   Future<List<SchedulModel>> getAllSchedul() async {
-//     String jsonStr = """
-// [
-//   {
-//     "coures": "Math",
-//     "instructor": "John Doe",
-//     "dept": "Mathematics",
-//     "level": "Intermediate",
-//     "classroom": "Room 101",
-//     "time": "10:00 AM",
-//     "days": "Monday - Friday",
-//     "batch": "Batch A"
-//   },
-//   {
-//     "coures": "Science",
-//     "instructor": "Jane Smith",
-//     "dept": "Physics",
-//     "level": "Advanced",
-//     "classroom": "Room 202",
-//     "time": "2:00 PM",
-//     "days": "Monday - Thursday",
-//     "batch": "Batch B"
-//   }
+    // String jsonStr =
+    String respone = """[
+  {
+    "coures": "Math",
+    "instructor": "John Doe",
+    "dept": "Mathematics",
+    "level": "Intermediate",
+    "classroom": "Room 101",
+    "time": "10:00 AM",
+    "days": "Monday - Friday",
+    "batch": "Batch A"
+  },
+  {
+    "coures": "Science",
+    "instructor": "Jane Smith",
+    "dept": "Physics",
+    "level": "Advanced",
+    "classroom": "Room 202",
+    "time": "2:00 PM",
+    "days": "Monday - Thursday",
+    "batch": "Batch B"
+  },
+  {
+    "coures": "Science",
+    "instructor": "Jane Smith",
+    "dept": "Physics",
+    "level": "Advanced",
+    "classroom": "Room 202",
+    "time": "2:00 PM",
+    "days": "Monday - Thursday",
+    "batch": "Batch B"
+  },
+  {
+    "coures": "Science",
+    "instructor": "Jane Smith",
+    "dept": "Physics",
+    "level": "Advanced",
+    "classroom": "Room 202",
+    "time": "2:00 PM",
+    "days": "Monday - Thursday",
+    "batch": "Batch B"
+  }
 
-// ]
+]""";
 // """;
 
-    // List<dynamic> jsonData = jsonDecode(jsonStr);
-    // List<SchedulModel> schedules = [];
+    List<dynamic> jsonData = jsonDecode(respone);
+    List<SchedulModel> schedules = [];
 
-    // for (var item in jsonData) {
-    //   schedules.add(SchedulModel.formJson(item));
-    // }
-
-    final response = await client.get(
-      // Uri.parse("http://10.0.2.2:8012/university/schedule/schedule.php"),
-      Uri.parse(Constants.baseUrl),
-    );
-
-    if (response.statusCode == 200) {
-      print(response.body);
-      final List decodedJson = jsonDecode(response.body) as List;
-      final List<SchedulModel> postModels = decodedJson
-          .map((jsonPostModel) => SchedulModel.formJson(jsonPostModel))
-          .toList();
-      // print("$postModels ==== schedul ");
-      return postModels;
-    } else {
-      print("error =====in remote sechudal in no states200");
-      throw ServerException();
+    for (var item in jsonData) {
+      schedules.add(SchedulModel.formJson(item));
     }
+
+    // final response = await client.get(
+    //   // Uri.parse("http://10.0.2.2:8012/university/schedule/schedule.php"),
+    //   Uri.parse(Constants.baseUrl),
+    // );
+
+    // if (response.statusCode == 200) {
+    //   print(response.body);
+    //   final List decodedJson = jsonDecode(response.body) as List;
+    //   final List<SchedulModel> postModels = decodedJson
+    //       .map((jsonPostModel) => SchedulModel.formJson(jsonPostModel))
+    //       .toList();
+    // print("$postModels ==== schedul ");
+    return schedules;
+    // } else {
+    //   print("error =====in remote sechudal in no states200");
+    //   throw ServerException();
+    // }
   }
 
   @override
@@ -85,9 +105,9 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
     if (response.statusCode == 200) {
       print('SUCESS ============= remote schedule');
       final decodedJson = jsonDecode(response.body);
-      final SchedulModel postModels = decodedJson
-          .map((jsonPostModel) => SchedulModel.formJson(jsonPostModel));
-      return postModels;
+      final SchedulModel schedulModel =
+          decodedJson.map((jsonModel) => SchedulModel.formJson(jsonModel));
+      return schedulModel;
     } else {
       throw ServerException();
     }
