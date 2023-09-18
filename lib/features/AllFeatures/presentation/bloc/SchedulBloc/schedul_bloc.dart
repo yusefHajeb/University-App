@@ -29,28 +29,28 @@ class SchedulBloc extends Bloc<SchedulEvent, SchedulState> {
               classroom: 'الرازي',
               instructor: "رشيد الشعيبي",
               coures: " أنظمة خبيرة ",
-              days: "Thrusday"),
+              days: "Tue"),
           Schedule(
               batch: "1",
               time: "10:00",
               classroom: 'قاعة ابن الهيثم',
               instructor: "ندى الحميدي ",
               coures: " Prograaming",
-              days: "Thrusday"),
+              days: "Wed"),
           Schedule(
               batch: "1",
               time: "10:00",
               classroom: 'قاعة ابن الهيثم',
               instructor: "ندى الحميدي ",
               coures: " Prograaming",
-              days: "Thrusday"),
+              days: "Thu"),
           Schedule(
               batch: "1",
               time: "10:00",
               classroom: 'قاعة ابن الهيثم',
               instructor: "ندى الحميدي ",
               coures: " Prograaming",
-              days: "Thrusday"),
+              days: "Sat"),
         ];
 
         final schedulOrError = await getAllScheduleUsecase();
@@ -60,12 +60,12 @@ class SchedulBloc extends Bloc<SchedulEvent, SchedulState> {
         //   (schedula) => emit(LoadedSchedulState(schedule: schedula)),
         // );
         // emit(LoadedSchedulState(schedule: cahsed));
-        emit(_failureOrSchedualToState(schedulOrError));
+        emit(_failureOrSchedualToState(schedulOrError, event.index));
       } else if (event is RefreshScheduleEvent) {
         print("----------------- Refreshe");
         emit(LoadingSchedulState());
         final schedulOrError = await getAllScheduleUsecase();
-        emit(_failureOrSchedualToState(schedulOrError));
+        emit(_failureOrSchedualToState(schedulOrError, 0));
       }
 
       // else if (event is NotificationScheduleEvent) {
@@ -79,10 +79,10 @@ class SchedulBloc extends Bloc<SchedulEvent, SchedulState> {
     });
   }
   SchedulState _failureOrSchedualToState(
-      Either<Failure, List<Schedule>> either) {
+      Either<Failure, List<Schedule>> either, int index) {
     return either.fold(
       (failure) => ErrorSchedulState(message: failureToMessage(failure)),
-      (schedula) => LoadedSchedulState(schedule: schedula),
+      (schedula) => LoadedSchedulState(schedule: schedula, index: index),
     );
   }
 }

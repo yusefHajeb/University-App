@@ -13,9 +13,10 @@ class LoadingSchedulState extends SchedulState {}
 
 class LoadedSchedulState extends SchedulState {
   final List<Schedule> schedule;
-  const LoadedSchedulState({required this.schedule});
+  final int index;
+  const LoadedSchedulState({required this.schedule, this.index = 0});
   @override
-  List<Object> get props => [schedule];
+  List<Object> get props => [schedule, index];
 }
 
 class ErrorSchedulState extends SchedulState {
