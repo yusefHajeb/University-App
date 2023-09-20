@@ -11,7 +11,7 @@ import '../../../../../core/fonts/app_fonts.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
 import '../../../domain/entites/header_books_entites.dart';
-import '../../bloc/bloc/library_bloc.dart';
+import '../../bloc/library_bloc/library_bloc.dart';
 import '../../widget/library_widget.dart/book_carf_widget.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
 import '../../widget/library_widget.dart/showdialoge_widget.dart';

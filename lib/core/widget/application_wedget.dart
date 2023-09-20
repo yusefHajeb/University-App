@@ -5,6 +5,7 @@ import 'package:university/core/constant/varibal.dart';
 import 'package:university/features/AllFeatures/presentation/pages/schedule_page.dart';
 
 import '../../features/AllFeatures/presentation/pages/application_page.dart';
+import '../../features/AllFeatures/presentation/pages/books_saves_page.dart';
 import '../../features/AllFeatures/presentation/pages/library/library_pages.dart';
 import '../../features/AllFeatures/presentation/pages/profile/profile_page.dart';
 import '../../features/AllFeatures/presentation/resources/assets_mananger.dart';
@@ -29,9 +30,7 @@ Widget buildPage(int index, BuildContext context) {
       ),
     ),
     Center(child: buildBody(context)),
-    Center(
-      child: Text("schedule"),
-    ),
+    Center(child: BooksDownloaded()),
     Center(
       child: Text("None"),
     ),

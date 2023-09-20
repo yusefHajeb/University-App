@@ -12,7 +12,6 @@ import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/sc
 import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
-import 'package:university/features/AllFeatures/presentation/bloc/bloc/library_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/form_widget.dart';
 import '../features/AllFeatures/data/datasource/AuthDatatSource/auth_remote_database.dart';
@@ -21,8 +20,9 @@ import '../features/AllFeatures/data/repositories/schudul_repository_imp.dart';
 import '../features/AllFeatures/domain/repositories/auth_repositories/student_repository.dart';
 import '../features/AllFeatures/domain/repositories/schedule_repository.dart';
 import '../features/AllFeatures/domain/usecase/ScheduleUsecae/notificatin_schedule_usecase.dart';
-import '../features/AllFeatures/presentation/bloc/bloc/bloc/bloc/validate_bloc.dart';
-import '../features/AllFeatures/presentation/bloc/bloc/bloc/form_login_bloc.dart';
+import '../features/AllFeatures/presentation/bloc/form_bloc/bloc/validate_bloc.dart';
+import '../features/AllFeatures/presentation/bloc/form_bloc/form_login_bloc.dart';
+import '../features/AllFeatures/presentation/bloc/library_bloc/library_bloc.dart';
 import '../features/AllFeatures/presentation/bloc/onboarding_bloc/on_boarding_bloc_bloc.dart';
 import '../features/AllFeatures/presentation/helpers/bloc_observer.dart';
 

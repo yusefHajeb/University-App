@@ -51,4 +51,8 @@ class BoxDecorationStyles {
             blurRadius: 7,
             offset: Offset(0, 3))
       ]);
+
+  static final BoxDecoration testStyle = BoxDecoration(
+      borderRadius: BorderRadius.circular(10.0),
+      border: Border.all(width: 3, color: HexColor.fromHex("31333D")));
 }
