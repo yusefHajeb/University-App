@@ -2,6 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:university/core/constant/varibal.dart';
+import 'package:university/features/AllFeatures/data/models/library_models/library_model.dart';
+import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
 import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/fonts/app_fonts.dart';
@@ -11,6 +14,7 @@ import '../../../domain/entites/header_books_entites.dart';
 import '../../bloc/bloc/library_bloc.dart';
 import '../../widget/library_widget.dart/book_carf_widget.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
+import '../../widget/library_widget.dart/showdialoge_widget.dart';
 
 class Library_page extends StatelessWidget {
   const Library_page({
@@ -225,10 +229,15 @@ class Library_page extends StatelessWidget {
                                 : state.books;
                             return AnimateInEffect(
                               keepAlive: true,
-                              child: BookOfTheDayCard(
-                                context,
-                                book,
-                                index,
+                              child: InkWell(
+                                onTap: () {
+                                  funcShow(context, book[index]);
+                                },
+                                child: BookOfTheDayCard(
+                                  context,
+                                  book,
+                                  index,
+                                ),
                               ),
                             );
                           }),

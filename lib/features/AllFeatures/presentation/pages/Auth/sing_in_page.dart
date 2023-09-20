@@ -12,6 +12,7 @@ import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widge
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/global.dart';
 import '../../../../../core/widget/loading_widget.dart';
+import '../../widget/Auth Widget/form_widget.dart';
 import '../schedule_page.dart';
 
 class SingInPage extends StatelessWidget {
@@ -48,7 +49,7 @@ class SingInPage extends StatelessWidget {
                     print("===============bloc");
                     if (state is AuthProgressState) {
                       print("==============if");
-                      return FormLoginWidget();
+                      return FormeSingIn();
                     }
                     if (state is SingUpState) {
                       print("======== you in state singup ==============");

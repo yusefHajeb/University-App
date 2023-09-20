@@ -7,6 +7,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/Utils/lang/app_localization.dart';
 import 'app/enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
+import 'features/AllFeatures/presentation/bloc/bloc/bloc/bloc/validate_bloc.dart';
+import 'features/AllFeatures/presentation/bloc/bloc/bloc/form_login_bloc.dart';
 import 'features/AllFeatures/presentation/bloc/bloc/library_bloc.dart';
 import 'features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
 import 'features/AllFeatures/presentation/bloc/onboarding_bloc/on_boarding_bloc_bloc.dart';
@@ -53,7 +55,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 di.sl<OnBoardingBlocBloc>()..add(OnBoardingBlocEvent())),
-        BlocProvider(create: (context) => di.sl<LadingPageBloc>())
+        BlocProvider(create: (context) => di.sl<LadingPageBloc>()),
+        BlocProvider(create: (context) => di.sl<FormLoginBloc>()),
+        BlocProvider(create: (context) => di.sl<ValidateBloc>())
       ],
       child:
           BlocBuilder<LocaleCubit, ChangeLocalState>(builder: (context, state) {
