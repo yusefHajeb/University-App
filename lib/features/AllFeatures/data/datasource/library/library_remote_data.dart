@@ -32,7 +32,7 @@ class LibraryRemoteDataSourceImp implements LibraryRemoteDataSource {
 
   @override
   Future<BookTitleModel> getTitleBooks() async {
-    final response = await client.post(Uri.parse(Constants.schedule));
+    // final response = await client.post(Uri.parse(Constants.schedule));
 
     // TODO: implement getTitleBooks
     throw UnimplementedError();

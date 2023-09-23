@@ -5,15 +5,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/fonts/app_fonts.dart';
-import 'package:university/core/network/check_network.dart';
 import 'package:university/core/value/app_space.dart';
 import 'package:university/core/value/global.dart';
-import 'package:university/core/value/margin_manager.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/style_manager.dart';
 import '../../../domain/entites/auth_entites/singin.dart';
-import '../../bloc/authentication/authentication_bloc.dart';
 import '../../bloc/form_bloc/form_login_bloc.dart';
 import '../../pages/application_page.dart';
 import 'custom_textfiled.dart';
@@ -49,6 +46,7 @@ class FormeSingIn extends StatelessWidget {
         // TODO: implement listener
       },
       builder: (context, state) {
+        // ignore: unnecessary_type_check
         if (state is FormLoginState)
           return Form(
             key: state.formKey,

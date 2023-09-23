@@ -1,5 +1,6 @@
 part of 'on_boarding_bloc_bloc.dart';
 
+// ignore: must_be_immutable
 class OnBoardingBlocState extends Equatable {
   int page;
 
@@ -8,6 +9,7 @@ class OnBoardingBlocState extends Equatable {
   List<Object> get props => [page++];
 }
 
+// ignore: must_be_immutable
 class OnBoardingBlocInitial extends OnBoardingBlocState {}
 
 // class OnBardingState extends OnBoardingBlocBloc {

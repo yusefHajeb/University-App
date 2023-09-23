@@ -3,8 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/features/AllFeatures/presentation/pages/schedule_page.dart';
-
-import '../../features/AllFeatures/presentation/pages/application_page.dart';
 import '../../features/AllFeatures/presentation/pages/books_saves_page.dart';
 import '../../features/AllFeatures/presentation/pages/library/library_pages.dart';
 import '../../features/AllFeatures/presentation/pages/profile/profile_page.dart';

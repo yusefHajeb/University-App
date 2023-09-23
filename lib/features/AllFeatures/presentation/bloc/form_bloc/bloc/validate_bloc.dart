@@ -7,6 +7,7 @@ part 'validate_state.dart';
 class ValidateBloc extends Bloc<ValidateEvent, ValidateState> {
   ValidateBloc() : super(ValidateInitial()) {
     on<ValidateEvent>((event, emit) {
+      // ignore: unnecessary_type_check
       if (event is ValidateEvent) {
         emit(ValidateState(isValid: event.ckeck));
       }

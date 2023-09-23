@@ -7,6 +7,7 @@ import '../../../../../core/Utils/lang/app_localization.dart';
 import '../../../domain/entites/onboarding_model/slider_object.dart';
 import '../../resources/assets_mananger.dart';
 
+// ignore: must_be_immutable
 class OnBoardingPage extends StatelessWidget {
   // final SliderObject _sliderObject;
   List<SliderObject> _getSliderData = [

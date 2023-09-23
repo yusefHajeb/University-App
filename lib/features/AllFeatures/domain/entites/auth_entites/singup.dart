@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:equatable/equatable.dart';
-
 import 'package:equatable/equatable.dart';
 
 class SingUp extends Equatable {

@@ -1,5 +1,6 @@
 part of 'form_login_bloc.dart';
 
+// ignore: must_be_immutable
 class FormLoginState extends Equatable {
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
@@ -15,6 +16,7 @@ class FormLoginState extends Equatable {
   List<Object> get props => [controllerName, controllerPassword, formKey];
 }
 
+// ignore: must_be_immutable
 class FormLoginInitial extends FormLoginState {
   FormLoginInitial(
       {required super.controllerName,

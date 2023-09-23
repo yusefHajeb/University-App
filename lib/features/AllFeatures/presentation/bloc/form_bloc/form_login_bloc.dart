@@ -2,9 +2,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:university/core/value/global.dart';
-
 import '../../../domain/entites/auth_entites/singin.dart';
 part 'form_login_event.dart';
 part 'form_login_state.dart';
@@ -37,7 +34,7 @@ class FormLoginBloc extends Bloc<FormLoginEvent, FormLoginState> {
       TextEditingController contTextPassword) {
     // bool fige = await Global.storgeServece.checkNetWork();
     // bool x = await netWork.isConnected == true ? true : false;
-    final isValid = formKey.currentState!.validate();
+    // final isValid = formKey.currentState!.validate();
 
     // final Singin login = Singin(
     //   record: contTextName.text,

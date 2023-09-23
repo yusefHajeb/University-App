@@ -7,6 +7,7 @@ class LibraryState extends Equatable {
   List<Object> get props => [];
 }
 
+// ignore: must_be_immutable
 class LibraryBooksInitial extends LibraryState {
   int index;
   LibraryBooksInitial({required this.index});

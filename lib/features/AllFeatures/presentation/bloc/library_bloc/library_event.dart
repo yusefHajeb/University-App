@@ -13,6 +13,7 @@ class GetBooksLibraryEvent extends LibraryEvent {}
 
 class RefreshLibraryEvent extends LibraryEvent {}
 
+// ignore: must_be_immutable
 class GetHeaderBooksLibraryEvent extends LibraryEvent {
   int index;
   GetHeaderBooksLibraryEvent(this.index);

@@ -20,7 +20,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.6 <3.0.0'
+  sdk: '>=3.1.2 <4.0.0'
+  # sdk: '>=2.18.6 <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -45,18 +46,20 @@ dependencies:
   equatable: ^2.0.5
   http: 
   
-  shared_preferences: ^2.0.17
-  google_fonts: ^4.0.4
-  font_awesome_flutter: ^10.4.0
-  json_annotation: ^4.6.0
+  # shared_preferences: ^2.0.17
+  # google_fonts: ^4.0.4
+  # font_awesome_flutter: ^10.4.0
+  # json_annotation: ^4.6.0
   flutter_svg: ^1.1.6
   localization: ^2.1.0
-  flutter_localization: ^0.1.12
+  # flutter_localization: ^0.1.12
+  
   fluttertoast: ^8.2.2
-  flutter_screenutil: ^5.7.0
+  flutter_screenutil: ^5.9.0
   simple_animations: ^5.0.2
   scrollable_positioned_list: ^0.3.8
-  intl: ^0.17.0
+  # intl: ^0.17.0
+  intl: ^0.18.1
   flutter_shapes: ^0.3.0
   flutter_bloc: ^8.1.3
   # flutter_localizations:
@@ -66,6 +69,10 @@ dependencies:
   flutter_pdfview: ^1.3.1
   # syncfusion_flutter_pdfviewer: 
   cached_network_image: ^3.2.3
+  shared_preferences: ^2.2.1
+  google_fonts: ^6.1.0
+  flutter_localization: ^0.1.14
+  font_awesome_flutter: ^10.5.0
    
 
 

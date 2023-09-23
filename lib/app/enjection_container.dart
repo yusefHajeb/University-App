@@ -13,7 +13,6 @@ import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
-import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/form_widget.dart';
 import '../features/AllFeatures/data/datasource/AuthDatatSource/auth_remote_database.dart';
 import '../features/AllFeatures/data/repositories/auth/singin_singup_repository_imp.dart';
 import '../features/AllFeatures/data/repositories/schudul_repository_imp.dart';

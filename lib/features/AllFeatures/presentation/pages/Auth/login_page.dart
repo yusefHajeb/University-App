@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage>
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        brightness: Brightness.dark,
+        // brightness: Brightness.dark,
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -229,7 +229,6 @@ class _LoginPageState extends State<LoginPage>
 }
 
 class MyBehavior extends ScrollBehavior {
-  @override
   Widget buildViewportChrome(
     BuildContext context,
     Widget child,

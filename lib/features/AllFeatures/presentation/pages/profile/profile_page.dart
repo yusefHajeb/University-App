@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/value/global.dart';
-
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/bakground_dark.dart';
 import '../../../../../core/widget/buttons/default_back.dart';
 import '../../../../../core/widget/dummy/profile_dummy.dart';
-import '../../widget/onBoarding/toggle_option.dart';
-import '../../widget/profile_widget/flutter_feather_icon.dart';
 import '../../widget/profile_widget/prfile_text.dart';
 import '../../widget/profile_widget/text_autline.dart';
 import '../onboarding/onboarding_start.dart';

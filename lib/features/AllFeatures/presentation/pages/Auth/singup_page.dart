@@ -5,11 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/core/function/messages.dart';
-import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/pages/Auth/sing_in_page.dart';
 import 'package:university/features/AllFeatures/presentation/pages/onboarding/onboarding_start.dart';
-import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/form_login_widget.dart';
 
 import '../../../../../core/color/app_color.dart';
 import '../../widget/Auth Widget/form_singup_widget.dart';
@@ -21,7 +19,6 @@ class SingUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
 
-    final sizeWidth = ScreenUtil().screenWidth;
     final sizeHeight = ScreenUtil().screenHeight;
 
     return Scaffold(
@@ -84,7 +81,6 @@ class SingUpPage extends StatelessWidget {
 }
 
 class MyBehavior extends ScrollBehavior {
-  @override
   Widget buildViewportChrome(
     BuildContext context,
     Widget child,

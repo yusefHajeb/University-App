@@ -3,8 +3,6 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:university/core/Utils/box_decoration.dart';
 import 'package:university/core/value/app_space.dart';
-import 'package:university/features/AllFeatures/presentation/pages/application_page.dart';
-
 import '../../../../core/color/app_color.dart';
 import '../../../../core/widget/bakground_dark.dart';
 import '../../../../core/widget/buttons/default_back.dart';

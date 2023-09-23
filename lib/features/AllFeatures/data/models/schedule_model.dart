@@ -1,5 +1,6 @@
 import '../../domain/entites/schedule.dart';
 
+// ignore: must_be_immutable
 class SchedulModel extends Schedule {
   SchedulModel({
     String? coures,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/core/constant/varibal.dart';
@@ -21,7 +20,6 @@ class OnboardingCarousel extends StatefulWidget {
 }
 
 class _OnboardingCarouselState extends State<OnboardingCarousel> {
-  final int _numPages = 3;
   final PageController _pageController = PageController(initialPage: 0);
   int currentPage = 0;
   // OnBoardingVM viewMoldel = OnBoardingVM();
@@ -47,6 +45,7 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     int indexPage = 0;
     return Scaffold(
         body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -60,6 +59,7 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
               ),
               BlocConsumer<OnBoardingBlocBloc, OnBoardingBlocState>(
                   listener: ((context, state) {
+                // ignore: unnecessary_type_check
                 if (state is OnBoardingBlocState) {
                   indexPage = state.page;
                 }

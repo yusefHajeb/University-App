@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -15,7 +13,7 @@ part 'library_state.dart';
 class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   LibraryBloc() : super(LibraryBooksInitial(index: 0)) {
     on<LibraryEvent>((event, emit) {
-      int cureent = 0;
+      // int cureent = 0;
 
       if (event is GetBooksLibraryEvent) {
         emit(LoadingLibraryState());

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:university/core/Utils/schape.dart';
 
 import '../color/app_color.dart';
 

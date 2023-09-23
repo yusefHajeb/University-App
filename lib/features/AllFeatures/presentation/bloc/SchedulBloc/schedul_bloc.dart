@@ -2,14 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
-import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/notificatin_schedule_usecase.dart';
 
 import '../../../../../core/error/failure.dart';
 import '../../../../../core/function/failure_to_message.dart';
 import '../../../domain/entites/schedule.dart';
-
-import '../../../domain/entites/schedule.dart';
-
 part 'schedul_event.dart';
 part 'schedul_state.dart';
 
@@ -20,8 +16,8 @@ class SchedulBloc extends Bloc<SchedulEvent, SchedulState> {
     on<SchedulEvent>((event, emit) async {
       if (event is GetAllScheduleEvent) {
         emit(LoadingSchedulState());
-        print("========================");
 
+        // ignore: unused_local_variable
         var cahsed = [
           Schedule(
               batch: "1",

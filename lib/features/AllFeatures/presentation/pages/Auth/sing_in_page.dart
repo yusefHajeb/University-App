@@ -8,12 +8,10 @@ import 'package:university/core/function/messages.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
 import 'package:university/features/AllFeatures/presentation/pages/application_page.dart';
-import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/form_login_widget.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/global.dart';
 import '../../../../../core/widget/loading_widget.dart';
 import '../../widget/Auth Widget/form_widget.dart';
-import '../schedule_page.dart';
 
 class SingInPage extends StatelessWidget {
   const SingInPage({super.key});
@@ -22,7 +20,6 @@ class SingInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
 
-    final sizeWidth = ScreenUtil().screenWidth;
     final sizeHeight = ScreenUtil().screenHeight;
 
     return Scaffold(
@@ -91,7 +88,6 @@ class SingInPage extends StatelessWidget {
 }
 
 class MyBehavior extends ScrollBehavior {
-  @override
   Widget buildViewportChrome(
     BuildContext context,
     Widget child,

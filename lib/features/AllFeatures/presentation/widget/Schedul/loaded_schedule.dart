@@ -25,6 +25,7 @@ showSchedule(List<Schedule> data, int? changeDate) {
     return monthDayList;
   }
 
+  // ignore: unused_local_variable
   final List<String> weekDaysEn = [
     'Mon',
     'Tue',
@@ -50,15 +51,15 @@ showSchedule(List<Schedule> data, int? changeDate) {
     return weekDaysAr[weekday];
   }
 
-  final dateTime = DateTime.now();
-  List<Schedule> response;
-  int _selectedDay = 2;
-  int _selectedRepeat = 0;
-  String _selectedHour = '13:30';
-  List<int> _selectedExteraCleaning = [];
+  // final dateTime = DateTime.now();
+  // List<Schedule> response;
+  // int _selectedDay = 2;
+  // int _selectedRepeat = 0;
+  // String _selectedHour = '13:30';
+  // List<int> _selectedExteraCleaning = [];
 
-  final length = getMonthDayList();
-  int index = 0;
+  // final length = getMonthDayList();
+  // int index = 0;
   List listda(int index) {
     return [getMonthDayList()[index], getDay(index)];
   }
@@ -130,7 +131,7 @@ showSchedule(List<Schedule> data, int? changeDate) {
                         //     .where((element) =>
                         //         element.days == _days[index][1].toString())
                         //     .toList();
-                        String c = "Sat";
+                        // String c = "Sat";
                         // bool fig = _days[changeDate ?? index][1] == "Sat";
                         // print(
                         //     "${_days[changeDate ?? index][1]} == $c  ===== figuar $fig");

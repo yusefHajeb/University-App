@@ -1,11 +1,7 @@
 import 'dart:convert';
-
-import 'package:dartz/dartz.dart';
 import 'package:university/core/error/execptions.dart';
 import 'package:university/features/AllFeatures/data/models/schedule_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:university/features/AllFeatures/domain/entites/schedule.dart';
-
 import '../../../../../core/constant/varibal.dart';
 
 abstract class SchedulRemoteDataSource {

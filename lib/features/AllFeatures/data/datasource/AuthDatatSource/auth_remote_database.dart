@@ -2,10 +2,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:university/core/error/execptions.dart';
 import 'package:university/features/AllFeatures/data/models/auth_models/singup_model.dart';
-import 'package:university/features/AllFeatures/data/models/schedule_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
-import 'package:university/features/AllFeatures/domain/entites/auth_entites/singup.dart';
 
 import '../../../../../core/constant/varibal.dart';
 import '../../models/auth_models/singin_model.dart';
@@ -22,17 +19,12 @@ class SingInOrSingUpRemoteDataSourceImp
   SingInOrSingUpRemoteDataSourceImp({required this.client});
   @override
   Future<SinginModel> singinStudent(SinginModel singin) async {
-    final requestBody = {
-      LoginModelFields.password: singin.password,
-      LoginModelFields.record: singin.record,
-    };
+    // final requestBody = {
+    //   LoginModelFields.password: singin.password,
+    //   LoginModelFields.record: singin.record,
+    // };
     print("00000000000000000000000000 remote");
-    Map<String, String> header = {
-      "content-type": "application/json",
-      "accept": "application/json",
-      "authorization": "SEND TO",
-      "langauge": "en"
-    };
+
     final response = await http.post(
       // "http://172.18.48.1:8012/ecommerce/test.php"
       Uri.parse("http://172.18.48.1:8012/ecommerce/test.php"),
@@ -84,7 +76,7 @@ class SingInOrSingUpRemoteDataSourceImp
     final response =
         await client.post(Uri.parse("${Constants.singin}/"), body: requestBody);
     if (response.statusCode == 200) {
-      final decodedJson = jsonDecode(response.body);
+      // final decodedJson = jsonDecode(response.body);
       // final SingUpModel postModels = decodedJson
       //     .map((jsonPostModel) => SinginModel.fromJson(jsonPostModel));
 
