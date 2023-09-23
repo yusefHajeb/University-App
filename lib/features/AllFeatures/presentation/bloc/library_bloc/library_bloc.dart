@@ -35,15 +35,19 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 }
 
 // LibraryState _loadedOrErrorBooksState()
+List<BookDetaile> getBooksByOpenPage(int page) {
+  List<BookDetaile> allBooks = books;
+  return allBooks.where((book) => book.patch_id! >= page).toList();
+}
 
 List<BookTitleModel> titles = [
-  BookTitleModel(book_title: "All", bookId: 1),
-  BookTitleModel(book_title: "Flutter", bookId: 2),
-  BookTitleModel(book_title: "OOP", bookId: 3),
-  BookTitleModel(book_title: "web", bookId: 4),
-  BookTitleModel(book_title: "Tech", bookId: 3),
-  BookTitleModel(book_title: "web", bookId: 4),
-  BookTitleModel(book_title: "OOP", bookId: 3),
+  BookTitleModel(book_title: "الكل", bookId: 1),
+  BookTitleModel(book_title: "شبكات", bookId: 2),
+  BookTitleModel(book_title: "نطبيقات ذكاء اصطناعي", bookId: 3),
+  BookTitleModel(book_title: "تطبيقات ويب", bookId: 4),
+  BookTitleModel(book_title: "حوسبة سحابية", bookId: 3),
+  BookTitleModel(book_title: "برمجة كائنية", bookId: 4),
+  BookTitleModel(book_title: "ادارة مشاريع", bookId: 3),
   // BookTitleModel(book_title: "web", bookId: 4),
 ];
 
@@ -52,56 +56,66 @@ List<BookDetaile> books = const [
       id: 2,
       category_id: 1,
       patch_id: 2,
-      subject: "network",
+      subject: "شبكات",
       img_book: "assets/images/7.jpg",
       name_book: "Clean advanced",
       write_book: "Yousef Hajeb",
-      pdfUrl: "pdfUrl"),
+      pdfUrl:
+          'https://m.media-amazon.com/images/I/41pTqRlersL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg'),
   BookDetaile(
       id: 2,
       category_id: 3,
       patch_id: 2,
-      subject: "AI",
+      subject: "نطبيقات ذكاء اصطناعي",
       img_book: "assets/images/5.jpg",
       name_book: "PHP form beginer to advanced",
       write_book: "Yousef Hajeb",
-      pdfUrl: "pdfUrl"),
+      pdfUrl:
+          'https://m.media-amazon.com/images/I/41HvCijjVbL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg'),
   BookDetaile(
-      id: 2,
-      category_id: 3,
-      patch_id: 2,
-      subject: "web",
-      img_book: "assets/images/4.jpg",
-      name_book: "ابي الجميل",
-      write_book: "Yousef Hajeb",
-      pdfUrl: "pdfUrl"),
+    id: 2,
+    category_id: 3,
+    patch_id: 2,
+    subject: "تطبيقات ويب",
+    img_book: "assets/images/4.jpg",
+    name_book: "ابي الجميل",
+    write_book: "Yousef Hajeb",
+    pdfUrl:
+        'https://m.media-amazon.com/images/I/41zWWzbiHpL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg',
+  ),
   BookDetaile(
-      id: 2,
-      category_id: 1,
-      patch_id: 2,
-      subject: "network",
-      img_book: "assets/images/2.jpg",
-      name_book: "Network form begnersn to advanced",
-      write_book: "Yousef Hajeb",
-      pdfUrl: "pdfUrl"),
+    id: 2,
+    category_id: 1,
+    patch_id: 2,
+    subject: "حوسبة سحابية",
+    img_book: "assets/images/2.jpg",
+    name_book: "Network form begnersn to advanced",
+    write_book: "Yousef Hajeb",
+    pdfUrl:
+        'https://m.media-amazon.com/images/I/51yfA5Mo1hL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg',
+  ),
   BookDetaile(
-      id: 2,
-      category_id: 2,
-      patch_id: 2,
-      subject: "OOP",
-      img_book: "assets/images/11.jpg",
-      name_book: "Network form begnersn to advanced",
-      write_book: "Yousef Hajeb",
-      pdfUrl: "pdfUrl"),
+    id: 2,
+    category_id: 2,
+    patch_id: 2,
+    subject: "برمجة كائنية",
+    img_book: "assets/images/11.jpg",
+    name_book: "Network form begnersn to advanced",
+    write_book: "Yousef Hajeb",
+    pdfUrl:
+        'https://m.media-amazon.com/images/I/41pTqRlersL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg',
+  ),
   BookDetaile(
-      id: 2,
-      category_id: 2,
-      patch_id: 2,
-      subject: "OOP",
-      img_book: "assets/images/10.jpg",
-      name_book: "Network form begnersn to advanced",
-      write_book: "Yousef Hajeb",
-      pdfUrl: "pdfUrl"),
+    id: 2,
+    category_id: 2,
+    patch_id: 2,
+    subject: "OOP",
+    img_book: "assets/images/10.jpg",
+    name_book: "Network form begnersn to advanced",
+    write_book: "Yousef Hajeb",
+    pdfUrl:
+        'https://m.media-amazon.com/images/I/41pTqRlersL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg',
+  ),
 ];
 
 double changePostionedLine(int index, BuildContext ctx, int linght) {
