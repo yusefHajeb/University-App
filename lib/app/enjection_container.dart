@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/schedul_local_data_source.dart';
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/shedul_remote_datasource.dart';
+import 'package:university/features/AllFeatures/data/datasource/library/library_local_data.dart';
+import 'package:university/features/AllFeatures/data/datasource/library/library_remote_data.dart';
+import 'package:university/features/AllFeatures/data/repositories/library_repository/library_repository_imp.dart';
+import 'package:university/features/AllFeatures/domain/repositories/library_repositories/library_repository.dart';
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singup_usecase.dart';
+import 'package:university/features/AllFeatures/domain/usecase/library_usecase/library_usecase.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
@@ -39,7 +45,7 @@ Future<void> init() async {
       ));
   sl.registerFactory(
       () => AuthenticationBloc(singInUsecase: sl(), singUpUsecase: sl()));
-  sl.registerFactory(() => LibraryBloc());
+  sl.registerFactory(() => LibraryBloc(getAllBooksUsecase: sl()));
   // sl.registerFactory(() => LibraryBloc());
 
   sl.registerFactory(() => ValidateBloc());
@@ -53,12 +59,18 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => SingInUsecase(repository: sl()));
   sl.registerLazySingleton(() => SingUpUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetAllBooksUsecase(rerpository: sl()));
+
   //Repository Imp  ================
 
   sl.registerLazySingleton<ScheduleRepository>(() => SchedulRepositoryImp(
       localSource: sl(), networkInfo: sl(), remoteSchedul: sl()));
   sl.registerLazySingleton<StudentRepository>(
       () => StudentRepositoryImp(networkInfo: sl(), remoteData: sl()));
+
+  sl.registerLazySingleton<LibraryRepository>(() => LibraryRepositoryImp(
+      localSource: sl(), remoteDataSource: sl(), networkInfo: sl()));
+
   //Database =======================
   sl.registerLazySingleton<SchedulRemoteDataSource>(
     () => SchedulRemoteDataSourceImp(
@@ -71,10 +83,20 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<LibraryRemoteDataSource>(
+    () => LibraryRemoteDataSourceImp(
+      client: sl(),
+    ),
+  );
+
   sl.registerLazySingleton<ScheduleLocalDataSource>(
     () => ScheduleLocalDataSourceImp(
       sharedPreferences: sl(),
     ),
+  );
+
+  sl.registerLazySingleton<LibraryLocalDataSource>(
+    () => LibraryLocalDataSourceImp(),
   );
 
   // Core ===========================
@@ -84,6 +106,8 @@ Future<void> init() async {
 
   //ext
   final sharedPreferences = await SharedPreferences.getInstance();
+
+  // final  hive   = await Hive.
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
   sl.registerLazySingleton<http.Client>(() => http.Client());
   sl.registerLazySingleton(() => InternetConnectionChecker());
