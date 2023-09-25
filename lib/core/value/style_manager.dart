@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:university/core/color/app_color.dart';
 import 'package:university/core/fonts/app_fonts.dart';
 
 TextStyle _getTextStyleEn(double fontsize, FontWeight fontWeight, Color color) {
@@ -8,6 +9,15 @@ TextStyle _getTextStyleEn(double fontsize, FontWeight fontWeight, Color color) {
       fontWeight: fontWeight,
       color: color,
       fontFamily: FontConstannts.fontFamily);
+}
+
+TextStyle _getAlmraiStyle(double fontsize, FontWeight fontWeight, Color color) {
+  return GoogleFonts.almarai(
+      color: color, fontSize: fontsize, fontWeight: fontWeight);
+}
+
+TextStyle getFontNormal(double fontsize, FontWeight fontWeight, Color color) {
+  return _getAlmraiStyle(fontsize, fontWeight, color);
 }
 
 TextStyle getRegularStyleEn(

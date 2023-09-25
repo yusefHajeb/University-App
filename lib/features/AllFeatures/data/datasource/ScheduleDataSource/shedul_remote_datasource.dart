@@ -20,43 +20,53 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
     // String jsonStr =
     String respone = """[
   {
-    "coures": "Math",
-    "instructor": "John Doe",
-    "dept": "Mathematics",
-    "level": "Intermediate",
-    "classroom": "Room 101",
+    "coures": "شبكات",
+    "instructor": "ندى الحميدي",
+    "dept": "IT",
+    "level": "2",
+    "classroom": "الرازي",
     "time": "10:00 AM",
-    "days": "Monday - Friday",
-    "batch": "Batch A"
+    "days": "السبت",
+    "batch": "3"
+  },
+    {
+    "coures": "تطبيقات ذكاء اصطناعي",
+    "instructor": "د/اكرم الصباري",
+    "dept": "IT",
+    "level": "2",
+    "classroom": "ابن الهيثم",
+    "time": "10:00 AM",
+    "days": "الاحد",
+    "batch": "3"
   },
   {
-    "coures": "Science",
-    "instructor": "Jane Smith",
-    "dept": "Physics",
-    "level": "Advanced",
-    "classroom": "Room 202",
+    "coures": "تطبيقات ويب",
+    "instructor": "د/ عائض الشباطي",
+    "dept": "3",
+    "level": "3",
+    "classroom": "الرازي",
     "time": "2:00 PM",
-    "days": "Monday - Thursday",
-    "batch": "Batch B"
+    "days": "الاثنين",
+    "batch": "3"
   },
   {
-    "coures": "Science",
-    "instructor": "Jane Smith",
-    "dept": "Physics",
+    "coures": "حوسبة سحابية",
+    "instructor": "د/ وليد الشرفي",
+    "dept": "IT",
     "level": "Advanced",
-    "classroom": "Room 202",
+    "classroom": "ابن الرازي",
     "time": "2:00 PM",
-    "days": "Monday - Thursday",
-    "batch": "Batch B"
+    "days": "الثلاثاء",
+    "batch": "2"
   },
   {
-    "coures": "Science",
-    "instructor": "Jane Smith",
+    "coures": "برمحة كائنية",
+    "instructor": "د/ فهد الاغبري",
     "dept": "Physics",
-    "level": "Advanced",
-    "classroom": "Room 202",
+    "level": "2",
+    "classroom": "الرازي",
     "time": "2:00 PM",
-    "days": "Monday - Thursday",
+    "days": "الخميس",
     "batch": "Batch B"
   }
 

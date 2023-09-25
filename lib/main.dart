@@ -76,22 +76,22 @@ class MyApp extends StatelessWidget {
 
           //return and change local lunguage , supportedLocal that phon support
           localeResolutionCallback: (deviceLocal, supportedLocal) {
-            for (var local in supportedLocal) {
-              // if my phone support deviceLocal
-              if (deviceLocal != null &&
-                  deviceLocal.languageCode == local.languageCode) {
-                return deviceLocal;
-              }
-            }
+            // for (var local in supportedLocal) {
+            // if my phone support deviceLocal
+            // if (deviceLocal != null &&
+            //     deviceLocal.languageCode == local.languageCode) {
+            //   return deviceLocal;
+            // }
+            return Locale('ar');
+            // }
 
-            return supportedLocal
-                .first; //covert eng when no support lunguage deviceLocal
+            // return supportedLocal
+            //     .first; //covert eng when no support lunguage deviceLocal
           },
           title: 'Flutter Demo',
           onGenerateRoute: RouteGenerator.getRoutes,
           initialRoute: Routes.onBoarding,
           debugShowCheckedModeBanner: false,
-
           theme: ThemeData(
             primarySwatch: Colors.blue,
             appBarTheme: AppBarTheme(

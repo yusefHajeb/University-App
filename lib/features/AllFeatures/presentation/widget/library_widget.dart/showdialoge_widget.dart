@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/book_favorite_bloc/books_favorite_bloc.dart';
 import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/constant/varibal.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../domain/entites/header_books_entites.dart';
-import '../../bloc/bloc/books_favorite_bloc.dart';
 import '../Auth Widget/submet_login.dart';
 
 funcShow(BuildContext context, BookDetaile list) {

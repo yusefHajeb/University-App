@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/book_favorite_bloc/books_favorite_bloc.dart';
 // import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
 
 import '../../../../../core/color/app_color.dart';
@@ -21,8 +23,9 @@ import '../../../../../core/color/app_color.dart';
 
 class BookCover3D extends StatelessWidget {
   final String url;
+  final bool confige;
 
-  const BookCover3D({super.key, required this.url});
+  const BookCover3D({super.key, required this.url, required this.confige});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -62,25 +65,24 @@ class BookCover3D extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 2,
-              // bottom: 2,
-              child: Container(
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 255, 240, 240),
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  width: 20,
-                  height: 20,
-                  alignment: Alignment.center,
-                  child: Icon(
-                    Icons.favorite,
-                    size: 14,
-                    color: AppColors.error.withAlpha(300),
-                  )
-                  // IconButton(
+                top: 2,
+                // bottom: 2,
+                child: Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 255, 240, 240),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    width: 20,
+                    height: 20,
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.favorite,
+                      size: 14,
+                      color: AppColors.error.withAlpha(300),
+                    )
 
-                  ),
-            )
+                    // IconButton(
+                    ))
           ],
         ),
       ),

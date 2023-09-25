@@ -4,6 +4,7 @@ import 'package:university/features/AllFeatures/domain/entites/schedule.dart';
 import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/app_space.dart';
+import '../../../../../core/value/style_manager.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
 
 class CardSchedule extends StatelessWidget {
@@ -20,18 +21,18 @@ class CardSchedule extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        // decoration: BoxDecorationStyles.fadingGlory,
+        // decoration: BoxDecoration(color: AppColors.white),
         child: Padding(
           padding: EdgeInsets.all(0),
           child: DecoratedBox(
-            decoration: BoxDecorationStyles.fadingGlory,
+            decoration: BoxDecoration(color: AppColors.white),
             child: ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemCount: data.length,
               separatorBuilder: (BuildContext context, int index) {
-                return AppSpaces.verticalSpace20;
+                return AppSpaces.verticalSpace10;
               },
               itemBuilder: ((context, index) {
                 return AnimateInEffect(child: Card2(data[index]));
@@ -152,9 +153,10 @@ class CardShedeulWidget extends StatelessWidget {
 
 Widget Card2(Schedule schedule) {
   return Container(
+    margin: EdgeInsets.only(top: 10),
     padding: EdgeInsets.all(10.0),
     height: 130,
-    decoration: BoxDecorationStyles.fadingInnerDecor,
+    decoration: BoxDecorationStyles.cardSchedule,
     child: Row(
       children: [
         Column(
@@ -186,7 +188,11 @@ Widget Card2(Schedule schedule) {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             AppSpaces.verticalSpace20,
-            Text(schedule.coures ?? ""),
+            Text(
+              schedule.coures ?? "",
+              style: getFontNormal(
+                  13, FontWeight.w500, AppColors.darkRadialBackground),
+            ),
             Row(
               children: [
                 Icon(
@@ -196,7 +202,8 @@ Widget Card2(Schedule schedule) {
                 ),
                 AppSpaces.horizontalSpace10,
                 Text(schedule.classroom ?? "",
-                    style: TextStyle(color: AppColors.greyColor, fontSize: 13)),
+                    style: getFontNormal(
+                        12, FontWeight.normal, AppColors.greyColor)),
               ],
             ),
             Row(
@@ -208,7 +215,8 @@ Widget Card2(Schedule schedule) {
                 ),
                 AppSpaces.horizontalSpace10,
                 Text(schedule.instructor ?? "",
-                    style: TextStyle(color: AppColors.greyColor, fontSize: 13)),
+                    style: getFontNormal(
+                        12, FontWeight.normal, AppColors.greyColor)),
               ],
             )
           ],

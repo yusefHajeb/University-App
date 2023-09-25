@@ -18,7 +18,7 @@ class LibraryRemoteDataSourceImp implements LibraryRemoteDataSource {
   @override
   Future<List<LibraryModel>> getAllBooks() async {
     String respone = """[
-     "book" = [{
+      {
    "id": "2",
           "category_id": "1",
           "patch_id":"2",

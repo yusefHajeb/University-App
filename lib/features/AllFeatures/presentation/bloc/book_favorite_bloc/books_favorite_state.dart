@@ -11,9 +11,9 @@ class BooksFavoriteState extends Equatable {
 // class BooksFavoriteInitial extends BooksFavoriteState {}
 
 class BookDownloadState extends BooksFavoriteState {
+  bool isFavorite;
   final BookDetaile book;
-
-  BookDownloadState({required this.book});
+  BookDownloadState({required this.book, this.isFavorite = false});
   @override
   // TODO: implement props
   List<Object?> get props => [book];

@@ -52,8 +52,8 @@ class MyProfie extends StatelessWidget {
               child: Column(
                 children: [
                   DefaultNav(
-                      title: "$tabSpace Profile",
-                      type: ProfileDummyType.button),
+                    title: "$tabSpace ",
+                  ),
                   SizedBox(height: 30),
                   ProfileDummy(
                       color: HexColor.fromHex("94F0F1"),
@@ -62,20 +62,20 @@ class MyProfie extends StatelessWidget {
                       image: "assets/images/slider-background-3.png"),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Blake Gordon",
-                        style: GoogleFonts.lato(
+                    child: Text("يوسف حاجب",
+                        style: GoogleFonts.almarai(
                             color: Colors.white,
                             fontSize: 40,
                             fontWeight: FontWeight.bold)),
                   ),
-                  Text("blake@email.com",
+                  Text("yousef@email.com",
                       style: GoogleFonts.lato(
                           color: HexColor.fromHex("B0FFE1"), fontSize: 17)),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: OutlinedButtonWithText(
                         width: 75,
-                        content: "Edit",
+                        content: "تعديل",
                         onPressed: () {
                           // Get.to(() => EditProfilePage());
                         }),

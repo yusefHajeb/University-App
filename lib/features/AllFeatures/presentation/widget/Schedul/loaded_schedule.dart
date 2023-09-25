@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 
 import '../../../../../core/color/app_color.dart';
+import '../../../../../core/value/style_manager.dart';
 import '../../../domain/entites/schedule.dart';
 import 'cards_schedule.dart';
 
@@ -79,7 +80,7 @@ showSchedule(List<Schedule> data, int? changeDate) {
               padding: EdgeInsets.only(top: 20.0),
               child: Center(
                 child: Text(
-                  '${foramtDateToDay()} محاضرات اليوم',
+                  ' محاضرات اليوم',
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.grey.shade900,
@@ -170,8 +171,8 @@ showSchedule(List<Schedule> data, int? changeDate) {
                           children: [
                             Text(
                               getDay(index),
-                              style: TextStyle(
-                                  fontSize: 14, color: AppColors.greyColor),
+                              style: getFontNormal(
+                                  12, FontWeight.bold, AppColors.greyColor),
                             ),
                             SizedBox(
                               height: 10,
@@ -179,7 +180,7 @@ showSchedule(List<Schedule> data, int? changeDate) {
                             Text(
                               getMonthDayList()[index],
                               style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.kCardColor),
                             ),

@@ -24,7 +24,7 @@ class BoxDecorationStyles {
         end: Alignment.bottomRight,
         colors: [
           // AppColors.backgroundPages,
-          Color.fromARGB(255, 5, 8, 9),
+          // Color.fromARGB(255, 5, 8, 9),
           AppColors.primaryAccentColor
 
           // Color.fromRGBO(218, 223, 255, 1),
@@ -54,4 +54,8 @@ class BoxDecorationStyles {
   static final BoxDecoration testStyle = BoxDecoration(
       borderRadius: BorderRadius.circular(10.0),
       border: Border.all(width: 3, color: HexColor.fromHex("31333D")));
+
+  static final BoxDecoration headerTab = BoxDecoration(
+      borderRadius: BorderRadius.circular(15.0),
+      border: Border.all(width: 1, color: AppColors.kTextColor));
 }
