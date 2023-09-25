@@ -1,7 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dartz/dartz.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:university/core/error/failure.dart';
+import 'package:university/core/value/global.dart';
+import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/convert_book_3d.dart';
+import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/keep_reading_section.dart';
+import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/last_opend_book.dart';
+import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/reading_book.dart';
 import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/fonts/app_fonts.dart';
@@ -9,9 +17,7 @@ import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
 import '../../../domain/entites/header_books_entites.dart';
 import '../../bloc/library_bloc/library_bloc.dart';
-import '../../widget/library_widget.dart/book_carf_widget.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
-import '../../widget/library_widget.dart/showdialoge_widget.dart';
 
 class Library_page extends StatelessWidget {
   const Library_page({
@@ -130,14 +136,14 @@ class Library_page extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 5),
                       width: sizeWidth,
-                      height: sizeHeight * 20,
+                      height: sizeHeight * 40,
                       child: Stack(children: [
                         Positioned(
-                          bottom: 0,
+                          bottom: 3,
                           left: 2,
                           child: Container(
                             width: sizeWidth,
-                            height: sizeHeight * 20,
+                            height: sizeHeight * 30,
                             // color: Colors.amber,
                             child: ListView.builder(
                               itemCount: state.header.length,
@@ -153,19 +159,44 @@ class Library_page extends StatelessWidget {
 
                                   // }))))
                                   child: Container(
-                                    width: sizeWidth / state.header.length,
-                                    child: Text(
-                                      state.header[index].book_title ?? "",
-                                      style: TextStyle(
-                                          color: state.index == index
-                                              ? AppColors.primaryAccentColor
-                                              : AppColors.darkGrey,
-                                          fontWeight: state.index == index
-                                              ? FontWeightManager.black
-                                              : FontWeightManager.medium,
-                                          fontSize: 12),
+                                    // width: sizeWidth / 4,
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    height: 40,
+                                    margin: EdgeInsets.only(right: 10),
+                                    // width: sizeWidth / state.header.length,
+                                    child: Center(
+                                      child: Text(
+                                          state.header[index].book_title ?? "",
+                                          style: GoogleFonts.almarai(
+                                            color: state.index == index
+                                                ? AppColors.darkRadialBackground
+                                                : AppColors
+                                                    .darkRadialBackground,
+                                            fontSize: 12,
+                                            fontWeight: state.index == index
+                                                ? FontWeightManager.black
+                                                : FontWeightManager.medium,
+                                            // fontWeight: FontWeight.bold
+                                          )
+
+                                          // TextStyle(
+
+                                          //     color: state.index == index
+                                          //         ? AppColors.white
+                                          //         : AppColors.darkGrey,
+                                          //     fontWeight: state.index == index
+                                          //         ? FontWeightManager.black
+                                          //         : FontWeightManager.medium,
+                                          //     fontSize: 12),
+                                          ),
                                     ),
-                                    decoration: BoxDecoration(),
+                                    decoration: state.index == index
+                                        ? BoxDecorationStyles.headerTab
+                                            .copyWith(
+                                                color: Colors.blue.shade200)
+                                        : BoxDecorationStyles.headerTab
+                                            .copyWith(color: AppColors.white),
                                   ),
                                 );
                               }),
@@ -173,22 +204,28 @@ class Library_page extends StatelessWidget {
                             ),
                           ),
                         ),
-                        AnimatedPositioned(
-                            bottom: 0,
-                            left: changePostionedLine(
-                                state.index, context, state.header.length),
-                            curve: Curves.easeIn,
-                            duration: Duration(milliseconds: 300),
-                            child: AnimatedContainer(
-                              width: 50,
-                              height: 4,
-                              decoration: BoxDecorationStyles.backgroundBlack,
-                              duration: Duration(milliseconds: 400),
-                            ))
+                        // AnimatedPositioned(
+                        //     bottom: 0,
+                        //     left: changePostionedLine(
+                        //         state.index, context, state.header.length),
+                        //     curve: Curves.easeIn,
+                        //     duration: Duration(milliseconds: 300),
+                        //     child: AnimatedContainer(
+                        //       width: 50,
+                        //       height: 4,
+                        //       decoration: BoxDecorationStyles.backgroundBlack,
+                        //       duration: Duration(milliseconds: 400),
+                        //     ))
                       ]),
                     ),
                     // space between Header books and content book
                     AppSpaces.verticalSpace20,
+
+                    // LastOpenedBook(),
+                    KeepReadingSection(
+                      books: state.books,
+                    ),
+                    // AllPurchasedBooks(),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GridView.builder(
@@ -216,31 +253,44 @@ class Library_page extends StatelessWidget {
                             //     .toList();
                             print("Clike ${state.index} =====");
 
-                            List<BookDetaile> book = state.index != 0
-                                ? state.books
-                                    .where(
-                                      (element) =>
-                                          element.category_id == state.index,
-                                    )
-                                    .toList()
-                                : state.books;
+                            // List<BookDetaile> book = state.index != 0
+                            //     ? state.books
+                            //         .where(
+                            //           (element) =>
+                            //               element.category_id == state.index,
+                            //         )
+                            //         .toList()
+                            //     : state.books;
                             return AnimateInEffect(
                               keepAlive: true,
                               child: InkWell(
-                                onTap: () {
-                                  funcShow(context, book[index]);
-                                },
-                                child: BookOfTheDayCard(
-                                  context,
-                                  book,
-                                  index,
-                                ),
-                              ),
+                                  onTap: () {
+                                    BlocProvider.of<LibraryBloc>(context)
+                                        .add(DownloadBookLibraryEvent(
+                                      response:
+                                          starDownload(state.books[index]),
+                                    ));
+                                    // funcShow(context, book[index]);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => ReadingBook(
+                                                pdfPath:
+                                                    "assets/pdf/harry_potter.pdf")));
+                                  },
+                                  child: BookCover3D(
+                                    url: state.books[index].pdfUrl.toString(),
+                                    confige: true,
+                                  )),
                             );
                           }),
                     )
                   ],
                 ),
+              );
+            } else if (state is ErrorLibraryState) {
+              return Center(
+                child: Image.asset(""),
               );
             } else {
               return Column(
@@ -263,5 +313,13 @@ class Library_page extends StatelessWidget {
         // ContentBook(),
       ]),
     );
+  }
+
+  Future<Either<Failure, BookDetaile>> starDownload(BookDetaile book) async {
+    if (await Global.storgeServece.checkNetWork()) {
+      return Right(book);
+    } else {
+      return Left(OffLineFailure());
+    }
   }
 }

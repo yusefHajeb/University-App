@@ -20,3 +20,12 @@ class GetHeaderBooksLibraryEvent extends LibraryEvent {
   @override
   List<Object> get props => [index];
 }
+
+class DownloadBookLibraryEvent extends LibraryEvent {
+  final Future<Either<Failure, BookDetaile>> response;
+  const DownloadBookLibraryEvent({
+    required this.response,
+  });
+  @override
+  List<Object> get props => [response];
+}

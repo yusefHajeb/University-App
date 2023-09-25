@@ -15,11 +15,9 @@ class LibraryBooksInitial extends LibraryState {
 
 class LoadedBookLibraryState extends LibraryState {
   final List<BookDetaile> books;
-
   LoadedBookLibraryState({
     required this.books,
   });
-
   @override
   List<Object> get props => [books];
 }
@@ -33,16 +31,28 @@ class HeaderBooksLibraryState extends LibraryState {
 
   HeaderBooksLibraryState(
       {required this.index, required this.header, required this.books});
-
   @override
   List<Object> get props => [header, index, books];
 }
 
 class ErrorLibraryState extends LibraryState {
   final String message;
-
   const ErrorLibraryState({required this.message});
-
   @override
   List<Object> get props => [message];
+}
+
+class LibraryAddBookDownloadState extends LibraryState {
+  final List<BookDetaile> download;
+  LibraryAddBookDownloadState({required this.download});
+  @override
+  List<Object> get props => [download];
+}
+
+class LibraryBookDownloadState extends LibraryState {
+  final BookDetaile bookDawonload;
+
+  const LibraryBookDownloadState({required this.bookDawonload});
+  @override
+  List<Object> get props => [bookDawonload];
 }

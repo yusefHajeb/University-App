@@ -1,34 +1,57 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:university/core/constant/varibal.dart';
 // import 'package:university/features/AllFeatures/presentation/bloc/services_bloc/services_bloc.dart';
 
+import '../../../../../core/error/failure.dart';
+import '../../../../../core/function/failure_to_message.dart';
 import '../../../data/models/library_models/library_model.dart';
 import '../../../domain/entites/header_books_entites.dart';
+import '../../../domain/usecase/library_usecase/library_usecase.dart';
 
 part 'library_event.dart';
 part 'library_state.dart';
 
 class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
-  LibraryBloc() : super(LibraryBooksInitial(index: 0)) {
-    on<LibraryEvent>((event, emit) {
-      // int cureent = 0;
+  final GetAllBooksUsecase getAllBooksUsecase;
+  LibraryBloc({required this.getAllBooksUsecase})
+      : super(LibraryBooksInitial(index: 0)) {
+    on<LibraryEvent>((event, emit) async {
+      List<BookDetaile> bookDown = [];
 
       if (event is GetBooksLibraryEvent) {
         emit(LoadingLibraryState());
-
-        emit(LoadedBookLibraryState(books: books));
+        var data = await getAllBooksUsecase();
+        // emit(LoadedBookLibraryState(books: books));
+        emit(_failueOrGetAllBooksState(data));
       }
       if (event is GetHeaderBooksLibraryEvent) {
         emit(LoadingLibraryState());
-
         emit(HeaderBooksLibraryState(
             index: event.index, header: titles, books: books));
-
         // emit(LoadedBookLibraryState(books: books));
       }
+      if (event is DownloadBookLibraryEvent) {
+        var responsDownOrFailuer = await event.response;
+        _failueOrdownloadState(responsDownOrFailuer);
+        // emit(LoadingLibraryState());
+        // bookDown.add(event.details);
+      }
     });
+  }
+  LibraryState _failueOrdownloadState(Either<Failure, BookDetaile> ether) {
+    return ether.fold(
+        (failure) => ErrorLibraryState(message: failureToMessage(failure)),
+        (book) => LibraryBookDownloadState(bookDawonload: book));
+  }
+
+  LibraryState _failueOrGetAllBooksState(
+      Either<Failure, List<BookDetaile>> ether) {
+    return ether.fold(
+        (failure) => ErrorLibraryState(message: failureToMessage(failure)),
+        (books) => LoadedBookLibraryState(books: books));
   }
 }
 
