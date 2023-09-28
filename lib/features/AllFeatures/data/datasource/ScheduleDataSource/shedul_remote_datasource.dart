@@ -21,7 +21,7 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
     String respone = """[
   {
     "coures": "شبكات",
-    "instructor": "ندى الحميدي",
+    "instructor": " د / ندى الحميدي",
     "dept": "IT",
     "level": "2",
     "classroom": "الرازي",
@@ -73,12 +73,13 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
 ]""";
 // """;
 
-    List<dynamic> jsonData = jsonDecode(respone);
-    List<SchedulModel> schedules = [];
-
-    for (var item in jsonData) {
-      schedules.add(SchedulModel.formJson(item));
-    }
+    final List<dynamic> jsonData = jsonDecode(respone);
+    // List<SchedulModel> schedules = [];
+    List<SchedulModel> schedules =
+        (jsonData as List).map((e) => SchedulModel.formJson(e)).toList();
+    // for (var item in jsonData) {
+    //   schedules.add(SchedulModel.formJson(item));
+    // }
 
     // final response = await client.get(
     //   // Uri.parse("http://10.0.2.2:8012/university/schedule/schedule.php"),

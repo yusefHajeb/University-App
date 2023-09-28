@@ -25,6 +25,8 @@ class Constants {
   static const STORGE_DEVICE_OPEN_FIRST_TIME = "stroge_device_open_time";
   static const STORGE_USER_LOGED_FIRST = 'storge_loged_user';
   static const baseUrl = "http://10.0.0.2/university";
+  static const booksChach = "CASH_BOOKS";
+  static const headersChach = "CASH_HEADERS_BOOKS";
   // static const baseUrl = "https://q97wg.wiremockapi.cloud";
 
   // static const singin = "$baseUrl/auth/singup.php";

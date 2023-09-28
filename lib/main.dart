@@ -17,9 +17,9 @@ import 'features/AllFeatures/presentation/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await ScreenUtil.ensureScreenSize();
   // await di.init();
   // Bloc.observer = MyBlocObserver();
+  // await ScreenUtil.ensureScreenSize();
 
   await Global.init();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
             create: (context) =>
-                di.sl<LibraryBloc>()..add(GetHeaderBooksLibraryEvent(0))),
+                di.sl<LibraryBloc>()..add(GetBooksLibraryEvent())),
         BlocProvider(
             create: (context) =>
                 di.sl<OnBoardingBlocBloc>()..add(OnBoardingBlocEvent())),

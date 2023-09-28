@@ -20,14 +20,14 @@ class LibraryModel extends BookDetaile {
 
   factory LibraryModel.formJson(Map<String, dynamic> data) {
     return LibraryModel(
-        id: data['id'] as int,
-        category_id: data['category_id'] as int,
-        patch_id: data['patch_id'] as int,
-        img_book: data['img_book'] as String,
-        name_book: data['name_book'] as String,
-        pdfUrl: data['pdfUrl'] as String,
-        subject: data['subject'] ?? "",
-        write_book: data['write_book'] ?? "");
+        id: data['id'] as int?,
+        category_id: data['category_id'] as int?,
+        patch_id: data['patch_id'] as int?,
+        img_book: data['img_book'] as String?,
+        name_book: data['name_book'] as String?,
+        pdfUrl: data['pdfUrl'] as String?,
+        subject: data['subject'] as String?,
+        write_book: data['write_book'] as String?);
   }
 
   Map<String, dynamic> toJson() {
@@ -47,4 +47,22 @@ class LibraryModel extends BookDetaile {
 class BookTitleModel extends CategoryBooks {
   BookTitleModel({String? book_title, int? bookId})
       : super(book_title: book_title, book_id: bookId);
+
+  Map<String, dynamic> toJson() {
+    return {"book_title": book_title, "book_id": book_id};
+  }
+
+  factory BookTitleModel.formJson(Map<String, dynamic> data) {
+    return BookTitleModel(
+      bookId: data['book_id'] ?? 1,
+      book_title: data['book_title'] ?? "",
+    );
+  }
+}
+
+class Library {
+  final List<LibraryModel> libraryModel;
+  final List<BookTitleModel> bookTitleModel;
+
+  Library({required this.libraryModel, required this.bookTitleModel});
 }

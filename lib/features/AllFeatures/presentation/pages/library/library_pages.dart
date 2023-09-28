@@ -290,7 +290,7 @@ class Library_page extends StatelessWidget {
               );
             } else if (state is ErrorLibraryState) {
               return Center(
-                child: Image.asset(""),
+                child: Image.asset("assets/images/on_3.png"),
               );
             } else {
               return Column(
