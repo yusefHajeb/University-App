@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:university/core/constant/varibal.dart';
+import 'package:university/features/AllFeatures/data/datasource/library/library_local_data.dart';
 // import 'package:university/features/AllFeatures/presentation/bloc/services_bloc/services_bloc.dart';
 
 import '../../../../../core/error/failure.dart';
@@ -10,9 +11,10 @@ import '../../../../../core/function/failure_to_message.dart';
 import '../../../data/models/library_models/library_model.dart';
 import '../../../domain/entites/header_books_entites.dart';
 import '../../../domain/usecase/library_usecase/library_usecase.dart';
-
 part 'library_event.dart';
 part 'library_state.dart';
+
+late Either<Failure, Library> either;
 
 class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   final GetAllBooksUsecase getAllBooksUsecase;
@@ -23,21 +25,16 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
       if (event is GetBooksLibraryEvent) {
         emit(LoadingLibraryState());
-        var data = await getAllBooksUsecase();
-        // emit(LoadedBookLibraryState(books: books));
-        emit(_failueOrGetAllBooksState(data));
+        either = await getAllBooksUsecase();
+        emit(_failueOrHeaderState(either, 0));
       }
       if (event is GetHeaderBooksLibraryEvent) {
         emit(LoadingLibraryState());
-        emit(HeaderBooksLibraryState(
-            index: event.index, header: titles, books: books));
-        // emit(LoadedBookLibraryState(books: books));
+        emit(_failueOrHeaderState(either, event.index));
       }
       if (event is DownloadBookLibraryEvent) {
         var responsDownOrFailuer = await event.response;
         _failueOrdownloadState(responsDownOrFailuer);
-        // emit(LoadingLibraryState());
-        // bookDown.add(event.details);
       }
     });
   }
@@ -48,10 +45,20 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   }
 
   LibraryState _failueOrGetAllBooksState(
-      Either<Failure, List<BookDetaile>> ether) {
+      Either<Failure, Map<String, dynamic>> ether) {
     return ether.fold(
         (failure) => ErrorLibraryState(message: failureToMessage(failure)),
-        (books) => LoadedBookLibraryState(books: books));
+        (books) => LoadedBookLibraryState(books: books['book']));
+  }
+
+  LibraryState _failueOrHeaderState(Either<Failure, Library> ether, int index) {
+    return ether.fold(
+        (failure) => ErrorLibraryState(message: failureToMessage(failure)),
+        (library) => HeaderBooksLibraryState(
+              header: library.bookTitleModel,
+              books: library.libraryModel,
+              index: index,
+            ));
   }
 }
 
