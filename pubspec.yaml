@@ -75,6 +75,8 @@ dependencies:
   flutter_localization: ^0.1.14
   font_awesome_flutter: ^10.5.0
   syncfusion_flutter_pdfviewer: ^23.1.36
+  path_provider: ^2.1.1
+  dio: ^5.3.3
    
 
 
