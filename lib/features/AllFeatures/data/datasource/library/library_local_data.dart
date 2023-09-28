@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/data/models/library_models/library_model.dart';
 import 'package:university/features/AllFeatures/domain/entites/header_books_entites.dart';
@@ -8,17 +9,18 @@ import 'package:university/features/AllFeatures/domain/entites/header_books_enti
 import '../../../../../core/error/execptions.dart';
 
 abstract class LibraryLocalDataSource {
-  Future<List<LibraryModel>> getCashedBook();
+  Future<Library> getCashedBook();
   Future<Unit> cachBooks(List<LibraryModel> data);
+  Future<Unit> cachHeadersBooks(List<BookTitleModel> data);
 }
 
 class LibraryLocalDataSourceImp implements LibraryLocalDataSource {
   //  data = Global.storgeServece.setDataToBox<BookDetaile>("Library");
 
   @override
-  Future<Unit> cachBooks(List<LibraryModel> libraryModel) async {
-    final libraryModelToJson = await libraryModel
-        .map<Map<String, dynamic>>((schedul) => schedul.toJson())
+  Future<Unit> cachBooks(List<LibraryModel> libraryModel) {
+    List libraryModelToJson = libraryModel
+        .map<Map<String, dynamic>>((book) => book.toJson())
         .toList();
 
     // final data = Global.storgeServece.retrieveData<LibraryModel>("Library");
@@ -26,23 +28,41 @@ class LibraryLocalDataSourceImp implements LibraryLocalDataSource {
     // final decodeJsonData = data.map((json)=> LibraryModel.formJson(json)).toList();
 // final dacode =  data.map((json) => LibraryModel.(json)).toList();
     final jsonString = Global.storgeServece
-        .setString("CACHED_LIBRARY", json.encode(libraryModelToJson));
+        .setString(Constants.booksChach, json.encode(libraryModelToJson));
+    print("cached book sucessfuly ===========");
     return Future.value(unit);
   }
 
   @override
-  Future<List<LibraryModel>> getCashedBook() {
-    final jsonString = Global.storgeServece.getStringData("CASH_LIBRARY");
-    if (jsonString != null) {
+  Future<Library> getCashedBook() {
+    final jsonString = Global.storgeServece.getStringData(Constants.booksChach);
+    final jsonHeaders =
+        Global.storgeServece.getStringData(Constants.headersChach);
+
+    if (jsonString != null && jsonHeaders != null) {
       List decodeJsonData = json.decode(jsonString);
-      List<LibraryModel> jsonToSchedulModel = decodeJsonData
+      List decodeHeaders = json.decode(jsonHeaders);
+      var localBook = decodeJsonData
           .map<LibraryModel>((jsonData) => LibraryModel.formJson(jsonData))
           .toList();
-
-      return Future.value(jsonToSchedulModel);
+      var localHeader = decodeHeaders
+          .map<BookTitleModel>((jsonData) => BookTitleModel.formJson(jsonData))
+          .toList();
+      return Future.value(
+          Library(bookTitleModel: localHeader, libraryModel: localBook));
     } else {
       throw EmptyCasheException();
     }
     // TODO: implement getCashedBook
+  }
+
+  @override
+  Future<Unit> cachHeadersBooks(List<BookTitleModel> data) {
+    List header = data
+        .map<Map<String, dynamic>>((jsonData) => jsonData.toJson())
+        .toList();
+    Global.storgeServece.setString(Constants.headersChach, json.encode(header));
+    print("cached header sucessfuly ===========");
+    return Future.value(unit);
   }
 }
