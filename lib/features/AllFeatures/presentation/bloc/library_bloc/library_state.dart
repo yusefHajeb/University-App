@@ -27,7 +27,7 @@ class LoadingLibraryState extends LibraryState {}
 class HeaderBooksLibraryState extends LibraryState {
   final List<BookTitleModel> header;
   final int index;
-  final List<BookDetaile> books;
+  final List<LibraryModel> books;
 
   HeaderBooksLibraryState(
       {required this.index, required this.header, required this.books});

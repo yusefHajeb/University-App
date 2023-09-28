@@ -21,20 +21,30 @@ class LibraryRepositoryImp implements LibraryRepository {
       required this.localSource,
       required this.networkInfo});
   @override
-  Future<Either<Failure, List<BookDetaile>>> getALLBooks() async {
+  Future<Either<Failure, Library>> getALLBooks() async {
     if (await networkInfo.isConnected) {
       try {
-        final List<LibraryModel> remoteData =
-            await remoteDataSource.getAllBooks();
+        var dataRespnse = await remoteDataSource.getAllBooks();
+        print(dataRespnse);
+        final List<LibraryModel> remoteData = dataRespnse.libraryModel;
         localSource.cachBooks(remoteData);
-        return Right(remoteData);
+        localSource.cachHeadersBooks(dataRespnse.bookTitleModel);
+        return Right(Library(
+            libraryModel: dataRespnse.libraryModel,
+            bookTitleModel: dataRespnse.bookTitleModel));
       } on ServerException {
         return Left(ServerFailure());
       }
     } else {
       try {
-        final List<LibraryModel> localData = await localSource.getCashedBook();
-        return Right(localData);
+        print("no Internet Connection ==========");
+        // var local = await localSource.getCashedBook();
+        var localData = await localSource.getCashedBook();
+        print(
+            "${localData.bookTitleModel} ============== ${localData.libraryModel}");
+        return Right(Library(
+            libraryModel: localData.libraryModel,
+            bookTitleModel: localData.bookTitleModel));
       } on EmptyCasheException {
         return Left(EmptyCasheFailure());
       }
