@@ -65,7 +65,17 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
     "dept": "Physics",
     "level": "2",
     "classroom": "الرازي",
-    "time": "2:00 PM",
+    "time": "10:00 PM",
+    "days": "الخميس",
+    "batch": "Batch B"
+  },
+  {
+    "coures": "تطبيقات ذكاء عملي",
+    "instructor": "احلام عنان",
+    "dept": "Physics",
+    "level": "2",
+    "classroom": "الرازي",
+    "time": "8:00 PM",
     "days": "الخميس",
     "batch": "Batch B"
   }

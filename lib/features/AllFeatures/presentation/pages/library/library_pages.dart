@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:university/core/error/failure.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/convert_book_3d.dart';
@@ -15,6 +20,7 @@ import '../../../../../core/color/app_color.dart';
 import '../../../../../core/fonts/app_fonts.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
+import '../../../../../core/widget/fade_effect.dart';
 import '../../../domain/entites/header_books_entites.dart';
 import '../../bloc/library_bloc/library_bloc.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
@@ -161,7 +167,7 @@ class Library_page extends StatelessWidget {
                                   child: Container(
                                     // width: sizeWidth / 4,
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
+                                        EdgeInsets.symmetric(horizontal: 15),
                                     height: 40,
                                     margin: EdgeInsets.only(right: 10),
                                     // width: sizeWidth / state.header.length,
@@ -243,8 +249,8 @@ class Library_page extends StatelessWidget {
                           scrollDirection: Axis.vertical,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 7,
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 10,
                                   childAspectRatio: 0.8,
                                   mainAxisSpacing: 10),
                           itemBuilder: (context, index) {
@@ -264,23 +270,70 @@ class Library_page extends StatelessWidget {
                             return AnimateInEffect(
                               keepAlive: true,
                               child: InkWell(
-                                  onTap: () {
+                                  onTap: () async {
+                                    Directory libraryDirectory = Directory(
+                                        '/storage/emulated/0/download/');
+                                    // Directory libraryDirectory =
+                                    //     await getApplicationDocumentsDirectory();
+                                    print(libraryDirectory.path);
+                                    //====================
+                                    Map<Permission, PermissionStatus> statuses =
+                                        await [Permission.storage].request();
+                                    if (statuses[Permission.storage]!
+                                        .isGranted) {
+                                      try {
+                                        var rsponse = await Dio().download(
+                                            libraryDirectory.path,
+                                            "https://www.fluttercampus.com/sample.pdf",
+                                            onReceiveProgress:
+                                                (received, total) {
+                                          if (total != -1) {
+                                            print((received / total * 100)
+                                                    .toStringAsFixed(0) +
+                                                "%");
+                                          }
+                                          options:
+                                          Options(
+                                            responseType: ResponseType.bytes,
+                                          );
+                                        }).then((rsponse) {
+                                          print(" ================== $rsponse");
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) => ReadingBook(
+                                                    pdfPath:
+                                                        libraryDirectory.path +
+                                                            "/sample.pdf"),
+                                              ));
+                                        });
+                                      } on DioException catch (e) {
+                                        print(e.message);
+                                      }
+                                      // await Global.storgeServece.downloadBook(
+                                      //     libraryDirectory.path,
+                                      //     "https://www.fluttercampus.com/sample.pdf");
+                                    }
+                                    //=========================
                                     BlocProvider.of<LibraryBloc>(context)
                                         .add(DownloadBookLibraryEvent(
                                       response:
                                           starDownload(state.books[index]),
                                     ));
                                     // funcShow(context, book[index]);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => ReadingBook(
-                                                pdfPath:
-                                                    "assets/pdf/harry_potter.pdf")));
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (_) => ReadingBook(
+                                    //           pdfPath:
+                                    //               "assets/pdf/harry_potter.pdf"),
+                                    //     ));
                                   },
-                                  child: BookCover3D(
-                                    url: state.books[index].pdfUrl.toString(),
-                                    confige: true,
+                                  child: FadeInEffect(
+                                    child: BookCover3D(
+                                      url: state.books[index].pdfUrl.toString(),
+                                      confige: true,
+                                    ),
                                   )),
                             );
                           }),

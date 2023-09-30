@@ -1,15 +1,18 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/network/check_network.dart';
-import 'package:university/features/AllFeatures/domain/entites/header_books_entites.dart';
-
 import 'app/enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/helpers/bloc_observer.dart';
 
 class StorgeServece {
   // late final Hive hive;
   late final SharedPreferences _pref;
+  late final Directory libraryDirectory;
   // late BuildContext context;
   late NetworkInfo _network;
   Future<StorgeServece> init() async {
@@ -22,6 +25,7 @@ class StorgeServece {
     // _pref = await SharedPreferences.getInstance();
     Bloc.observer = MyBlocObserver();
 
+    libraryDirectory = await getApplicationDocumentsDirectory();
     return this;
   }
 
@@ -49,6 +53,22 @@ class StorgeServece {
     _pref.setString(response, value);
   }
 
+  downloadBook(String libraryPath, String urlBook) async {
+    try {
+      await Dio().download(urlBook, libraryPath,
+          onReceiveProgress: (received, total) {
+        if (total != -1) {
+          print((received / total * 100).toStringAsFixed(0) + "%");
+        }
+      });
+    } on DioException catch (e) {
+      print(e.message);
+    }
+  }
+
+  String getPathStorageLibrary() {
+    return libraryDirectory.path;
+  }
   // Future<void> setDataToBox<T>(String boxName, T myClass) async {
   //   final box = await Hive.openBox<T>('$boxName');
   //   await box.add(myClass);

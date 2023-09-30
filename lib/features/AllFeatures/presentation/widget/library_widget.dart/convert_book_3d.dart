@@ -82,6 +82,25 @@ class BookCover3D extends StatelessWidget {
                     )
 
                     // IconButton(
+                    )),
+            Positioned(
+                bottom: 2,
+                // bottom: 2,
+                child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    width: 35,
+                    height: 33,
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.downloading_outlined,
+                      size: 22,
+                      color: AppColors.white,
+                    )
+
+                    // IconButton(
                     ))
           ],
         ),

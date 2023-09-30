@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import '../../../../core/widget/loading_widget.dart';
+import '../../domain/entites/schedule.dart';
 import '../widget/Schedul/loaded_schedule.dart';
 
 class SchedulePage extends StatelessWidget {
@@ -45,16 +47,27 @@ Widget buildBody(BuildContext context) {
   //   final weekday = (firstDay.weekday + dayIndex - 1) % 7;
   //   return weekDaysEn[weekday];
   // }
-
-  return BlocBuilder<SchedulBloc, SchedulState>(
+  final day = DateFormat('dd').format(DateTime.now());
+  return BlocConsumer<SchedulBloc, SchedulState>(
     builder: (context, state) {
       // print(getMonthDayList());
       if (state is LoadingSchedulState) {
         return LoadingCircularProgress();
       } else if (state is LoadedSchedulState) {
         print("${state.index} ================");
-        return showSchedule(
-            state.schedule, state.index == 0 ? null : state.index);
+        if (state.index == 0) {
+          return showSchedule(
+              state.schedule, state.index == 0 ? null : state.index, day);
+        } else {
+          print(
+              '99999999999${state.schedule.where((element) => element.level == state.index).toList()};;;;;;;;;;;;');
+          return showSchedule(
+              state.schedule
+                  .where((element) => element.days == "الخميس")
+                  .toList(),
+              state.index == 0 ? null : state.index,
+              day);
+        }
 
         // RefreshIndicator(
         //     onRefresh: () => _onRefresh(context),
@@ -77,6 +90,7 @@ Widget buildBody(BuildContext context) {
         return Center(child: CircularProgressIndicator());
       }
     },
+    listener: (BuildContext context, SchedulState state) {},
   );
 
   // return _showSchedule(_days);

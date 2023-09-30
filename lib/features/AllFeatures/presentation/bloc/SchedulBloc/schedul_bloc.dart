@@ -9,6 +9,8 @@ import '../../../domain/entites/schedule.dart';
 part 'schedul_event.dart';
 part 'schedul_state.dart';
 
+late Either<Failure, List<Schedule>> schedulOrError;
+
 class SchedulBloc extends Bloc<SchedulEvent, SchedulState> {
   final GetAllScheduleUsecase getAllScheduleUsecase;
   // final GetNotificationScheduleUsecase schedlulenotificationUsecae;
@@ -18,50 +20,17 @@ class SchedulBloc extends Bloc<SchedulEvent, SchedulState> {
         emit(LoadingSchedulState());
 
         // ignore: unused_local_variable
-        var cahsed = [
-          Schedule(
-              batch: "1",
-              time: '8:00',
-              classroom: 'الرازي',
-              instructor: "رشيد الشعيبي",
-              coures: " أنظمة خبيرة ",
-              days: "Tue"),
-          Schedule(
-              batch: "1",
-              time: "10:00",
-              classroom: 'قاعة ابن الهيثم',
-              instructor: "ندى الحميدي ",
-              coures: " Prograaming",
-              days: "Wed"),
-          Schedule(
-              batch: "1",
-              time: "10:00",
-              classroom: 'قاعة ابن الهيثم',
-              instructor: "ندى الحميدي ",
-              coures: " Prograaming",
-              days: "Thu"),
-          Schedule(
-              batch: "1",
-              time: "10:00",
-              classroom: 'قاعة ابن الهيثم',
-              instructor: "ندى الحميدي ",
-              coures: " Prograaming",
-              days: "Sat"),
-        ];
 
-        final schedulOrError = await getAllScheduleUsecase();
-        // schedulOrError.fold(
-        //   (failure) =>
-        //       emit(ErrorSchedulState(message: failureToMessage(failure))),
-        //   (schedula) => emit(LoadedSchedulState(schedule: schedula)),
-        // );
-        // emit(LoadedSchedulState(schedule: cahsed));
+        schedulOrError = await getAllScheduleUsecase();
         emit(_failureOrSchedualToState(schedulOrError, event.index));
       } else if (event is RefreshScheduleEvent) {
         print("----------------- Refreshe");
         emit(LoadingSchedulState());
         final schedulOrError = await getAllScheduleUsecase();
         emit(_failureOrSchedualToState(schedulOrError, 0));
+      } else if (event is SelectDayScheduleEvent) {
+        emit(LoadingSchedulState());
+        emit(_failureOrSchedualToState(schedulOrError, event.index));
       }
 
       // else if (event is NotificationScheduleEvent) {
