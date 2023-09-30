@@ -8,10 +8,10 @@ import '../../../../../core/value/style_manager.dart';
 import '../../../domain/entites/schedule.dart';
 import 'cards_schedule.dart';
 
-showSchedule(List<Schedule> data, int? changeDate) {
-  String foramtDateToDay() {
-    return DateFormat('dd').format(DateTime.now());
-  }
+showSchedule(List<Schedule> data, int? changeDate, String foramtDateToDay) {
+  // String foramtDateToDay() {
+  //   return DateFormat('dd').format(DateTime.now());
+  // }
 
   String foramtDateMonth() {
     // return DateFormat('mm').format(DateTime(DateTime.now().month));
@@ -20,7 +20,7 @@ showSchedule(List<Schedule> data, int? changeDate) {
 
   List<String> getMonthDayList() {
     final now = DateTime.now();
-    final dayesInMonth = DateTime(now.year, now.month + 1, 0).day;
+    final dayesInMonth = DateTime(now.year, now.month, 0).day;
     final monthDayList =
         List<String>.generate(dayesInMonth, (index) => (index + 1).toString());
     return monthDayList;
@@ -36,14 +36,15 @@ showSchedule(List<Schedule> data, int? changeDate) {
     'Sat',
     'Sun'
   ];
+  List<Schedule> select = data;
   final List<String> weekDaysAr = [
-    'السبت',
-    'الاحد',
     'الإثنين',
     'الثلاثاء',
     'الأربعاء',
     'الخميس',
-    'الجمعة'
+    'الجمعة',
+    'السبت',
+    'الاحد',
   ];
   String getDay(int dayIndex) {
     final now = DateTime.now();
@@ -61,9 +62,9 @@ showSchedule(List<Schedule> data, int? changeDate) {
 
   // final length = getMonthDayList();
   // int index = 0;
-  List listda(int index) {
-    return [getMonthDayList()[index], getDay(index)];
-  }
+  // List listda(int index) {
+  //   return [getMonthDayList()[index], getDay(index)];
+  // }
 
   // for (int x in getMonthDayList()) {
   //   day = listda(x);
@@ -125,9 +126,17 @@ showSchedule(List<Schedule> data, int? changeDate) {
                     onTap: () {},
                     child: InkWell(
                       onTap: () {
-                        print("$changeDate ===");
+                        print(" =============$changeDate ===");
                         BlocProvider.of<SchedulBloc>(context)
-                            .add(GetAllScheduleEvent(index: index + 1));
+                            .add(SelectDayScheduleEvent(index: index + 1));
+                        if (changeDate != null) {
+                          select = data
+                              .where((element) =>
+                                  element.days == getDay(changeDate))
+                              .toList();
+                          print("${select.length}-----------------------");
+                        }
+
                         // response = data
                         //     .where((element) =>
                         //         element.days == _days[index][1].toString())
@@ -149,7 +158,7 @@ showSchedule(List<Schedule> data, int? changeDate) {
                               ? (changeDate.toString() == day[index]
                                   ? Colors.blue.shade100.withOpacity(0.5)
                                   : Colors.blue.withOpacity(0))
-                              : (foramtDateToDay() == day[index]
+                              : (foramtDateToDay == day[index]
                                   ? Colors.blue.shade100.withOpacity(0.5)
                                   : Colors.blue.withOpacity(0)))
                           // ? Colors.blue.shade100.withOpacity(0.5)
@@ -191,7 +200,7 @@ showSchedule(List<Schedule> data, int? changeDate) {
                   );
                 }),
           ),
-          CardSchedule(data)
+          CardSchedule(select)
         ]),
       ));
 }
