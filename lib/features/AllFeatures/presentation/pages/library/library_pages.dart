@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -7,14 +6,14 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:university/core/error/execptions.dart';
 import 'package:university/core/error/failure.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/convert_book_3d.dart';
 import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/keep_reading_section.dart';
-import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/last_opend_book.dart';
-import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/reading_book.dart';
 import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/fonts/app_fonts.dart';
@@ -24,6 +23,7 @@ import '../../../../../core/widget/fade_effect.dart';
 import '../../../domain/entites/header_books_entites.dart';
 import '../../bloc/library_bloc/library_bloc.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
+import 'widget_download.dart';
 
 class Library_page extends StatelessWidget {
   const Library_page({
@@ -39,6 +39,100 @@ class Library_page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Dio dio = Dio();
+    String newPath = '';
+    Future<Either<Failure, BookDetaile>> downloadPDF(
+        String url, String filename, BookDetaile book) async {
+      Directory? libraryDirectory;
+      try {
+        Map<Permission, PermissionStatus> statuses =
+            await [Permission.storage].request();
+        if (statuses[Permission.storage]!.isGranted) {
+          libraryDirectory = (await getDownloadsDirectory())!;
+          newPath = '';
+          List<String> folders = libraryDirectory.path.split('/');
+          for (int x = 1; x < folders.length; x++) {
+            String folder = folders[x];
+            if (folder != "Android") {
+              newPath += "/" + folder;
+            } else {
+              break;
+            }
+          }
+          newPath = newPath + "/University";
+          libraryDirectory = Directory(newPath);
+          print(libraryDirectory.path);
+          if ((await libraryDirectory.exists())) {
+            print("Create File Successfuly");
+            await libraryDirectory.create(recursive: true);
+          }
+          if (await libraryDirectory.exists()) {
+            print("Start downloading PDF"); // رسالة قبل بدء التنزيل
+            int progress = 0;
+            File saveFile = File('${libraryDirectory.path}/$filename');
+            await dio.download(url, saveFile.path,
+                onReceiveProgress: (received, total) {
+              print("received: $received, total: $total");
+              progress = (received / total).toInt();
+
+              print('progress');
+              print(progress);
+              // if (total != -1) {
+              //   double progress = received / total * 100;
+              //   print("Download progress: $progress%");
+              // }
+            });
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('تم التنزيل'),
+                  content: const Text('هل ترغب في فتح الملف؟'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        BlocProvider.of<LibraryBloc>(context).add(
+                          DownloadBookLibraryEvent(
+                              response: BookDetaile(
+                                  category_id: book.category_id,
+                                  img_book: book.img_book,
+                                  name_book: filename,
+                                  patch_id: book.patch_id,
+                                  pdfUrl: saveFile.path)),
+                        );
+                        OpenFilex.open(saveFile.path); // فتح الملف
+                      },
+                      child: const Text('نعم'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('لا'),
+                    ),
+                  ],
+                );
+              },
+            );
+
+            // OpenFilex.open(saveFile.path);
+          }
+        }
+        print("Successfully  ==========");
+        return Right(BookDetaile(
+            category_id: book.category_id,
+            img_book: book.img_book,
+            name_book: book.name_book,
+            patch_id: book.patch_id,
+            pdfUrl: newPath));
+      } on ServerException {
+        print("حدث خطأ أثناء التنزيل: ");
+
+        return Left(ServerFailure());
+      }
+    }
+
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(children: [
@@ -83,7 +177,7 @@ class Library_page extends StatelessWidget {
                 enableInfiniteScroll: true,
                 enlargeCenterPage: true, //to image show is biger than behaind
                 autoPlayCurve: Curves.fastOutSlowIn,
-                autoPlayInterval: Duration(seconds: 4),
+                autoPlayInterval: const Duration(seconds: 4),
                 autoPlay: false),
             itemBuilder: (BuildContext context, int index, int realIndex) {
               return Container(
@@ -110,23 +204,16 @@ class Library_page extends StatelessWidget {
             position: 3,
             decorator: DotsDecorator(
                 color: AppColors.darkGrey,
-                size: Size.square(8.0),
-                activeSize: Size(18.0, 8.0),
+                size: const Size.square(8.0),
+                activeSize: const Size(18.0, 8.0),
                 activeShape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 activeColor: AppColors.primaryAccentColor),
           ),
         ),
         AppSpaces.verticalSpace20,
-
         BlocConsumer<LibraryBloc, LibraryState>(
-          listener: (context, state) {
-            // if (state is ServiceCurentState) {
-            //   BlocProvider.of<ServicesBloc>(context)
-            //       .add(ServiceCurentEvent(cureent: state.curent));
-            // }
-            // state.curent = state.curent;
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             // int curent = state.curent;
             if (state is LoadingLibraryState) {
@@ -150,7 +237,7 @@ class Library_page extends StatelessWidget {
                           child: Container(
                             width: sizeWidth,
                             height: sizeHeight * 30,
-                            // color: Colors.amber,
+                            padding: const EdgeInsets.only(right: 5.0),
                             child: ListView.builder(
                               itemCount: state.header.length,
                               scrollDirection: Axis.horizontal,
@@ -162,15 +249,11 @@ class Library_page extends StatelessWidget {
                                     BlocProvider.of<LibraryBloc>(context)
                                         .add(GetHeaderBooksLibraryEvent(index));
                                   },
-
-                                  // }))))
                                   child: Container(
-                                    // width: sizeWidth / 4,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 15),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
                                     height: 40,
                                     margin: EdgeInsets.only(right: 10),
-                                    // width: sizeWidth / state.header.length,
                                     child: Center(
                                       child: Text(
                                           state.header[index].book_title ?? "",
@@ -184,18 +267,7 @@ class Library_page extends StatelessWidget {
                                                 ? FontWeightManager.black
                                                 : FontWeightManager.medium,
                                             // fontWeight: FontWeight.bold
-                                          )
-
-                                          // TextStyle(
-
-                                          //     color: state.index == index
-                                          //         ? AppColors.white
-                                          //         : AppColors.darkGrey,
-                                          //     fontWeight: state.index == index
-                                          //         ? FontWeightManager.black
-                                          //         : FontWeightManager.medium,
-                                          //     fontSize: 12),
-                                          ),
+                                          )),
                                     ),
                                     decoration: state.index == index
                                         ? BoxDecorationStyles.headerTab
@@ -210,28 +282,11 @@ class Library_page extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // AnimatedPositioned(
-                        //     bottom: 0,
-                        //     left: changePostionedLine(
-                        //         state.index, context, state.header.length),
-                        //     curve: Curves.easeIn,
-                        //     duration: Duration(milliseconds: 300),
-                        //     child: AnimatedContainer(
-                        //       width: 50,
-                        //       height: 4,
-                        //       decoration: BoxDecorationStyles.backgroundBlack,
-                        //       duration: Duration(milliseconds: 400),
-                        //     ))
                       ]),
                     ),
                     // space between Header books and content book
                     AppSpaces.verticalSpace20,
 
-                    // LastOpenedBook(),
-                    KeepReadingSection(
-                      books: state.books,
-                    ),
-                    // AllPurchasedBooks(),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GridView.builder(
@@ -248,86 +303,31 @@ class Library_page extends StatelessWidget {
                           physics: NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
                                   crossAxisSpacing: 10,
                                   childAspectRatio: 0.8,
                                   mainAxisSpacing: 10),
                           itemBuilder: (context, index) {
-                            // List<BookDetaile> checkBook = state.books
-                            //     .where((element) => element.category_id == 1)
-                            //     .toList();
-                            print("Clike ${state.index} =====");
-
-                            // List<BookDetaile> book = state.index != 0
-                            //     ? state.books
-                            //         .where(
-                            //           (element) =>
-                            //               element.category_id == state.index,
-                            //         )
-                            //         .toList()
-                            //     : state.books;
                             return AnimateInEffect(
                               keepAlive: true,
                               child: InkWell(
                                   onTap: () async {
-                                    Directory libraryDirectory = Directory(
-                                        '/storage/emulated/0/download/');
-                                    // Directory libraryDirectory =
-                                    //     await getApplicationDocumentsDirectory();
-                                    print(libraryDirectory.path);
-                                    //====================
-                                    Map<Permission, PermissionStatus> statuses =
-                                        await [Permission.storage].request();
-                                    if (statuses[Permission.storage]!
-                                        .isGranted) {
-                                      try {
-                                        var rsponse = await Dio().download(
-                                            libraryDirectory.path,
-                                            "https://www.fluttercampus.com/sample.pdf",
-                                            onReceiveProgress:
-                                                (received, total) {
-                                          if (total != -1) {
-                                            print((received / total * 100)
-                                                    .toStringAsFixed(0) +
-                                                "%");
-                                          }
-                                          options:
-                                          Options(
-                                            responseType: ResponseType.bytes,
-                                          );
-                                        }).then((rsponse) {
-                                          print(" ================== $rsponse");
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (_) => ReadingBook(
-                                                    pdfPath:
-                                                        libraryDirectory.path +
-                                                            "/sample.pdf"),
-                                              ));
-                                        });
-                                      } on DioException catch (e) {
-                                        print(e.message);
-                                      }
-                                      // await Global.storgeServece.downloadBook(
-                                      //     libraryDirectory.path,
-                                      //     "https://www.fluttercampus.com/sample.pdf");
-                                    }
-                                    //=========================
-                                    BlocProvider.of<LibraryBloc>(context)
-                                        .add(DownloadBookLibraryEvent(
-                                      response:
-                                          starDownload(state.books[index]),
-                                    ));
-                                    // funcShow(context, book[index]);
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //       builder: (_) => ReadingBook(
-                                    //           pdfPath:
-                                    //               "assets/pdf/harry_potter.pdf"),
-                                    //     ));
+                                    String pdfUrl =
+                                        "https://www.fluttercampus.com/sample.pdf";
+                                    String pdfFilename = "sample.pdf";
+                                    await downloadPDF(
+                                        pdfUrl, pdfFilename, books[index]);
+
+                                    //       Navigator.push(
+                                    //           context,
+                                    //           MaterialPageRoute(
+                                    //             builder: (_) => ReadingBook(
+                                    //                 pdfPath:
+                                    //                     libraryDirectory.path +
+                                    //                         "/sample.pdf"),
+                                    //           ));
+                                    //     });
                                   },
                                   child: FadeInEffect(
                                     child: BookCover3D(
@@ -337,7 +337,7 @@ class Library_page extends StatelessWidget {
                                   )),
                             );
                           }),
-                    )
+                    ),
                   ],
                 ),
               );
@@ -348,9 +348,9 @@ class Library_page extends StatelessWidget {
             } else {
               return Column(
                 children: [
-                  Text("some  woring"),
+                  const Text("some  woring"),
                   ElevatedButton(
-                    child: Text("try Again"),
+                    child: const Text("try Again"),
                     onPressed: () {
                       BlocProvider.of<LibraryBloc>(context)
                           .add(GetHeaderBooksLibraryEvent(0));
@@ -362,8 +362,6 @@ class Library_page extends StatelessWidget {
           },
         ),
         AppSpaces.verticalSpace20,
-
-        // ContentBook(),
       ]),
     );
   }
