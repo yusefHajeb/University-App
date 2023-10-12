@@ -22,10 +22,11 @@ class GetHeaderBooksLibraryEvent extends LibraryEvent {
 }
 
 class DownloadBookLibraryEvent extends LibraryEvent {
-  final Future<Either<Failure, BookDetaile>> response;
+  final BookDetaile response;
   const DownloadBookLibraryEvent({
     required this.response,
   });
+
   @override
   List<Object> get props => [response];
 }

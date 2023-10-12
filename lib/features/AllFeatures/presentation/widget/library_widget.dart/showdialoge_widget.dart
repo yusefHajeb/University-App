@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:university/features/AllFeatures/data/models/library_models/library_model.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/book_favorite_bloc/books_favorite_bloc.dart';
 import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/constant/varibal.dart';
 import '../../../../../core/value/app_space.dart';
-import '../../../domain/entites/header_books_entites.dart';
 import '../Auth Widget/submet_login.dart';
 
-funcShow(BuildContext context, BookDetaile list) {
+funcShow(BuildContext context, LibraryModel list) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -28,8 +28,8 @@ funcShow(BuildContext context, BookDetaile list) {
                     // height: 200,
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
-                      child: Image.asset(
-                        list.img_book.toString(),
+                      child: Image.network(
+                        list.img_book ?? "",
                         fit: BoxFit.cover,
                       ),
                     ),

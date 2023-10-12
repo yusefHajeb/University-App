@@ -17,7 +17,7 @@ class AppColors {
   static final white = Color(0xFFFFFFFF);
   static const kCardColor = Color(0xFF282B30);
   static const kBGColor = Color(0xFF343537);
-
+  static const backgroundAccentColor = Color(0xFF262A34);
 //=========================================== //cashed
   static const kTextColor = Color.fromARGB(255, 143, 149, 152);
   static const kBlackColor = Color.fromARGB(255, 39, 68, 78);

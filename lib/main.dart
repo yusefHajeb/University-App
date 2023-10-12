@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/Utils/lang/app_localization.dart';
 import 'app/enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
+import 'features/AllFeatures/presentation/bloc/book_favorite_bloc/books_favorite_bloc.dart';
 import 'features/AllFeatures/presentation/bloc/form_bloc/bloc/validate_bloc.dart';
 import 'features/AllFeatures/presentation/bloc/form_bloc/form_login_bloc.dart';
 import 'features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
@@ -57,7 +58,8 @@ class MyApp extends StatelessWidget {
                 di.sl<OnBoardingBlocBloc>()..add(OnBoardingBlocEvent())),
         BlocProvider(create: (context) => di.sl<LadingPageBloc>()),
         BlocProvider(create: (context) => di.sl<FormLoginBloc>()),
-        BlocProvider(create: (context) => di.sl<ValidateBloc>())
+        BlocProvider(create: (context) => di.sl<ValidateBloc>()),
+        BlocProvider(create: (context) => di.sl<BooksFavoriteBloc>())
       ],
       child:
           BlocBuilder<LocaleCubit, ChangeLocalState>(builder: (context, state) {
@@ -94,7 +96,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
-            appBarTheme: AppBarTheme(
+            appBarTheme: const AppBarTheme(
               systemOverlayStyle: SystemUiOverlayStyle.light,
             ),
           ),

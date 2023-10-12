@@ -5,7 +5,6 @@ import 'package:university/core/function/messages.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singup.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singup_usecase.dart';
-
 import '../../../../../core/error/failure.dart';
 import '../../../../../core/function/failure_to_message.dart';
 import '../../../domain/entites/auth_entites/singin.dart';

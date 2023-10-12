@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import '../../../../core/widget/loading_widget.dart';
-import '../../domain/entites/schedule.dart';
 import '../widget/Schedul/loaded_schedule.dart';
 
 class SchedulePage extends StatelessWidget {

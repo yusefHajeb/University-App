@@ -40,13 +40,17 @@ class ApplicationPage extends StatelessWidget {
                     topRight: Radius.circular(20))),
             child: BottomNavigationBar(
               items: bottomNavItems,
+              // fixedColor: AppColors.greyColor,
               // elevation: 0,
+              backgroundColor: AppColors.error,
+
               type: BottomNavigationBarType.shifting,
               currentIndex: state.tabIndex,
               showSelectedLabels: true,
+
               // showUnselectedLabels: false,
-              selectedItemColor: Theme.of(context).colorScheme.primary,
-              unselectedItemColor: AppColors.greyColor,
+              selectedItemColor: AppColors.primaryAccentColor,
+              unselectedItemColor: AppColors.primaryAccentColor,
               onTap: ((value) {
                 //get data to index in bloc and refresh value in ui
                 BlocProvider.of<LadingPageBloc>(context).add(TabChange(value));

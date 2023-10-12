@@ -36,9 +36,9 @@ class SinginModel extends Singin {
 }
 
 class LoginModelFields {
-  static const String username = "username";
-  static const String password = "password";
-  static const String token = "token";
-  static const String record = "record";
-  static const String email = "email";
+  static const String username = "std_";
+  static const String password = "std_";
+  static const String token = "std_";
+  static const String record = "std_";
+  static const String email = "std_";
 }

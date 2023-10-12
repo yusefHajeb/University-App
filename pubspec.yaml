@@ -78,6 +78,9 @@ dependencies:
   path_provider: ^2.1.1
   dio: ^5.3.3
   permission_handler: ^11.0.0
+  # open_file: ^3.3.2
+  # open_filex: ^4.3.4
+  # awesome_dialog: ^3.1.0
    
 
 
@@ -108,7 +111,7 @@ flutter:
     - assets/images/
     - assets/lang/
     - assets/pdf/
-    
+      
 
  
   fonts:

@@ -13,8 +13,8 @@ class CustomInputSerch extends StatelessWidget {
 
     return Expanded(
       child: Container(
-        height: sizeWidth / 8,
-        width: sizeWidth / 1.22,
+        height: sizeWidth / 10,
+        width: sizeWidth / 1.27,
         alignment: Alignment.center,
         padding: EdgeInsets.only(right: sizeWidth / 30),
         decoration: BoxDecoration(

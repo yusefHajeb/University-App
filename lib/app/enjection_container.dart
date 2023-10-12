@@ -25,6 +25,7 @@ import '../features/AllFeatures/data/repositories/schudul_repository_imp.dart';
 import '../features/AllFeatures/domain/repositories/auth_repositories/student_repository.dart';
 import '../features/AllFeatures/domain/repositories/schedule_repository.dart';
 import '../features/AllFeatures/domain/usecase/ScheduleUsecae/notificatin_schedule_usecase.dart';
+import '../features/AllFeatures/presentation/bloc/book_favorite_bloc/books_favorite_bloc.dart';
 import '../features/AllFeatures/presentation/bloc/form_bloc/bloc/validate_bloc.dart';
 import '../features/AllFeatures/presentation/bloc/form_bloc/form_login_bloc.dart';
 import '../features/AllFeatures/presentation/bloc/library_bloc/library_bloc.dart';
@@ -35,6 +36,8 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   //bloc ===========================
+
+  sl.registerFactory(() => BooksFavoriteBloc());
   sl.registerFactory(() => LadingPageBloc());
   sl.registerFactory(() => SchedulBloc(getAllScheduleUsecase: sl()));
   sl.registerFactory(() => OnBoardingBlocBloc());

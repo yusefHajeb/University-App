@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,7 +7,6 @@ import 'package:university/core/function/messages.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/pages/Auth/sing_in_page.dart';
 import 'package:university/features/AllFeatures/presentation/pages/onboarding/onboarding_start.dart';
-
 import '../../../../../core/color/app_color.dart';
 import '../../widget/Auth Widget/form_singup_widget.dart';
 

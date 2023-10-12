@@ -9,8 +9,10 @@ class BookDetaile extends Equatable {
   final String? name_book;
   final String? write_book;
   final String? pdfUrl;
+  final bool? isDownload;
 
   const BookDetaile({
+    this.isDownload,
     this.id,
     this.category_id,
     this.patch_id,
@@ -30,7 +32,8 @@ class BookDetaile extends Equatable {
         name_book,
         write_book,
         category_id,
-        pdfUrl
+        pdfUrl,
+        isDownload
       ];
 }
 

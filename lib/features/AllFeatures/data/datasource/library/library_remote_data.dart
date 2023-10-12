@@ -27,40 +27,40 @@ class LibraryRemoteDataSourceImp implements LibraryRemoteDataSource {
                 "category_id": 1,
                 "patch_id": 2,
                 "subject": "شبكات",
-                "img_book": "https://www.fluttercampus.com/sample.pdf",
+                "img_book": "https://m.media-amazon.com/images/I/41pTqRlersL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg",
                 "name_book": "Clean advanced",
                 "write_book": "Yousef Hajeb",
-                "pdfUrl": "https://m.media-amazon.com/images/I/41pTqRlersL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg"
+                "pdfUrl": "https://www.fluttercampus.com/sample.pdf"
             },
             {
                 "id": 2,
                 "category_id": 3,
                 "patch_id": 2,
                 "subject": "نطبيقات ذكاء اصطناعي",
-                "img_book": "https://www.fluttercampus.com/sample.pdf",
+                "img_book":"https://m.media-amazon.com/images/I/41HvCijjVbL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg" ,
                 "name_book": "PHP form beginer to advanced",
                 "write_book": "Yousef Hajeb",
-                "pdfUrl": "https://m.media-amazon.com/images/I/41HvCijjVbL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg"
+                "pdfUrl": "https://www.fluttercampus.com/sample.pdf"
             },
             {
                 "id": 2,
                 "category_id": 3,
                 "patch_id": 2,
                 "subject": "تطبيقات ويب",
-                "img_book": "https://www.fluttercampus.com/sample.pdf",
+                "img_book": "https://m.media-amazon.com/images/I/41zWWzbiHpL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg",
                 "name_book": "ابي الجميل",
                 "write_book": "Yousef Hajeb",
-                "pdfUrl": "https://m.media-amazon.com/images/I/41zWWzbiHpL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg"
+                "pdfUrl": "https://www.fluttercampus.com/sample.pdf"
             },
             {
                 "id": 2,
                 "category_id": 3,
                 "patch_id": 2,
                 "subject": "تطبيقات ويب",
-                "img_book": "https://www.fluttercampus.com/sample.pdf",
+                "img_book": "https://m.media-amazon.com/images/I/41zWWzbiHpL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg",
                 "name_book": "ابي الجميل",
                 "write_book": "Yousef Hajeb",
-                "pdfUrl": "https://m.media-amazon.com/images/I/41zWWzbiHpL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg"
+                "pdfUrl": "https://www.fluttercampus.com/sample.pdf"
             }
            
         ],

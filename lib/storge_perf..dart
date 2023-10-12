@@ -37,6 +37,10 @@ class StorgeServece {
     return await _pref.setBool(key, value);
   }
 
+  Future<bool> getBool(String key) async {
+    return await _pref.getBool(key) ?? false;
+  }
+
   bool getDeviceFirstOpen() {
     return _pref.getBool(Constants.STORGE_DEVICE_OPEN_FIRST_TIME) ?? false;
   }
