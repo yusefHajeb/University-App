@@ -5,6 +5,8 @@ import 'package:university/features/AllFeatures/presentation/bloc/book_favorite_
 // import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
 
 import '../../../../../core/color/app_color.dart';
+import '../../../data/models/library_models/library_model.dart';
+import '../../pages/library/downoad_widget.dart';
 // import '../../../../../core/constant/varibal.dart';
 // import '../../../../../core/widget/buttons/button_back.dart';
 // import '../../../../../core/widget/buttons/custom_button_with_icon.dart';
@@ -22,10 +24,9 @@ import '../../../../../core/color/app_color.dart';
 // }
 
 class BookCover3D extends StatelessWidget {
-  final String url;
   final bool confige;
-
-  const BookCover3D({super.key, required this.url, required this.confige});
+  final LibraryModel book;
+  const BookCover3D({super.key, required this.book, required this.confige});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -58,7 +59,7 @@ class BookCover3D extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: CachedNetworkImage(
-                    imageUrl: url,
+                    imageUrl: book.img_book.toString(),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -85,23 +86,11 @@ class BookCover3D extends StatelessWidget {
                     )),
             Positioned(
                 bottom: 2,
-                // bottom: 2,
-                child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    width: 35,
-                    height: 33,
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.downloading_outlined,
-                      size: 22,
-                      color: AppColors.white,
-                    )
 
-                    // IconButton(
-                    ))
+                // bottom: 2,
+                child: TestDownload(
+                  bookDownload: book,
+                ))
           ],
         ),
       ),

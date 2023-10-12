@@ -6,24 +6,26 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:open_filex/open_filex.dart';
+// import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:university/core/error/execptions.dart';
 import 'package:university/core/error/failure.dart';
-import 'package:university/core/value/global.dart';
+import 'package:university/features/AllFeatures/presentation/pages/library/downoad_widget.dart';
 import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/convert_book_3d.dart';
-import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/keep_reading_section.dart';
 import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/fonts/app_fonts.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
 import '../../../../../core/widget/fade_effect.dart';
+import '../../../data/models/library_models/library_model.dart';
 import '../../../domain/entites/header_books_entites.dart';
 import '../../bloc/library_bloc/library_bloc.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
-import 'widget_download.dart';
+// import 'widget_download.dart';
+
+final CarouselController carouselController = CarouselController();
 
 class Library_page extends StatelessWidget {
   const Library_page({
@@ -62,19 +64,16 @@ class Library_page extends StatelessWidget {
           newPath = newPath + "/University";
           libraryDirectory = Directory(newPath);
           print(libraryDirectory.path);
-          if ((await libraryDirectory.exists())) {
-            print("Create File Successfuly");
-            await libraryDirectory.create(recursive: true);
-          }
+
           if (await libraryDirectory.exists()) {
             print("Start downloading PDF"); // رسالة قبل بدء التنزيل
             int progress = 0;
             File saveFile = File('${libraryDirectory.path}/$filename');
+            newPath = saveFile.path;
             await dio.download(url, saveFile.path,
                 onReceiveProgress: (received, total) {
               print("received: $received, total: $total");
               progress = (received / total).toInt();
-
               print('progress');
               print(progress);
               // if (total != -1) {
@@ -82,43 +81,46 @@ class Library_page extends StatelessWidget {
               //   print("Download progress: $progress%");
               // }
             });
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('تم التنزيل'),
-                  content: const Text('هل ترغب في فتح الملف؟'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        BlocProvider.of<LibraryBloc>(context).add(
-                          DownloadBookLibraryEvent(
-                              response: BookDetaile(
-                                  category_id: book.category_id,
-                                  img_book: book.img_book,
-                                  name_book: filename,
-                                  patch_id: book.patch_id,
-                                  pdfUrl: saveFile.path)),
-                        );
-                        OpenFilex.open(saveFile.path); // فتح الملف
-                      },
-                      child: const Text('نعم'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('لا'),
-                    ),
-                  ],
-                );
-              },
-            );
 
             // OpenFilex.open(saveFile.path);
           }
         }
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('تم التنزيل'),
+              content: const Text('هل ترغب في فتح الملف؟'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    BlocProvider.of<LibraryBloc>(context).add(
+                      DownloadBookLibraryEvent(
+                          response: BookDetaile(
+                              category_id: book.category_id,
+                              img_book: book.img_book,
+                              name_book: filename,
+                              patch_id: book.patch_id,
+                              pdfUrl: newPath)),
+                    );
+                    print("newPath");
+                    print("$newPath/$filename");
+                    // OpenFilex.open("$newPath/$filename"); // فتح الملف
+                  },
+                  child: const Text('نعم'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('لا'),
+                ),
+              ],
+            );
+          },
+        );
+
         print("Successfully  ==========");
         return Right(BookDetaile(
             category_id: book.category_id,
@@ -151,23 +153,9 @@ class Library_page extends StatelessWidget {
         AppSpaces.verticalSpace10,
         Container(
           child: CarouselSlider.builder(
+            carouselController: carouselController,
             // useing this code when show img from internet
-            // items: libraryCarouslImg.map((imageUrl) {
-            //   return Container(
-            //     width: double.infinity,
-            //     decoration: BoxDecorationStyles.fadingInnerDecor,
-            //     child: ClipRRect(
-            //       borderRadius: BorderRadius.all(Radius.circular(20)),
-            //       child: InteractiveViewer(
-            //         clipBehavior: Clip.hardEdge,
-            //         child: Image.asset(
-            //           imageUrl,
-            //           fit: BoxFit.cover,
-            //         ),
-            //       ),
-            //     ),
-            //   );
-            // }).toList(),
+
             options: CarouselOptions(
                 height: 120,
                 onPageChanged: (int val, _) {},
@@ -211,7 +199,7 @@ class Library_page extends StatelessWidget {
                 activeColor: AppColors.primaryAccentColor),
           ),
         ),
-        AppSpaces.verticalSpace20,
+        AppSpaces.verticalSpace10,
         BlocConsumer<LibraryBloc, LibraryState>(
           listener: (context, state) {},
           builder: (context, state) {
@@ -285,7 +273,7 @@ class Library_page extends StatelessWidget {
                       ]),
                     ),
                     // space between Header books and content book
-                    AppSpaces.verticalSpace20,
+                    AppSpaces.verticalSpace10,
 
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -315,10 +303,11 @@ class Library_page extends StatelessWidget {
                                   onTap: () async {
                                     String pdfUrl =
                                         "https://www.fluttercampus.com/sample.pdf";
-                                    String pdfFilename = "sample.pdf";
-                                    await downloadPDF(
-                                        pdfUrl, pdfFilename, books[index]);
+                                    String pdfFilename = "sampe.pdf";
 
+                                    // Either<Failure, BookDetaile> x= await downloadPDF(
+                                    //     pdfUrl, pdfFilename, books[index]);
+                                    // x.fold(( failure) =>  , (loaded) => null)
                                     //       Navigator.push(
                                     //           context,
                                     //           MaterialPageRoute(
@@ -331,7 +320,7 @@ class Library_page extends StatelessWidget {
                                   },
                                   child: FadeInEffect(
                                     child: BookCover3D(
-                                      url: state.books[index].pdfUrl.toString(),
+                                      book: state.books[index],
                                       confige: true,
                                     ),
                                   )),
@@ -362,15 +351,10 @@ class Library_page extends StatelessWidget {
           },
         ),
         AppSpaces.verticalSpace20,
+        TestDownload(
+            bookDownload: LibraryModel(
+                pdfUrl: "https://www.fluttercampus.com/sample.pdf"))
       ]),
     );
-  }
-
-  Future<Either<Failure, BookDetaile>> starDownload(BookDetaile book) async {
-    if (await Global.storgeServece.checkNetWork()) {
-      return Right(book);
-    } else {
-      return Left(OffLineFailure());
-    }
   }
 }

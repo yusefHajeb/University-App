@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -6,8 +8,8 @@ import '../../../../../core/widget/buttons/default_back.dart';
 
 class ReadingBook extends StatefulWidget {
   final String pdfPath;
-
-  ReadingBook({required this.pdfPath});
+  final File file;
+  ReadingBook({required this.pdfPath, required this.file});
 
   @override
   _ReadingBookState createState() => _ReadingBookState();
@@ -41,6 +43,8 @@ class _ReadingBookState extends State<ReadingBook> {
             ? IconButton(
                 icon: const Icon(Icons.close_fullscreen_outlined),
                 onPressed: () {
+                  print("widget.pdfPath");
+                  print(widget.pdfPath);
                   setState(() {
                     isFullScreen = false;
                   });
@@ -62,8 +66,8 @@ class _ReadingBookState extends State<ReadingBook> {
       body: Column(
         children: [
           Expanded(
-            child: SfPdfViewer.asset(
-              widget.pdfPath,
+            child: SfPdfViewer.file(
+              widget.file,
               controller: _pdfViewerController,
               onDocumentLoaded: (PdfDocumentLoadedDetails details) {
                 setState(() {
