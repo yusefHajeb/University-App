@@ -8,7 +8,7 @@ class BooksFavoriteEvent extends Equatable {
 }
 
 class StartDownloadEvent extends BooksFavoriteEvent {
-  final BookDetaile book;
+  final LibraryModel book;
   // List<BookDetaile> favorite = [];
   StartDownloadEvent({
     required this.book,
@@ -21,3 +21,9 @@ class GetAllBooksDownloadEvent extends BooksFavoriteEvent {
 }
 
 class FavoritBookEvent extends BooksFavoriteEvent {}
+
+class DeleteFavorites extends BooksFavoriteEvent {
+  final int index;
+
+  const DeleteFavorites({required this.index});
+}

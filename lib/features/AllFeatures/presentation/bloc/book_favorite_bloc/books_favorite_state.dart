@@ -1,7 +1,8 @@
 part of 'books_favorite_bloc.dart';
 
 class BooksFavoriteState extends Equatable {
-  BooksFavoriteState();
+  List<BookDetaile> favrit;
+  BooksFavoriteState({required this.favrit});
 
   @override
   // TODO: implement props
@@ -12,19 +13,20 @@ class BooksFavoriteState extends Equatable {
 
 class BookDownloadState extends BooksFavoriteState {
   bool isFavorite;
-  final BookDetaile book;
-  BookDownloadState({required this.book, this.isFavorite = false});
+
+  BookDownloadState({this.isFavorite = false, required super.favrit});
   @override
-  // TODO: implement props
-  List<Object?> get props => [book];
+  List<Object?> get props => [favrit, isFavorite];
 }
 
 class ShowAllBooksSavedState extends BooksFavoriteState {
   final List<BookDetaile> favorite;
-  ShowAllBooksSavedState({required this.favorite});
+  ShowAllBooksSavedState({required this.favorite, required super.favrit});
 
   @override
   List<Object> get props => [favorite];
 }
 
-class LoadingBookSatate extends BooksFavoriteState {}
+class LoadingBookSatate extends BooksFavoriteState {
+   LoadingBookSatate({required super.favrit});
+}
