@@ -4,7 +4,6 @@ import 'package:dartz/dartz.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/data/models/library_models/library_model.dart';
-import 'package:university/features/AllFeatures/domain/entites/header_books_entites.dart';
 
 import '../../../../../core/error/execptions.dart';
 
@@ -19,16 +18,16 @@ class LibraryLocalDataSourceImp implements LibraryLocalDataSource {
 
   @override
   Future<Unit> cachBooks(List<LibraryModel> libraryModel) {
-    List libraryModelToJson = libraryModel
-        .map<Map<String, dynamic>>((book) => book.toJson())
-        .toList();
+    // List libraryModelToJson = libraryModel
+    //     .map<Map<String, dynamic>>((book) => book.toJson())
+    //     .toList();
 
     // final data = Global.storgeServece.retrieveData<LibraryModel>("Library");
     // if (data != null) {
     // final decodeJsonData = data.map((json)=> LibraryModel.formJson(json)).toList();
 // final dacode =  data.map((json) => LibraryModel.(json)).toList();
-    final jsonString = Global.storgeServece
-        .setString(Constants.booksChach, json.encode(libraryModelToJson));
+    // final jsonString = Global.storgeServece
+    //     .setString(Constants.booksChach, json.encode(libraryModelToJson));
     print("cached book sucessfuly ===========");
     return Future.value(unit);
   }

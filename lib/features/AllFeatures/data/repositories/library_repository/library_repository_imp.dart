@@ -49,8 +49,6 @@ class LibraryRepositoryImp implements LibraryRepository {
         return Left(EmptyCasheFailure());
       }
     }
-
-    throw UnimplementedError();
   }
 
   @override

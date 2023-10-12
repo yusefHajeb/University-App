@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:university/core/color/app_color.dart';
 import 'package:university/core/fonts/app_fonts.dart';
 
 TextStyle _getTextStyleEn(double fontsize, FontWeight fontWeight, Color color) {

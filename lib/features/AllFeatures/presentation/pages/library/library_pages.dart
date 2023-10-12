@@ -328,9 +328,6 @@ class Library_page extends StatelessWidget {
                                 keepAlive: true,
                                 child: InkWell(
                                     onTap: () async {
-                                      String pdfUrl =
-                                          "https://www.fluttercampus.com/sample.pdf";
-                                      String pdfFilename = "sampe.pdf";
                                       funcShow(context, state.books[index]);
                                       // Either<Failure, BookDetaile> x= await downloadPDF(
                                       //     pdfUrl, pdfFilename, books[index]);

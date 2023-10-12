@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:university/features/AllFeatures/presentation/bloc/book_favorite_bloc/books_favorite_bloc.dart';
 // import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
 
 import '../../../../../core/color/app_color.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 part of 'books_favorite_bloc.dart';
 
 class BooksFavoriteState extends Equatable {
@@ -28,5 +30,5 @@ class ShowAllBooksSavedState extends BooksFavoriteState {
 }
 
 class LoadingBookSatate extends BooksFavoriteState {
-   LoadingBookSatate({required super.favrit});
+  LoadingBookSatate({required super.favrit});
 }

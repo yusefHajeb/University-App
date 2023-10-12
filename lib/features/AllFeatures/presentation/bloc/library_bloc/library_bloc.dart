@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:university/core/constant/varibal.dart';
 
 // import 'package:university/features/AllFeatures/presentation/bloc/services_bloc/services_bloc.dart';
 
@@ -34,7 +32,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         emit(_failueOrHeaderState(either, event.index));
       }
       if (event is DownloadBookLibraryEvent) {
-        var responsDownOrFailuer = await event.response;
+        // var responsDownOrFailuer = await event.response;
         downloadedBook.add(event.response);
         // _failueOrdownloadState(responsDownOrFailuer);
       }

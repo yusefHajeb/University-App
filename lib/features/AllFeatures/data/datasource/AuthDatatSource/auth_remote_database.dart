@@ -1,3 +1,5 @@
+// ignore_for_file: equal_keys_in_map
+
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:university/core/error/execptions.dart';
