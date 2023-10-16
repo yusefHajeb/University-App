@@ -18,14 +18,14 @@ class LibraryRemoteDataSourceImp implements LibraryRemoteDataSource {
     {
         "books": [
             {
-                "id": 2,
+                "id": 1,
                 "category_id": 1,
                 "patch_id": 2,
                 "subject": "شبكات",
                 "img_book": "https://m.media-amazon.com/images/I/41pTqRlersL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg",
                 "name_book": "Clean advanced",
                 "write_book": "Yousef Hajeb",
-                "pdfUrl": "https://www.fluttercampus.com/sample.pdf"
+                "pdfUrl": "https://m.media-amazon.com/images/I/41pTqRlersL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg"
             },
             {
                 "id": 2,
@@ -38,7 +38,7 @@ class LibraryRemoteDataSourceImp implements LibraryRemoteDataSource {
                 "pdfUrl": "https://www.fluttercampus.com/sample.pdf"
             },
             {
-                "id": 2,
+                "id": 3,
                 "category_id": 3,
                 "patch_id": 2,
                 "subject": "تطبيقات ويب",
@@ -48,7 +48,7 @@ class LibraryRemoteDataSourceImp implements LibraryRemoteDataSource {
                 "pdfUrl": "https://www.fluttercampus.com/sample.pdf"
             },
             {
-                "id": 2,
+                "id": 4,
                 "category_id": 3,
                 "patch_id": 2,
                 "subject": "تطبيقات ويب",
@@ -56,6 +56,26 @@ class LibraryRemoteDataSourceImp implements LibraryRemoteDataSource {
                 "name_book": "ابي الجميل",
                 "write_book": "Yousef Hajeb",
                 "pdfUrl": "https://www.fluttercampus.com/sample.pdf"
+            },
+            {
+                "id": 4,
+                "category_id": 3,
+                "patch_id": 2,
+                "subject": "تطبيقات ويب",
+                "img_book": "https://m.media-amazon.com/images/I/41zWWzbiHpL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg",
+                "name_book": "ابي الجميل",
+                "write_book": "Yousef Hajeb",
+                "pdfUrl": "https://www.fluttercampus.com/sample.pdf"
+            },
+            {
+                "id": 1,
+                "category_id": 5,
+                "patch_id": 2,
+                "subject": "شبكات",
+                "img_book": "https://m.media-amazon.com/images/I/41pTqRlersL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg",
+                "name_book": "Clean advanced",
+                "write_book": "Yousef Hajeb",
+                "pdfUrl": "https://m.media-amazon.com/images/I/41pTqRlersL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg"
             }
            
         ],

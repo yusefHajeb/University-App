@@ -7,9 +7,8 @@ import '../../../../../core/color/app_color.dart';
 import '../../../../../core/widget/buttons/default_back.dart';
 
 class ReadingBook extends StatefulWidget {
-  final String pdfPath;
   final File file;
-  ReadingBook({required this.pdfPath, required this.file});
+  ReadingBook({required this.file});
 
   @override
   _ReadingBookState createState() => _ReadingBookState();
@@ -44,7 +43,7 @@ class _ReadingBookState extends State<ReadingBook> {
                 icon: const Icon(Icons.close_fullscreen_outlined),
                 onPressed: () {
                   print("widget.pdfPath");
-                  print(widget.pdfPath);
+
                   setState(() {
                     isFullScreen = false;
                   });

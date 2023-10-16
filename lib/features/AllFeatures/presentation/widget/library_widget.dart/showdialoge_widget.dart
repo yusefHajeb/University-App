@@ -63,7 +63,7 @@ funcShow(BuildContext context, LibraryModel list) {
                       btnName: "Download",
                       onPressed: () {
                         BlocProvider.of<BooksFavoriteBloc>(context)
-                            .add(StartDownloadEvent(book: list));
+                            .add(StartDownloadEvent());
                       },
                     ),
                   ),

@@ -98,7 +98,7 @@ Future<void> init() async {
   );
 
   sl.registerLazySingleton<LibraryLocalDataSource>(
-    () => LibraryLocalDataSourceImp(),
+    () => LibraryLocalDataSourceImp(sharedPreferences: sl()),
   );
 
   // Core ===========================

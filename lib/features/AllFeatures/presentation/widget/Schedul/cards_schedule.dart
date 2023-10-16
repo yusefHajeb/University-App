@@ -25,7 +25,7 @@ class CardSchedule extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(0),
           child: DecoratedBox(
-            decoration: BoxDecoration(color: AppColors.white),
+            decoration: BoxDecoration(color: AppColors.backgroundPages),
             child: ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -156,14 +156,15 @@ Widget Card2(Schedule schedule) {
     margin: EdgeInsets.only(top: 10),
     padding: EdgeInsets.all(10.0),
     height: 130,
-    decoration: BoxDecorationStyles.cardSchedule,
+    decoration: BoxDecorationStyles.testStyle,
     child: Row(
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(schedule.time.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold)),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: AppColors.greyColor)),
             Text("AM",
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: AppColors.greyColor)),
@@ -190,8 +191,7 @@ Widget Card2(Schedule schedule) {
             AppSpaces.verticalSpace20,
             Text(
               schedule.coures ?? "",
-              style: getFontNormal(
-                  13, FontWeight.w500, AppColors.darkRadialBackground),
+              style: getFontNormal(13, FontWeight.w600, AppColors.white),
             ),
             Row(
               children: [

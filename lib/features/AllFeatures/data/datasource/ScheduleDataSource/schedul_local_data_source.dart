@@ -28,6 +28,7 @@ class ScheduleLocalDataSourceImp implements ScheduleLocalDataSource {
 
   @override
   Future<List<SchedulModel>> getCachedSchedul() {
+    print("Get data Schedule from ShardPrefrance");
     final jsonString = sharedPreferences.getString("CACHED_SCHEDUL");
     if (jsonString != null) {
       List decodeJsonData = json.decode(jsonString);

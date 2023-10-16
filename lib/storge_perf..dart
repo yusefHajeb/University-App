@@ -24,7 +24,6 @@ class StorgeServece {
     // context = di.sl<BuildContext>();
     // _pref = await SharedPreferences.getInstance();
     Bloc.observer = MyBlocObserver();
-
     libraryDirectory = await getApplicationDocumentsDirectory();
     return this;
   }

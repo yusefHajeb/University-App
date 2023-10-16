@@ -82,11 +82,8 @@ showSchedule(List<Schedule> data, int? changeDate, String foramtDateToDay) {
               child: Center(
                 child: Text(
                   ' محاضرات اليوم',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey.shade900,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style:
+                      getFontNormal(12, FontWeight.bold, AppColors.greyColor),
                 ),
               ),
             ),
@@ -98,7 +95,10 @@ showSchedule(List<Schedule> data, int? changeDate, String foramtDateToDay) {
         child: Column(children: <Widget>[
           Row(
             children: [
-              Text(foramtDateMonth()),
+              Text(
+                foramtDateMonth(),
+                style: getBlackStyleEn(color: AppColors.greyColor),
+              ),
               Spacer(),
               IconButton(
                 padding: EdgeInsets.all(0),
@@ -115,7 +115,8 @@ showSchedule(List<Schedule> data, int? changeDate, String foramtDateToDay) {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               // color: Colors.white,
-              border: Border.all(width: 1.5, color: Colors.grey.shade200),
+              border:
+                  Border.all(width: 1.5, color: AppColors.backgrounfContent),
             ),
             child: ListView.builder(
                 shrinkWrap: true,
@@ -150,16 +151,16 @@ showSchedule(List<Schedule> data, int? changeDate, String foramtDateToDay) {
                         // print("---- $response");
                       },
                       child: AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 300),
                         width: 62,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(29),
                           color: (changeDate != null
                               ? (changeDate.toString() == day[index]
-                                  ? Colors.blue.shade100.withOpacity(0.5)
+                                  ? AppColors.backgrounfContent
                                   : Colors.blue.withOpacity(0))
                               : (foramtDateToDay == day[index]
-                                  ? Colors.blue.shade100.withOpacity(0.5)
+                                  ? AppColors.backgrounfContent
                                   : Colors.blue.withOpacity(0)))
                           // ? Colors.blue.shade100.withOpacity(0.5)
                           // : Colors.blue.withOpacity(0),

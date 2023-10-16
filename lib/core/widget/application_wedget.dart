@@ -27,7 +27,7 @@ Widget buildPage(int index, BuildContext context) {
         sizeWidth: sizeWidth,
       ),
     ),
-    Center(child: buildBody(context)),
+    Center(child: SchedulePage()),
     Center(child: BooksDownloaded()),
     Center(
       child: Text("None"),

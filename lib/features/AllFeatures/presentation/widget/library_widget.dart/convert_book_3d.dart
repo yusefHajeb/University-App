@@ -12,7 +12,6 @@ import '../../pages/library/downoad_widget.dart';
 
 // class BookCover3D extends StatefulWidget {
 //   final String imageUrl;
-
 //   BookCover3D({
 //     required this.imageUrl,
 //   });
@@ -83,8 +82,8 @@ class BookCover3D extends StatelessWidget {
                     // IconButton(
                     )),
             Positioned(
-                bottom: 2,
-
+                left: 14,
+                bottom: -7,
                 // bottom: 2,
                 child: TestDownload(
                   bookDownload: book,

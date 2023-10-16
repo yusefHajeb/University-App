@@ -26,8 +26,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         emit(LoadingLibraryState());
         either = await getAllBooksUsecase();
         emit(_failueOrHeaderState(either, 0));
-      }
-      if (event is GetHeaderBooksLibraryEvent) {
+      } else if (event is GetHeaderBooksLibraryEvent) {
         emit(LoadingLibraryState());
         emit(_failueOrHeaderState(either, event.index));
       }

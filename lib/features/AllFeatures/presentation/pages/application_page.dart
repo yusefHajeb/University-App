@@ -49,7 +49,7 @@ class ApplicationPage extends StatelessWidget {
               showSelectedLabels: true,
 
               // showUnselectedLabels: false,
-              selectedItemColor: AppColors.primaryAccentColor,
+              selectedItemColor: AppColors.greyColor,
               unselectedItemColor: AppColors.primaryAccentColor,
               onTap: ((value) {
                 //get data to index in bloc and refresh value in ui

@@ -59,7 +59,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => di.sl<LadingPageBloc>()),
         BlocProvider(create: (context) => di.sl<FormLoginBloc>()),
         BlocProvider(create: (context) => di.sl<ValidateBloc>()),
-        BlocProvider(create: (context) => di.sl<BooksFavoriteBloc>())
+        BlocProvider(
+            create: (context) =>
+                di.sl<BooksFavoriteBloc>()..add(StartDownloadEvent()))
       ],
       child:
           BlocBuilder<LocaleCubit, ChangeLocalState>(builder: (context, state) {

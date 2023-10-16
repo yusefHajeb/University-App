@@ -52,10 +52,19 @@ class BoxDecorationStyles {
       ]);
 
   static final BoxDecoration testStyle = BoxDecoration(
-      borderRadius: BorderRadius.circular(10.0),
-      border: Border.all(width: 3, color: HexColor.fromHex("31333D")));
+    borderRadius: BorderRadius.circular(10.0),
+    color: AppColors.backgroundAccentColor,
+    // border: Border.all(
+    //   width: 3,
+    //   color: HexColor.fromHex("31333D"),
+    // ),
+  );
 
   static final BoxDecoration headerTab = BoxDecoration(
-      borderRadius: BorderRadius.circular(10.0),
-      border: Border.all(width: 1, color: AppColors.kTextColor));
+    borderRadius: BorderRadius.circular(10.0),
+    border: Border.all(
+      width: 1,
+      color: AppColors.backgrounfContent,
+    ),
+  );
 }

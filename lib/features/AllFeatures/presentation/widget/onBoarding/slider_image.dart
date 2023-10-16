@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
+import 'package:university/core/widget/animation_text_kit.dart';
 import 'dart:math' as math;
-
 import '../../../../../core/Utils/lang/app_localization.dart';
 import '../../../domain/entites/onboarding_model/slider_object.dart';
 import '../../resources/assets_mananger.dart';
@@ -40,11 +38,9 @@ class OnBoardingPage extends StatelessWidget {
           bottom: 20,
           left: AppLocalizations.of(context)!.local == Locale('ar') ? 0 : 20,
           right: AppLocalizations.of(context)!.local == Locale('ar') ? 20 : 0,
-          child: Text(_getSliderData[index].title.tr(context),
-              style: GoogleFonts.raleway(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
-                  color: Color.fromARGB(255, 255, 251, 252)))),
+          child: CustomTextkit(
+            txt: _getSliderData[index].title.tr(context).toString(),
+          )),
       Positioned(
           bottom: 70,
           right: 50,

@@ -1,27 +1,25 @@
 // ignore_for_file: depend_on_referenced_packages
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart' as path;
+import 'package:university/core/constant/varibal.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/book_favorite_bloc/books_favorite_bloc.dart';
+import '../../../../../app/enjection_container.dart' as di;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../core/color/app_color.dart';
-import '../../../../../core/value/global.dart';
 import '../../../data/models/library_models/library_model.dart';
-import '../../bloc/book_favorite_bloc/books_favorite_bloc.dart';
 import '../../widget/library_widget.dart/reading_book.dart';
 
 class TestDownload extends StatefulWidget {
-  // final String url;
   final LibraryModel bookDownload;
-  // final String fileName;
   const TestDownload({
     required this.bookDownload,
-
-    // required this.fileName,
     super.key,
   });
 
@@ -34,14 +32,20 @@ class _TestDownloadState extends State<TestDownload> {
   bool fileExists = false;
   double progress = 0.0;
   Directory? pathes;
-  bool? confige;
+  bool? confige = false;
+  late final SharedPreferences sharedPreferences;
   String fileName = "";
   late String filePath;
   File? saveFile;
   late CancelToken cancelToken;
   String linkStor = "";
-  @override
+  List<LibraryModel> localBook = [];
+  Future<void> getInstate() async {
+    await di.init();
+  }
+
   void initState() {
+    sharedPreferences = di.sl<SharedPreferences>();
     super.initState();
     setState(() {
       fileName = path.basename(widget.bookDownload.pdfUrl ?? "");
@@ -54,8 +58,6 @@ class _TestDownloadState extends State<TestDownload> {
     PermissionStatus status = await Permission.storage.request();
     status = await Permission.storage.status;
     if (!status.isDenied) {
-      print(status.isDenied);
-      // await Permission.storage.request();
       String storePath = '';
 
       List<String> folders = pathes!.path.split('/');
@@ -67,21 +69,15 @@ class _TestDownloadState extends State<TestDownload> {
           break;
         }
       }
-      print("storage Path");
-      print(storePath);
-
-      storePath = storePath + "/University";
       if ((await pathes!.exists())) {
-        print("Create File Successfuly");
-
         await pathes!.create(recursive: true);
       }
       pathes = Directory(storePath);
       filePath = "$storePath/$fileName";
       saveFile = File(filePath);
+      print("saveFile!.path");
+      print(saveFile!.path);
       linkStor = filePath;
-      // File saveFile = File('${pathes?.path}/$fileName');
-
       setState(() {
         isDowLoading = true;
         progress = 0;
@@ -95,28 +91,49 @@ class _TestDownloadState extends State<TestDownload> {
           }),
           cancelToken: cancelToken,
         );
-        setState(() async {
+
+        final decodeJsonData =
+            sharedPreferences.getString(Constants.savedBooks);
+        if (decodeJsonData != null) {
+          List decodeBooks = json.decode(decodeJsonData);
+          localBook = decodeBooks
+              .map<LibraryModel>((jsonData) => LibraryModel.formJson(jsonData))
+              .toList();
+          localBook.add(widget.bookDownload.copyWith(
+              pdfUrl: saveFile!.path,
+              img_book: widget.bookDownload.img_book,
+              name_book: widget.bookDownload.name_book));
+          confige = await sharedPreferences.setString(
+              Constants.savedBooks, json.encode(localBook));
+        } else {
+          List<LibraryModel> lib = [];
+          LibraryModel model = widget.bookDownload;
+          lib.add(widget.bookDownload.copyWith(
+              pdfUrl: saveFile!.path,
+              id: model.id,
+              category_id: model.category_id,
+              img_book: model.img_book,
+              name_book: model.name_book,
+              subject: model.subject,
+              write_book: model.write_book));
+          confige = await sharedPreferences.setString(
+              Constants.savedBooks, json.encode(lib));
+        }
+        setState(() {
           isDowLoading = false;
           fileExists = true;
-          print("----------------------------");
-          BlocProvider.of<BooksFavoriteBloc>(context)
-              .add(StartDownloadEvent(book: widget.bookDownload));
-          print("book Library Download");
-          print(widget.bookDownload.toJson());
-          await Global.storgeServece
-              .setBool(widget.bookDownload.pdfUrl ?? "", true);
+          BlocProvider.of<BooksFavoriteBloc>(context).add(StartDownloadEvent());
         });
-      } catch (e) {
+      } catch (e, s) {
         setState(() {
           isDowLoading = false;
         });
         if (kDebugMode) {
           print(e);
+          print(s);
         }
       }
-    } else {
-      print("Not Permission");
-    }
+    } else {}
   }
 
   cancelDownload() async {
@@ -132,29 +149,55 @@ class _TestDownloadState extends State<TestDownload> {
     bool isFileExist = await File(filePath).exists();
     setState(() {
       fileExists = isFileExist;
-      print("checkFileExist()");
-      print(fileExists);
     });
   }
 
   openFile() async {
-    print("filePath===");
-    print(saveFile?.path);
+    final decodeJsonData = sharedPreferences.getString(Constants.savedBooks);
+    if (decodeJsonData != null) {
+      List decodeBooks = json.decode(decodeJsonData);
+      localBook = decodeBooks
+          .map<LibraryModel>((jsonData) => LibraryModel.formJson(jsonData))
+          .toList();
+    }
+    if (localBook.isNotEmpty) {
+      for (var element in localBook) {
+        if (widget.bookDownload.id == element.id) {
+          File filePath = File("${element.pdfUrl}");
 
-    confige =
-        await Global.storgeServece.getBool(widget.bookDownload.pdfUrl ?? "");
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => ReadingBook(
-            pdfPath: filePath,
-            file: saveFile!,
-          ),
-        ));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ReadingBook(
+                file: filePath,
+              ),
+            ),
+          );
+          break;
+        }
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final decodeJsonData = sharedPreferences.getString(Constants.savedBooks);
+    if (decodeJsonData != null) {
+      List decodeBooks = json.decode(decodeJsonData);
+      localBook = decodeBooks
+          .map<LibraryModel>((jsonData) => LibraryModel.formJson(jsonData))
+          .toList();
+    }
+    if (localBook.isNotEmpty) {
+      localBook.forEach(
+        (element) {
+          if (widget.bookDownload.id == element.id) {
+            confige = true;
+          }
+        },
+      );
+    }
+
     return isDowLoading
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -200,36 +243,30 @@ class _TestDownloadState extends State<TestDownload> {
               ),
             ],
           )
-        : TextButton(
-            onPressed: () {
-              (fileExists && !isDowLoading) ? openFile() : startDownload();
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                  color: confige != null
-                      ? Colors.green
-                      : AppColors.backgroundPages,
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                width: 35,
-                height: 33,
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.downloading_outlined,
-                  size: 22,
-                  color: AppColors.white,
-                )
-
-                // IconButton(
-                ),
-
-            //  Text(
-            //   (fileExists && !isDowLoading) ? "Open" : "Download",
-            //   style: TextStyle(
-            //     color:
-            //         (fileExists && !isDowLoading) ? Colors.green : Colors.blue,
-            //   ),
-            // ),
-          );
+        : Container(
+            width: 50,
+            height: 50,
+            child: TextButton(
+              onPressed: () {
+                confige == true ? openFile() : startDownload();
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                    color: confige == true
+                        ? Colors.green
+                        : AppColors.backgroundPages,
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  width: 50,
+                  height: 50,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    confige == true
+                        ? Icons.download_done
+                        : Icons.downloading_outlined,
+                    size: 22,
+                    color: AppColors.white,
+                  )),
+            ));
   }
 }

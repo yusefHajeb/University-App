@@ -19,6 +19,27 @@ class LibraryModel extends BookDetaile {
             pdfUrl: pdfUrl,
             subject: subject,
             isDownload: isDownload);
+
+  LibraryModel copyWith(
+      {int? id,
+      bool? isDownload,
+      int? category_id,
+      int? patch_id,
+      String? subject,
+      String? img_book,
+      String? name_book,
+      String? write_book,
+      String? pdfUrl}) {
+    return LibraryModel(
+        id: id ?? this.id,
+        category_id: category_id ?? this.category_id,
+        img_book: img_book ?? this.img_book,
+        patch_id: patch_id ?? this.patch_id,
+        subject: subject ?? this.subject,
+        name_book: name_book ?? this.name_book,
+        pdfUrl: pdfUrl ?? this.pdfUrl);
+  }
+
   factory LibraryModel.formJson(Map<String, dynamic> data) {
     return LibraryModel(
         id: data['id'] as int?,

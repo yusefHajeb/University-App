@@ -6,13 +6,11 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/error/execptions.dart';
 import 'package:university/core/error/failure.dart';
-import 'package:university/features/AllFeatures/presentation/pages/library/downoad_widget.dart';
 import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/convert_book_3d.dart';
 import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/color/app_color.dart';
@@ -21,12 +19,10 @@ import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
 import '../../../../../core/widget/dummy/profile_dummy.dart';
 import '../../../../../core/widget/fade_effect.dart';
-import '../../../data/models/library_models/library_model.dart';
 import '../../../domain/entites/header_books_entites.dart';
 import '../../bloc/library_bloc/library_bloc.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
 import '../../widget/library_widget.dart/showdialoge_widget.dart';
-// import 'widget_download.dart';
 
 final CarouselController carouselController = CarouselController();
 
@@ -92,8 +88,8 @@ class Library_page extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('تم التنزيل'),
-              content: const Text('هل ترغب في فتح الملف؟'),
+              title: Text('تم التنزيل'),
+              content: Text('هل ترغب في فتح الملف؟'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
@@ -166,12 +162,11 @@ class Library_page extends StatelessWidget {
                         image: "assets/images/slider-background-3.png"),
                   ),
                 ),
-                // Image.asset("assets/icons/menus.png", height: 35),
                 CustomInputSerch(),
-
                 IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.notifications_none_rounded)),
+                    icon: Icon(Icons.notifications_none_rounded,
+                        color: AppColors.backgrounfContent)),
               ],
             ),
           ),
@@ -285,11 +280,12 @@ class Library_page extends StatelessWidget {
                                       decoration: state.index == index
                                           ? BoxDecorationStyles.headerTab
                                               .copyWith(
-                                                  color: Colors.blue.shade200)
+                                                  color: AppColors
+                                                      .backgrounfContent)
                                           : BoxDecorationStyles.headerTab
                                               .copyWith(
                                                   color: AppColors
-                                                      .backgroundAccentColor),
+                                                      .backgroundPages),
                                     ),
                                   );
                                 }),
@@ -375,9 +371,9 @@ class Library_page extends StatelessWidget {
             },
           ),
           AppSpaces.verticalSpace20,
-          TestDownload(
-              bookDownload: LibraryModel(
-                  pdfUrl: "https://www.fluttercampus.com/sample.pdf"))
+          // TestDownload(
+          //     bookDownload: LibraryModel(
+          //         pdfUrl: "https://www.fluttercampus.com/sample.pdf"))
         ]),
       ),
     );
