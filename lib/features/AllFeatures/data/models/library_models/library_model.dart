@@ -90,3 +90,17 @@ class Library {
 
   Library({required this.libraryModel, required this.bookTitleModel});
 }
+
+
+//  RowDataPacket {
+//     t_id: 6,
+//     day_id: 1,
+//     dept_name: 'رياضيات الحاسوب',
+//     level_name: 'المستوى الثاني الترم الثاني',
+//     coures_name: 'اساسيات برمجة',
+//     time_name: 'الثالثة',
+//     classroom_name: 'معلم علوم',
+//     batch_name: 'الرؤية التقنية',
+//     start_year: 2023-10-05T21:00:00.000Z,
+//     instructor_name: 'رشيد الشعيبي'
+//   }

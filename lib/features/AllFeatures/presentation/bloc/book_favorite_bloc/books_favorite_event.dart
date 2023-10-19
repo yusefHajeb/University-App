@@ -1,25 +1,25 @@
 part of 'books_favorite_bloc.dart';
 
-class BooksFavoriteEvent extends Equatable {
-  const BooksFavoriteEvent();
+class DownloadBooksEvent extends Equatable {
+  const DownloadBooksEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class StartDownloadEvent extends BooksFavoriteEvent {
+class StartDownloadEvent extends DownloadBooksEvent {
   // List<BookDetaile> favorite = [];
   StartDownloadEvent();
 }
 
-class GetAllBooksDownloadEvent extends BooksFavoriteEvent {
+class GetAllBooksDownloadEvent extends DownloadBooksEvent {
   // final List<BookDetaile> favorite;
   // GetAllBooksDownloadEvent({required this.favorite});
 }
 
-class FavoritBookEvent extends BooksFavoriteEvent {}
+class FavoritBookEvent extends DownloadBooksEvent {}
 
-class DeleteFavorites extends BooksFavoriteEvent {
+class DeleteFavorites extends DownloadBooksEvent {
   final int index;
 
   const DeleteFavorites({required this.index});

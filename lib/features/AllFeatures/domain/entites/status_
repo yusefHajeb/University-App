@@ -1,0 +1,8 @@
+class StatusLecture{
+  String pending;
+  String gone;
+  String canceled;
+  String assured;
+}
+
+

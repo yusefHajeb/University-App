@@ -3,36 +3,36 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyBlocObserver extends BlocObserver {
   @override
-  void onCreate(BlocBase bloc) {
-    super.onCreate(bloc);
-    if (kDebugMode) {
-      print('onCreate -- ${bloc.runtimeType}');
-    }
-  }
+  // void onCreate(BlocBase bloc) {
+  //   super.onCreate(bloc);
+  //   if (kDebugMode) {
+  //     print('onCreate -- ${bloc.runtimeType}');
+  //   }
+  // }
 
-  @override
-  void onEvent(Bloc bloc, Object? event) {
-    super.onEvent(bloc, event);
-    if (kDebugMode) {
-      print('onEvent -- ${bloc.runtimeType}, $event');
-    }
-  }
+  // @override
+  // void onEvent(Bloc bloc, Object? event) {
+  //   super.onEvent(bloc, event);
+  //   if (kDebugMode) {
+  //     print('onEvent -- ${bloc.runtimeType}, $event');
+  //   }
+  // }
 
-  @override
-  void onChange(BlocBase bloc, Change change) {
-    super.onChange(bloc, change);
-    if (kDebugMode) {
-      print('onChange -- ${bloc.runtimeType}, $change');
-    }
-  }
+  // @override
+  // void onChange(BlocBase bloc, Change change) {
+  //   super.onChange(bloc, change);
+  //   if (kDebugMode) {
+  //     print('onChange -- ${bloc.runtimeType}, $change');
+  //   }
+  // }
 
-  @override
-  void onTransition(Bloc bloc, Transition transition) {
-    super.onTransition(bloc, transition);
-    if (kDebugMode) {
-      print('onTransition -- ${bloc.runtimeType}, $transition');
-    }
-  }
+  // @override
+  // void onTransition(Bloc bloc, Transition transition) {
+  //   super.onTransition(bloc, transition);
+  //   if (kDebugMode) {
+  //     print('onTransition -- ${bloc.runtimeType}, $transition');
+  //   }
+  // }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {

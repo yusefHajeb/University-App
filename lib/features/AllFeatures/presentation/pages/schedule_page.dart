@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:university/features/AllFeatures/domain/entites/schedule.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import '../../../../core/color/app_color.dart';
 import '../../../../core/widget/loading_widget.dart';
@@ -18,7 +19,7 @@ class SchedulePage extends StatelessWidget {
 }
 
 Future<void> _onRefresh(BuildContext context) async {
-  BlocProvider.of<SchedulBloc>(context).add(RefreshScheduleEvent());
+  BlocProvider.of<ScheduleBloc>(context).add(RefreshScheduleEvent());
   // final x = BlocProvider.of<SchedulBloc>(context).getAllScheduleUsecase;
   // print("$x");
   return Future.value(Unit);
@@ -50,25 +51,23 @@ Widget buildBody(BuildContext context) {
   // }
 
   final day = DateFormat('dd').format(DateTime.now());
-  return BlocConsumer<SchedulBloc, SchedulState>(
+  final hour = DateFormat('hh').format(DateTime.now());
+  return BlocConsumer<ScheduleBloc, ScheduleState>(
     builder: (context, state) {
-      // print(getMonthDayList());
       if (state is LoadingSchedulState) {
-        return LoadingCircularProgress();
+        return const LoadingCircularProgress();
       } else if (state is LoadedSchedulState) {
-        print("${state.index} ================");
         if (state.index == 0) {
+          print("hour");
+          print(hour);
           return showSchedule(
               state.schedule, state.index == 0 ? null : state.index, day);
         } else {
-          print(
-              '99999999999${state.schedule.where((element) => element.level == state.index).toList()};;;;;;;;;;;;');
+          List<Schedule> schedule = state.schedule
+              .where((element) => element.level == state.index)
+              .toList();
           return showSchedule(
-              state.schedule
-                  .where((element) => element.days == "الخميس")
-                  .toList(),
-              state.index == 0 ? null : state.index,
-              day);
+              state.schedule, state.index == 0 ? null : state.index, day);
         }
 
         // RefreshIndicator(
@@ -78,10 +77,10 @@ Widget buildBody(BuildContext context) {
         return Center(
           child: Column(
             children: [
-              Text("${state.message}"),
+              // Text("${state.message}"),
               ElevatedButton(
                   onPressed: () {
-                    BlocProvider.of<SchedulBloc>(context)
+                    BlocProvider.of<ScheduleBloc>(context)
                         .add(GetAllScheduleEvent(index: 0));
                   },
                   child: Text("try again"))
@@ -92,7 +91,7 @@ Widget buildBody(BuildContext context) {
         return Center(child: CircularProgressIndicator());
       }
     },
-    listener: (BuildContext context, SchedulState state) {},
+    listener: (BuildContext context, ScheduleState state) {},
   );
 
   // return _showSchedule(_days);

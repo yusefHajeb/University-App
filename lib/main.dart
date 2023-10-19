@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:university/core/color/app_color.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) =>
-              di.sl<SchedulBloc>()..add(GetAllScheduleEvent(index: 0)),
+              di.sl<ScheduleBloc>()..add(GetAllScheduleEvent(index: 0)),
         ),
         BlocProvider(
           create: (context) => di.sl<AuthenticationBloc>()..add(AuthGetStart()),
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => di.sl<ValidateBloc>()),
         BlocProvider(
             create: (context) =>
-                di.sl<BooksFavoriteBloc>()..add(StartDownloadEvent()))
+                di.sl<DownloadBooksBloc>()..add(StartDownloadEvent()))
       ],
       child:
           BlocBuilder<LocaleCubit, ChangeLocalState>(builder: (context, state) {
@@ -98,6 +99,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
+            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              backgroundColor: AppColors.backgroundAccentColor,
+            ),
             appBarTheme: const AppBarTheme(
               systemOverlayStyle: SystemUiOverlayStyle.light,
             ),

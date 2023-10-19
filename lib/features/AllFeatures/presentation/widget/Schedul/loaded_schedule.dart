@@ -36,7 +36,7 @@ showSchedule(List<Schedule> data, int? changeDate, String foramtDateToDay) {
     'Sat',
     'Sun'
   ];
-  List<Schedule> select = data;
+
   final List<String> weekDaysAr = [
     'الإثنين',
     'الثلاثاء',
@@ -75,133 +75,159 @@ showSchedule(List<Schedule> data, int? changeDate, String foramtDateToDay) {
   //  final List<String> weekdays = DateFormat.E().narrow;
   return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return <Widget>[
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.only(top: 20.0),
-              child: Center(
-                child: Text(
-                  ' محاضرات اليوم',
-                  style:
-                      getFontNormal(12, FontWeight.bold, AppColors.greyColor),
-                ),
-              ),
+    return <Widget>[
+      SliverToBoxAdapter(
+        child: Padding(
+          padding: EdgeInsets.only(top: 20.0),
+          child: Center(
+            child: Text(
+              ' محاضرات اليوم',
+              style: getFontNormal(12, FontWeight.bold, AppColors.greyColor),
             ),
-          )
-        ];
-      },
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(children: <Widget>[
-          Row(
-            children: [
-              Text(
-                foramtDateMonth(),
-                style: getBlackStyleEn(color: AppColors.greyColor),
-              ),
-              Spacer(),
-              IconButton(
-                padding: EdgeInsets.all(0),
-                onPressed: () {},
-                icon: Icon(
-                  Icons.arrow_drop_down_circle_outlined,
-                  color: Colors.grey.shade700,
-                ),
-              )
-            ],
           ),
-          Container(
-            height: 80,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              // color: Colors.white,
-              border:
-                  Border.all(width: 1.5, color: AppColors.backgrounfContent),
+        ),
+      )
+    ];
+  }, body: BlocBuilder<ScheduleBloc, ScheduleState>(
+    builder: (context, state) {
+      if (state is LoadedSchedulState) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(children: <Widget>[
+            Row(
+              children: [
+                Text(
+                  foramtDateMonth(),
+                  style: getBlackStyleEn(color: AppColors.greyColor),
+                ),
+                Spacer(),
+                IconButton(
+                  padding: EdgeInsets.all(0),
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.arrow_drop_down_circle_outlined,
+                    color: Colors.grey.shade700,
+                  ),
+                )
+              ],
             ),
-            child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: getMonthDayList().length,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: InkWell(
-                      onTap: () {
-                        print(" =============$changeDate ===");
-                        BlocProvider.of<SchedulBloc>(context)
-                            .add(SelectDayScheduleEvent(index: index + 1));
-                        if (changeDate != null) {
-                          select = data
-                              .where((element) =>
-                                  element.days == getDay(changeDate))
-                              .toList();
-                          print("${select.length}-----------------------");
-                        }
+            Container(
+              height: 80,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                // color: Colors.white,
+                border:
+                    Border.all(width: 1.5, color: AppColors.backgrounfContent),
+              ),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: getMonthDayList().length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {},
+                      child: InkWell(
+                        onTap: () {
+                          print("=============$changeDate ===");
+                          state.day = getDay(index + 1);
+                          state.index = index + 1;
 
-                        // response = data
-                        //     .where((element) =>
-                        //         element.days == _days[index][1].toString())
-                        //     .toList();
-                        // String c = "Sat";
-                        // bool fig = _days[changeDate ?? index][1] == "Sat";
-                        // print(
-                        //     "${_days[changeDate ?? index][1]} == $c  ===== figuar $fig");
-                        // print(
-                        //     "--------------------$fig---------\n   $changeDate  ------ ${_days[index][1]}");
-                        // print("---- $response");
-                      },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        width: 62,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(29),
-                          color: (changeDate != null
-                              ? (changeDate.toString() == day[index]
-                                  ? AppColors.backgrounfContent
-                                  : Colors.blue.withOpacity(0))
-                              : (foramtDateToDay == day[index]
-                                  ? AppColors.backgrounfContent
-                                  : Colors.blue.withOpacity(0)))
-                          // ? Colors.blue.shade100.withOpacity(0.5)
-                          // : Colors.blue.withOpacity(0),
-                          ,
-                          // border: Border.all(
-                          //   color: (changeDate != null
-                          //       ? (changeDate.toString() == day[index]
-                          //           ? Colors.blue.shade100.withOpacity(0.7)
-                          //           : Colors.blue.withOpacity(0))
-                          //       : (int.parse(foramtDateToDay()) == day
-                          //           ? Colors.blue.shade100.withOpacity(0.7)
-                          //           : Colors.blue.withOpacity(0))),
-                          //   width: 1.5,
-                          // ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              getDay(index),
-                              style: getFontNormal(
-                                  12, FontWeight.bold, AppColors.greyColor),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              getMonthDayList()[index],
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.kCardColor),
-                            ),
-                          ],
+                          if (state.index != 0) {
+                            print("index");
+                            print("${state.index}-----------------------");
+                          }
+                          print(state.schedule.where(
+                              (element) => element.days == getDay(index)));
+                          BlocProvider.of<ScheduleBloc>(context).add(
+                              SelectDayScheduleEvent(
+                                  index: state.index, day: getDay(index)));
+                          // response = data
+                          //     .where((element) =>
+                          //         element.days == _days[index][1].toString())
+                          //     .toList();
+                          // String c = "Sat";
+                          // bool fig = _days[changeDate ?? index][1] == "Sat";
+                          // print(
+                          //     "${_days[changeDate ?? index][1]} == $c  ===== figuar $fig");
+                          // print(
+                          //     "--------------------$fig---------\n   $changeDate  ------ ${_days[index][1]}");
+                          // print("---- $response");
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          width: 62,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(29),
+                            color: (state.index != 0
+                                ? (state.index.toString() == day[index]
+                                    ? AppColors.backgrounfContent
+                                    : Colors.blue.withOpacity(0))
+                                : (foramtDateToDay == day[index]
+                                    ? AppColors.backgrounfContent
+                                    : Colors.blue.withOpacity(0)))
+                            // ? Colors.blue.shade100.withOpacity(0.5)
+                            // : Colors.blue.withOpacity(0),
+                            ,
+                            // border: Border.all(
+                            //   color: (changeDate != null
+                            //       ? (changeDate.toString() == day[index]
+                            //           ? Colors.blue.shade100.withOpacity(0.7)
+                            //           : Colors.blue.withOpacity(0))
+                            //       : (int.parse(foramtDateToDay()) == day
+                            //           ? Colors.blue.shade100.withOpacity(0.7)
+                            //           : Colors.blue.withOpacity(0))),
+                            //   width: 1.5,
+                            // ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                getDay(index),
+                                style: getFontNormal(
+                                    12,
+                                    FontWeight.bold,
+                                    (state.index != 0
+                                        ? (state.index.toString() == day[index]
+                                            ? AppColors.white
+                                            : AppColors.greyColor)
+                                        : (foramtDateToDay == day[index]
+                                            ? AppColors.white
+                                            : AppColors.greyColor))),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                getMonthDayList()[index],
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: (changeDate != null
+                                        ? (changeDate.toString() == day[index]
+                                            ? AppColors.greyColor
+                                            : AppColors.backgroundAccentColor)
+                                        : (foramtDateToDay == day[index]
+                                            ? AppColors.greyColor
+                                            : AppColors
+                                                .backgroundAccentColor))),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
-          ),
-          CardSchedule(select)
-        ]),
-      ));
+                    );
+                  }),
+            ),
+            CardSchedule(state.schedule
+                .where((element) => element.days == state.day)
+                .toList())
+          ]),
+        );
+      }
+      return Center(
+        child: Container(),
+      );
+    },
+  ));
 }

@@ -62,7 +62,7 @@ funcShow(BuildContext context, LibraryModel list) {
                     child: SubmitFormBtn(
                       btnName: "Download",
                       onPressed: () {
-                        BlocProvider.of<BooksFavoriteBloc>(context)
+                        BlocProvider.of<DownloadBooksBloc>(context)
                             .add(StartDownloadEvent());
                       },
                     ),

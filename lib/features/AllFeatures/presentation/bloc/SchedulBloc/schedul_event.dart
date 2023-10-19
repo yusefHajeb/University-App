@@ -17,10 +17,10 @@ class GetAllScheduleEvent extends SchedulEvent {
 
 class SelectDayScheduleEvent extends SchedulEvent {
   final int index;
-
-  const SelectDayScheduleEvent({required this.index});
+  final String day;
+  const SelectDayScheduleEvent({required this.day, required this.index});
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [index, day];
 }
 
 class RefreshScheduleEvent extends SchedulEvent {}

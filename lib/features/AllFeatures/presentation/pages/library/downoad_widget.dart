@@ -117,12 +117,14 @@ class _TestDownloadState extends State<TestDownload> {
               subject: model.subject,
               write_book: model.write_book));
           confige = await sharedPreferences.setString(
-              Constants.savedBooks, json.encode(lib));
+            Constants.savedBooks,
+            json.encode(lib),
+          );
         }
         setState(() {
           isDowLoading = false;
           fileExists = true;
-          BlocProvider.of<BooksFavoriteBloc>(context).add(StartDownloadEvent());
+          BlocProvider.of<DownloadBooksBloc>(context).add(StartDownloadEvent());
         });
       } catch (e, s) {
         setState(() {

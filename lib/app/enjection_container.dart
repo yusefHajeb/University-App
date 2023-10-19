@@ -36,9 +36,9 @@ final sl = GetIt.instance;
 Future<void> init() async {
   //bloc ===========================
 
-  sl.registerFactory(() => BooksFavoriteBloc());
+  sl.registerFactory(() => DownloadBooksBloc());
   sl.registerFactory(() => LadingPageBloc());
-  sl.registerFactory(() => SchedulBloc(getAllScheduleUsecase: sl()));
+  sl.registerFactory(() => ScheduleBloc(getAllScheduleUsecase: sl()));
   sl.registerFactory(() => OnBoardingBlocBloc());
   sl.registerFactory(() => FormLoginBloc(
       // sl(),

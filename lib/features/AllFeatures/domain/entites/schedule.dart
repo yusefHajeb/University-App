@@ -2,34 +2,44 @@ import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
 class Schedule extends Equatable {
-  String? coures;
-  String? instructor;
+  String? tId;
+  String? courseName;
+  String? instructorName;
   String? dept;
   String? level;
   String? classroom;
   String? time;
   String? days;
-  String? batch;
+  String? batchName;
+  String? status;
+  String? note;
+
   Schedule({
-    this.coures,
-    this.instructor,
+    this.tId,
+    this.courseName,
+    this.instructorName,
     this.dept,
     this.level,
     this.classroom,
     this.time,
     this.days,
-    this.batch,
+    this.batchName,
+    this.status,
+    this.note,
   });
 
   @override
   List<Object?> get props => [
-        coures,
-        instructor,
+        tId,
+        courseName,
+        instructorName,
         dept,
         level,
         classroom,
         time,
         days,
-        batch,
+        batchName,
+        status,
+        note,
       ];
 }

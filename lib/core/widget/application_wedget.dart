@@ -18,16 +18,15 @@ Widget buildPage(int index, BuildContext context) {
   final sizeWidth = ScreenUtil().screenWidth;
   final sizeHeight = ScreenUtil().scaleHeight;
   List<Widget> __widget = [
+    Container(height: appSize(context).height, child: SchedulePage()),
     Container(
       height: appSize(context).height,
-      color: AppColors.white,
       child: Library_page(
         libraryCarouslImg: libraryCarouslImg,
         sizeHeight: sizeHeight,
         sizeWidth: sizeWidth,
       ),
     ),
-    Center(child: SchedulePage()),
     Center(child: BooksDownloaded()),
     Center(
       child: Text("None"),
@@ -41,28 +40,41 @@ List<BottomNavigationBarItem> bottomNavItems = <BottomNavigationBarItem>[
   BottomNavigationBarItem(
       label: "Home",
       backgroundColor: AppColors.backgroundAccentColor,
-      icon: SvgPicture.asset("assets/icons/house.svg",
-          color: AppColors.white, width: 35.0)),
+      icon: SvgPicture.asset(
+        "assets/icons/calendar.svg",
+        color: AppColors.white,
+        width: 35.0,
+        height: 30,
+      )),
   BottomNavigationBarItem(
       label: "schedule",
-      icon: SvgPicture.asset("assets/icons/calendar.svg",
-          color: AppColors.white, width: 35.0)),
+      icon: SvgPicture.asset(
+        "assets/icons/calendar.svg",
+        color: AppColors.white,
+        width: 35.0,
+        height: 30,
+      )),
   BottomNavigationBarItem(
       label: "homework",
       icon: SizedBox(
           width: 40,
-          height: 40,
+          height: 30,
           child: SvgPicture.asset(
             "assets/icons/homework.svg",
             width: 35.0,
+            height: 30,
             color: AppColors.white,
           ))),
   BottomNavigationBarItem(
       label: "book",
       icon: SvgPicture.asset("assets/icons/comment.svg",
-          width: 35.0, color: AppColors.white)),
+          width: 35.0, height: 30, color: AppColors.white)),
   BottomNavigationBarItem(
       label: "book2",
-      icon: SvgPicture.asset("assets/icons/read_book.svg",
-          width: 35.0, color: AppColors.white)),
+      icon: SvgPicture.asset(
+        "assets/icons/read_book.svg",
+        width: 35.0,
+        color: AppColors.white,
+        height: 30,
+      )),
 ];

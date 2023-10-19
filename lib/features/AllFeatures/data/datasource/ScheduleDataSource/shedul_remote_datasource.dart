@@ -18,69 +18,77 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
   @override
   Future<List<SchedulModel>> getAllSchedul() async {
     // String jsonStr =
-    String respone = """[
-  {
-    "coures": "شبكات",
-    "instructor": " د / ندى الحميدي",
-    "dept": "IT",
-    "level": "2",
-    "classroom": "الرازي",
-    "time": "10:00 AM",
-    "days": "السبت",
-    "batch": "3"
+    String respone = """
+  [{
+    "t_id": "9" ,
+    "coures_name": "شبكات",
+    "instructor_name": " د / ندى الحميدي",
+    "dept_name": "IT",
+    "level_name": "2",
+    "classroom_name": "الرازي",
+    "time_name": "10:00 AM",
+    "day_id": "السبت",
+    "batch_name": "3",
+    "state_lectuer": "مؤكدة",
+    " note": "لاجديد"
+  },
+{
+    "t_id": "5" ,
+    "coures_name": "تطبيقات ذكاء اصطناعي",
+    "instructor_name": "د/اكرم الصباري",
+    "dept_name": "IT",
+    "level_name": "2",
+    "classroom_name": "ابن الهيثم",
+    "time_name": "10:00 AM",
+    "day_id": "السبت",
+    "batch_name": "3",
+    "state_lectuer": "قيد الإنتظار",
+    " note": "لاجديد"
   },
     {
-    "coures": "تطبيقات ذكاء اصطناعي",
-    "instructor": "د/اكرم الصباري",
-    "dept": "IT",
-    "level": "2",
-    "classroom": "ابن الهيثم",
-    "time": "10:00 AM",
-    "days": "الاحد",
-    "batch": "3"
+    "t_id": "5" ,
+    "coures_name": "تطبيقات ويب",
+    "instructor _name": "د/ عائض الشباطي",
+    "dept_name": "IT",
+    "level_name": "2",
+    "classroom_name": "الرازي",
+    "time_name": "10:00 AM",
+    "day_id": "الإثنين",
+    "batch_name": "3",
+    "state_lectuer": "ملغي",
+    " note": "لاجديد"
   },
   {
-    "coures": "تطبيقات ويب",
-    "instructor": "د/ عائض الشباطي",
-    "dept": "3",
-    "level": "3",
-    "classroom": "الرازي",
-    "time": "2:00 PM",
-    "days": "الاثنين",
-    "batch": "3"
+    "t_id": "5" ,
+    "coures_name": "تطبيقات ويب",
+    "instructor_name": "د/ عائض الشباطي",
+    "dept_name": "IT",
+    "level_name": "2",
+    "classroom_name": "الرازي",
+    "time_name": "10:00 AM",
+    "day_id": "الخميس",
+    "batch_name": "3",
+    "state_lectuer": "قيد الإنتظار",
+    " note": "لاجديد"
   },
   {
-    "coures": "حوسبة سحابية",
-    "instructor": "د/ وليد الشرفي",
-    "dept": "IT",
-    "level": "Advanced",
-    "classroom": "ابن الرازي",
-    "time": "2:00 PM",
-    "days": "الثلاثاء",
-    "batch": "2"
-  },
-  {
-    "coures": "برمحة كائنية",
-    "instructor": "د/ فهد الاغبري",
-    "dept": "Physics",
-    "level": "2",
-    "classroom": "الرازي",
-    "time": "10:00 PM",
-    "days": "الخميس",
-    "batch": "Batch B"
-  },
-  {
-    "coures": "تطبيقات ذكاء عملي",
-    "instructor": "احلام عنان",
-    "dept": "Physics",
-    "level": "2",
-    "classroom": "الرازي",
-    "time": "8:00 PM",
-    "days": "الخميس",
-    "batch": "Batch B"
+    "t_id": "5" ,
+    "coures_name": "برمجة ",
+    "instructor _name": "د/ عمر الشريفي",
+    "dept_name": "IT",
+    "level_name": "2",
+    "classroom_name": "الرازي",
+    "time_name": "10:00 AM",
+    "day_id": "الإثنين",
+    "batch_name": "3",
+    "state_lectuer": "قيد الإنتظار",
+    " note": "لاجديد"
   }
-
-]""";
+  
+  
+  
+]
+""";
 // """;
 
     final List<dynamic> jsonData = jsonDecode(respone);

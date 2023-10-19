@@ -27,6 +27,7 @@ class ApplicationPage extends StatelessWidget {
         return SafeArea(
             child: Scaffold(
           bottomNavigationBar: Container(
+            height: 60,
             decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -42,15 +43,13 @@ class ApplicationPage extends StatelessWidget {
               items: bottomNavItems,
               // fixedColor: AppColors.greyColor,
               // elevation: 0,
-              backgroundColor: AppColors.error,
+              // backgroundColor: AppColors.error,
 
-              type: BottomNavigationBarType.shifting,
               currentIndex: state.tabIndex,
               showSelectedLabels: true,
 
-              // showUnselectedLabels: false,
               selectedItemColor: AppColors.greyColor,
-              unselectedItemColor: AppColors.primaryAccentColor,
+
               onTap: ((value) {
                 //get data to index in bloc and refresh value in ui
                 BlocProvider.of<LadingPageBloc>(context).add(TabChange(value));
@@ -60,10 +59,10 @@ class ApplicationPage extends StatelessWidget {
           // body: buildPage(state.tabIndex),
 
           // when state.tabindex =1 not use singleChil... .becuase show error
-          body: state.tabIndex == 1
-              ? buildPage(state.tabIndex, context)
-              : SingleChildScrollView(
-                  child: buildPage(state.tabIndex, context)),
+          body: buildPage(state.tabIndex, context),
+          // ? buildPage(state.tabIndex, context)
+          // : SingleChildScrollView(
+          //     child: buildPage(state.tabIndex, context)),
         ));
       },
     );
