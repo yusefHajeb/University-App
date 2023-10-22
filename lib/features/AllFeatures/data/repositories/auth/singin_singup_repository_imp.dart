@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:university/core/error/execptions.dart';
+import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/data/models/auth_models/singin_model.dart';
 import 'package:university/features/AllFeatures/data/models/auth_models/singup_model.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
@@ -21,20 +24,27 @@ class StudentRepositoryImp implements StudentRepository {
     required this.remoteData,
   });
   @override
-  Future<Either<Failure, Singin>> singInStuden(Singin singin) async {
+  Future<Either<Failure, SingUp>> singInStuden(Singin singin) async {
     if (await networkInfo.isConnected) {
       try {
-        final SinginModel singInModel = SinginModel(
+        final singInModel = SinginModel(
           password: singin.password,
           record: singin.record,
         );
-        final SinginModel remote = await remoteData.singinStudent(singInModel);
+        SingUpModel? remote = await remoteData.singinStudent(singInModel);
 
         print("===========================$singInModel  repository");
         // return await _getMessage(() => remoteData.singinStudent(singInModel));
+        if (remote == null) {
+          return Left(SingInFailure());
+        }
+        print("remote.toJson()");
+        print(remote.toJson());
+        Global.storgeServece
+            .setString("STUDEN_DATA", json.encode(remote.toJson()));
         return Right(remote);
       } on ServerException {
-        return Left(ServerFailure());
+        return Left(SingInFailure());
       }
     } else {
       return Left(OffLineFailure());
@@ -48,7 +58,6 @@ class StudentRepositoryImp implements StudentRepository {
         password: singUp.password!,
         email: singUp.email!,
         record: singUp.record!,
-        token: singUp.record!,
         username: singUp.username!,
       );
       // final  date = await remoteData.singUpStudent(singUpModel);

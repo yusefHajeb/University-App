@@ -10,8 +10,8 @@ class SinginModel extends Singin {
       required String record,
       String? email})
       : super(
-          password: password.orEmpty(),
-          record: record.orEmpty(),
+          password: password,
+          record: record,
         );
 
   factory SinginModel.fromJson(String jsonString) {

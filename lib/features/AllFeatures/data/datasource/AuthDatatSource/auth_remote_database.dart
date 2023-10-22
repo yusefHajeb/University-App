@@ -10,7 +10,7 @@ import '../../../../../core/constant/varibal.dart';
 import '../../models/auth_models/singin_model.dart';
 
 abstract class SingInOrSingUpRemoteDataSource {
-  Future<SinginModel> singinStudent(SinginModel singin);
+  Future<SingUpModel?> singinStudent(SinginModel singin);
   Future<Unit> singUpStudent(SingUpModel singUp);
 }
 
@@ -20,50 +20,95 @@ class SingInOrSingUpRemoteDataSourceImp
 
   SingInOrSingUpRemoteDataSourceImp({required this.client});
   @override
-  Future<SinginModel> singinStudent(SinginModel singin) async {
-    // final requestBody = {
-    //   LoginModelFields.password: singin.password,
-    //   LoginModelFields.record: singin.record,
-    // };
-    print("00000000000000000000000000 remote");
-
-    final response = await http.post(
-      // "http://172.18.48.1:8012/ecommerce/test.php"
-      Uri.parse("http://172.18.48.1:8012/ecommerce/test.php"),
-      headers: {
-        "Content-Type": "application/json",
+  Future<SingUpModel?> singinStudent(SinginModel singin) async {
+    const String sinInJson = """[
+    {
+        "t_id": "47",
+        "std_name": "يوسف عبد الملك حاجب",
+        "std_password": "1234",
+        "std_record": "1234",
+        "std_phone": "711111111",
+        "batch_id": "12",
+        "std_gander": "0",
+        "std_image": "assets/images/4.jpg",
+        " isOnline": "0",
+        "status": "in Company",
+        "std_email": "programingdesingers2@gmail.com"
+    },
+    {
+        "t_id": "47",
+        "std_name": "عمر جميل",
+        "std_password": "12345",
+        "std_record": "12345",
+        "std_phone": "711111111",
+        "batch_id": "12",
+        "std_gander": "0",
+        "std_image": "assets/images/6.jpg",
+        " isOnline": "0",
+        "status": "in Company",
+        "std_email": "programingdesingers2@gmail.com"
+    },
+    {
+        "t_id": "47",
+        "std_name": "عبدالله ",
+        "std_password": "20202422",
+        "std_record": "0",
+        "std_phone": "711111111",
+        "batch_id": "12",
+        "std_gander": "0",
+        "std_image": "assets/images/1.jpg",
+        " isOnline": "0",
+        "status": "in Company",
+        "std_email": "programingdesingers2@gmail.com"
+    }
+]""";
+    final List<dynamic> jsonData = jsonDecode(sinInJson);
+    List<SingUpModel> response =
+        (jsonData as List).map((e) => SingUpModel.formJson(e)).toList();
+    SingUpModel? studentData;
+    response.forEach(
+      (element) {
+        if (element.record == singin.record &&
+            element.password == singin.password) {
+          studentData = element;
+        }
       },
-      // body: json.encode(
-      //   {
-      //     "student": {"password": "12345", "record": "2040"}
-      //   },
-      // )
     );
+    ;
+    print("sing in in Loacl");
+    print(singin);
+    print("00000000000000000000000000 remote${studentData?.toJson()}");
+    // final response = await http.post(
+    //   // "http://172.18.48.1:8012/ecommerce/test.php"
+    //   Uri.parse("http://172.18.48.1:8012/ecommerce/test.php"),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // );
 
-    final responseBody = json.decode(response.body);
+    // final responseBody = json.decode(response.body);
 
-    print("$responseBody bbbbbbbbbbbbb");
-    if (responseBody['error'] != null) {
-      print(
-          "============================= the error is ${responseBody['error']['message']}");
-    }
-    if (response.statusCode == 200) {
-      print("============================ remote + response");
-      final decodedJson = jsonDecode(response.body);
+    // print("$responseBody bbbbbbbbbbbbb");
+    // if (responseBody['error'] != null) {
+    //   print(
+    //       "============================= the error is ${responseBody['error']['message']}");
+    // }
+    // if (response.statusCode == 200) {
+    //   print("============================ remote + response");
+    //   final decodedJson = jsonDecode(response.body);
 
-      final SinginModel singlModels = SinginModel.fromJson(decodedJson);
-      // .map((jsonPostModel) => SinginModel.fromJson(jsonPostModel))
-      // .toList();
-      print("------------------------------ the data is = $singlModels ");
-      //     student.password == singin.password &&
-      //     student.record == singin.record);
-      return singlModels;
-      // final respons = postModels.firstWhere((student) =>
-    } else {
-      print("============================ remote + faild");
+    //   final SinginModel singlModels = SinginModel.fromJson(decodedJson);
+    //   // .map((jsonPostModel) => SinginModel.fromJson(jsonPostModel))
+    //   // .toList();
+    //   print("------------------------------ the data is = $singlModels ");
+    //   //     student.password == singin.password &&
+    //   //     student.record == singin.record);
+    return studentData;
+    // final respons = postModels.firstWhere((student) =>
+    // } else {
+    // print("============================ remote + faild");
 
-      throw ServerException();
-    }
+    // throw ServerException();
   }
 
   @override

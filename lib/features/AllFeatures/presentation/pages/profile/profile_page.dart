@@ -1,9 +1,12 @@
 // import 'dart:html';
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/value/global.dart';
+import 'package:university/features/AllFeatures/data/models/auth_models/singup_model.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/bakground_dark.dart';
@@ -38,6 +41,12 @@ class MyProfie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final jsonString = Global.storgeServece.getStringData("STUDEN_DATA");
+    late SingUpModel student;
+    if (jsonString != null) {
+      final decodeJsonData = json.decode(jsonString);
+      student = SingUpModel.formJson(decodeJsonData);
+    }
     return Container(
       color: AppColors.backgroundPages,
       child: Stack(children: [
@@ -59,16 +68,16 @@ class MyProfie extends StatelessWidget {
                       color: HexColor.fromHex("94F0F1"),
                       dummyType: ProfileDummyType.image,
                       scale: 4.0,
-                      image: "assets/images/slider-background-3.png"),
+                      image: student.image),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("يوسف حاجب",
+                    child: Text("${student.name}",
                         style: GoogleFonts.almarai(
                             color: Colors.white,
                             fontSize: 40,
                             fontWeight: FontWeight.bold)),
                   ),
-                  Text("yousef@email.com",
+                  Text("${student.email}",
                       style: GoogleFonts.lato(
                           color: HexColor.fromHex("B0FFE1"), fontSize: 17)),
                   Padding(

@@ -1,20 +1,52 @@
 import 'package:equatable/equatable.dart';
 
 class SingUp extends Equatable {
-  final String? username;
-  final String? password;
-  final String? email;
-  final String? token;
-  final String? record;
+  String? tId;
+  String? username;
+  String? password;
+  String? email;
+  String? token;
+  String? record;
+  String? name;
+  String? batchId;
+  String? gender;
+
+  String? image;
+  String? isOnline;
+  String? status;
+  String? phone;
+
   SingUp({
-    required this.username,
-    required this.password,
+    this.tId,
+    this.name,
+    this.batchId,
+    this.gender,
+    this.image,
+    this.isOnline,
+    this.status,
+    this.username,
+    this.password,
     this.token,
-    required this.record,
-    required this.email,
+    this.phone,
+    this.record,
+    this.email,
   });
   @override
-  List<Object?> get props => [username, password, token, record, email];
+  List<Object?> get props => [
+        tId,
+        name,
+        batchId,
+        gender,
+        image,
+        isOnline,
+        status,
+        username,
+        password,
+        token,
+        record,
+        email,
+        phone,
+      ];
 }
 
 // class Login extends Equatable {

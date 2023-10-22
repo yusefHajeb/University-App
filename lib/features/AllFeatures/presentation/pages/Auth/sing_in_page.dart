@@ -8,10 +8,11 @@ import 'package:university/core/function/messages.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
 import 'package:university/features/AllFeatures/presentation/pages/application_page.dart';
+import 'package:university/features/AllFeatures/presentation/pages/schedule_page.dart';
+import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/form_login_widget.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/global.dart';
 import '../../../../../core/widget/loading_widget.dart';
-import '../../widget/Auth Widget/form_widget.dart';
 
 class SingInPage extends StatelessWidget {
   const SingInPage({super.key});
@@ -46,23 +47,29 @@ class SingInPage extends StatelessWidget {
                     print("===============bloc");
                     if (state is AuthProgressState) {
                       print("==============if");
-                      return FormeSingIn();
+                      return FormLoginWidget();
                     }
                     if (state is SingUpState) {
                       print("======== you in state singup ==============");
                       // return SizedBox();
-                    } else if (state is AuthSuccessState) {
-                      return LoadingCircularProgress();
+                    }
+                    // else if (state is AuthSuccessState) {
+                    //   return LoadingCircularProgress();
+                    // }
+                    else if (state is AuthErrorState) {
+                      return FormLoginWidget();
                     }
                     return LoadingCircularProgress();
                   },
-                  listener: (context, state) {
-                    if (state is AuthSuccessState ||
-                        state is SingUpSuccessState) {
+                  listener: (context, state) async {
+                    if (state is AuthSuccessState) {
+                      print("SingUpSuccessState");
+
                       Fluttertoast.showToast(
                         msg: (singInSuccessfuly).tr(context),
                       );
-                      Global.storgeServece
+                      print("lisener ======= ");
+                      await Global.storgeServece
                           .setBool(Constants.STORGE_USER_LOGED_FIRST, true);
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (_) => ApplicationPage()),
@@ -71,10 +78,6 @@ class SingInPage extends StatelessWidget {
                       Fluttertoast.showToast(
                         msg: (state.message).tr(context),
                       );
-                      // Navigator.pushAndRemoveUntil(
-                      //     context,
-                      //     MaterialPageRoute(builder: (_) => SchedulePage()),
-                      //     (route) => false);
                     } else if (state is SingUpState) {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (_) => SingUpPage()),
