@@ -21,7 +21,7 @@ Widget buildPage(int index, BuildContext context) {
     Container(height: appSize(context).height, child: SchedulePage()),
     Container(
       height: appSize(context).height,
-      child: Library_page(
+      child: LibraryPage(
         libraryCarouslImg: libraryCarouslImg,
         sizeHeight: sizeHeight,
         sizeWidth: sizeWidth,

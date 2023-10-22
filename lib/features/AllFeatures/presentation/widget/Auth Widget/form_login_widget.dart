@@ -95,7 +95,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          SizedBox(),
+                          const SizedBox(),
                           Text(
                             'SignUp'.tr(context),
                             style: TextStyle(
@@ -191,6 +191,9 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
   }
 
   void validateFormLogin() {
+    print("recored and password");
+    print(_recordStd.text);
+    print(_passwordStd.text);
     final isValid = _formKey.currentState!.validate();
     final Singin login = Singin(
       record: _recordStd.text,

@@ -32,8 +32,7 @@ class SchedulRepositoryImp implements ScheduleRepository {
       }
     } else {
       try {
-        final List<SchedulModel> localData =
-            await localSource.getCachedSchedul();
+        List<SchedulModel> localData = await localSource.getCachedSchedul();
         return Right(localData);
       } on EmptyCasheException {
         return Left(EmptyCasheFailure());

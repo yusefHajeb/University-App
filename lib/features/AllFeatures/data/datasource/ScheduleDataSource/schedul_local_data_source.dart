@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:university/core/error/execptions.dart';
 import 'package:university/features/AllFeatures/data/models/schedule_model.dart';
 
+import '../../../../../core/constant/varibal.dart';
+
 abstract class ScheduleLocalDataSource {
   Future<List<SchedulModel>> getCachedSchedul();
   Future<Unit> cacheSchedul(List<SchedulModel> schedulModel);
@@ -21,7 +23,7 @@ class ScheduleLocalDataSourceImp implements ScheduleLocalDataSource {
         .map<Map<String, dynamic>>((schedul) => schedul.toJson())
         .toList();
     sharedPreferences.setString(
-        "CACHED_SCHEDUL", json.encode(schedulModelToJson));
+        Constants.cachedSchedule, json.encode(schedulModelToJson));
 
     return Future.value(unit);
   }
@@ -29,7 +31,7 @@ class ScheduleLocalDataSourceImp implements ScheduleLocalDataSource {
   @override
   Future<List<SchedulModel>> getCachedSchedul() {
     print("Get data Schedule from ShardPrefrance");
-    final jsonString = sharedPreferences.getString("CACHED_SCHEDUL");
+    final jsonString = sharedPreferences.getString(Constants.cachedSchedule);
     if (jsonString != null) {
       List decodeJsonData = json.decode(jsonString);
       List<SchedulModel> jsonToSchedulModel = decodeJsonData
@@ -47,7 +49,7 @@ class ScheduleLocalDataSourceImp implements ScheduleLocalDataSource {
     final schedulModelToJson = await schedulModel.toJson();
 
     sharedPreferences.setString(
-        "CACHED_SCHEDUL", json.encode(schedulModelToJson));
+        Constants.cachedSchedule, json.encode(schedulModelToJson));
 
     return Future.value(unit);
   }

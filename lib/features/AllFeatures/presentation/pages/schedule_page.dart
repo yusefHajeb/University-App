@@ -2,10 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:university/features/AllFeatures/domain/entites/schedule.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import '../../../../core/color/app_color.dart';
-import '../../../../core/widget/loading_widget.dart';
 import '../widget/Schedul/loaded_schedule.dart';
 
 class SchedulePage extends StatelessWidget {
@@ -20,8 +18,6 @@ class SchedulePage extends StatelessWidget {
 
 Future<void> _onRefresh(BuildContext context) async {
   BlocProvider.of<ScheduleBloc>(context).add(RefreshScheduleEvent());
-  // final x = BlocProvider.of<SchedulBloc>(context).getAllScheduleUsecase;
-  // print("$x");
   return Future.value(Unit);
 }
 
@@ -51,48 +47,52 @@ Widget buildBody(BuildContext context) {
   // }
 
   final day = DateFormat('dd').format(DateTime.now());
-  final hour = DateFormat('hh').format(DateTime.now());
-  return BlocConsumer<ScheduleBloc, ScheduleState>(
-    builder: (context, state) {
-      if (state is LoadingSchedulState) {
-        return const LoadingCircularProgress();
-      } else if (state is LoadedSchedulState) {
-        if (state.index == 0) {
-          print("hour");
-          print(hour);
-          return showSchedule(
-              state.schedule, state.index == 0 ? null : state.index, day);
-        } else {
-          List<Schedule> schedule = state.schedule
-              .where((element) => element.level == state.index)
-              .toList();
-          return showSchedule(
-              state.schedule, state.index == 0 ? null : state.index, day);
-        }
+  return showSchedule(4, day);
+  // String today = DateFormat('EEEE', 'ar')
+  //     .format(DateTime(DateTime.now().year, DateTime.now().month, 12));
+  // final hour = DateFormat('hh').format(DateTime.now());
+  // return BlocConsumer<ScheduleBloc, ScheduleState>(
+  //   listener: (BuildContext context, ScheduleState state) {},
+  //   builder: (context, state) {
+  //     if (state is LoadingSchedulState) {
+  //       return const LoadingCircularProgress();
+  //     } else if (state is LoadedSchedulState) {
+  //       if (state.index == 0) {
+  //         print("hour");
 
-        // RefreshIndicator(
-        //     onRefresh: () => _onRefresh(context),
-        //     child: showSchedule(_days, state.schedule));
-      } else if (state is ErrorSchedulState) {
-        return Center(
-          child: Column(
-            children: [
-              // Text("${state.message}"),
-              ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<ScheduleBloc>(context)
-                        .add(GetAllScheduleEvent(index: 0));
-                  },
-                  child: Text("try again"))
-            ],
-          ),
-        );
-      } else {
-        return Center(child: CircularProgressIndicator());
-      }
-    },
-    listener: (BuildContext context, ScheduleState state) {},
-  );
+  //         print(day);
+  //         print(today);
+  //         return showSchedule(
+  //             state.schedule, state.index == 0 ? null : state.index, day);
+  //       } else {
+  //         print("day");
+  //         print(today);
+  //         return showSchedule(
+  //             state.schedule, state.index == 0 ? null : state.index, day);
+  //       }
+
+  //       // RefreshIndicator(
+  //       //     onRefresh: () => _onRefresh(context),
+  //       //     child: showSchedule(_days, state.schedule));
+  //     } else if (state is ErrorSchedulState) {
+  //       return Center(
+  //         child: Column(
+  //           children: [
+  //             // Text("${state.message}"),
+  //             ElevatedButton(
+  //                 onPressed: () {
+  //                   BlocProvider.of<ScheduleBloc>(context)
+  //                       .add(const GetAllScheduleEvent(index: 0));
+  //                 },
+  //                 child: const Text("try again"))
+  //           ],
+  //         ),
+  //       );
+  //     } else {
+  //       return Center(child: CircularProgressIndicator());
+  //     }
+  //   },
+  // );
 
   // return _showSchedule(_days);
 }

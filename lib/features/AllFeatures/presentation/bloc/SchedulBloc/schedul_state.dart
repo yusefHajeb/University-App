@@ -11,6 +11,7 @@ class SchedulInitial extends ScheduleState {}
 
 class LoadingSchedulState extends ScheduleState {}
 
+// ignore: must_be_immutable
 class LoadedSchedulState extends ScheduleState {
   final List<Schedule> schedule;
   int index;
@@ -22,6 +23,7 @@ class LoadedSchedulState extends ScheduleState {
 
 class ErrorSchedulState extends ScheduleState {
   final String message;
+
   const ErrorSchedulState({required this.message});
   @override
   List<Object> get props => [message];

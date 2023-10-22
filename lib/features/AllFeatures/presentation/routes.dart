@@ -21,19 +21,29 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.singin:
         {
+          print("---------------------------------------router");
           bool getLoged = Global.storgeServece.getLogedUsersFirstSuccess();
           if (getLoged) {
             return MaterialPageRoute(builder: (_) => SchedulePage());
           }
-
           return MaterialPageRoute(builder: (_) => SingInPage());
         }
       case Routes.singup:
-        return MaterialPageRoute(builder: (_) => SingUpPage());
+        {
+          print("---------------------------------------router2");
+
+          bool getLoged = Global.storgeServece.getLogedUsersFirstSuccess();
+          if (getLoged) {
+            return MaterialPageRoute(builder: (_) => SchedulePage());
+          }
+          return MaterialPageRoute(builder: (_) => SingInPage());
+        }
       case Routes.schedul:
         return MaterialPageRoute(builder: (_) => SchedulePage());
       case Routes.onBoarding:
         {
+          print("---------------------------------------onBoarding");
+
           bool getDevices = Global.storgeServece.getDeviceFirstOpen();
           if (getDevices) {
             return MaterialPageRoute(builder: (_) => SingInPage());

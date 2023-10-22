@@ -18,6 +18,7 @@ import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/search_books/search_books_bloc.dart';
 import '../features/AllFeatures/data/datasource/AuthDatatSource/auth_remote_database.dart';
 import '../features/AllFeatures/data/repositories/auth/singin_singup_repository_imp.dart';
 import '../features/AllFeatures/data/repositories/schudul_repository_imp.dart';
@@ -40,11 +41,8 @@ Future<void> init() async {
   sl.registerFactory(() => LadingPageBloc());
   sl.registerFactory(() => ScheduleBloc(getAllScheduleUsecase: sl()));
   sl.registerFactory(() => OnBoardingBlocBloc());
-  sl.registerFactory(() => FormLoginBloc(
-      // sl(),
-      // sl(),
-      // sl(),
-      ));
+  sl.registerFactory(() => SearchBooksBloc(sl()));
+  sl.registerFactory(() => FormLoginBloc());
   sl.registerFactory(
       () => AuthenticationBloc(singInUsecase: sl(), singUpUsecase: sl()));
   sl.registerFactory(() => LibraryBloc(getAllBooksUsecase: sl()));
@@ -96,6 +94,9 @@ Future<void> init() async {
       sharedPreferences: sl(),
     ),
   );
+
+  // sl.registerLazySingleton<LibraryLocalDataSource>(
+  //     () => LibraryLocalDataSourceImp(sharedPreferences: sl()));
 
   sl.registerLazySingleton<LibraryLocalDataSource>(
     () => LibraryLocalDataSourceImp(sharedPreferences: sl()),

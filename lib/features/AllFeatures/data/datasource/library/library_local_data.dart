@@ -11,6 +11,7 @@ abstract class LibraryLocalDataSource {
   Future<Library> getCashedBook();
   Future<Unit> cachBooks(List<LibraryModel> data);
   Future<Unit> cachHeadersBooks(List<BookTitleModel> data);
+  List<LibraryModel> getAllBooksCashed();
 }
 
 class LibraryLocalDataSourceImp implements LibraryLocalDataSource {
@@ -69,5 +70,22 @@ class LibraryLocalDataSourceImp implements LibraryLocalDataSource {
     sharedPreferences.setString(Constants.headersChach, json.encode(header));
     print("cached header sucessfuly ===========");
     return Future.value(unit);
+  }
+
+  @override
+  List<LibraryModel> getAllBooksCashed() {
+    final jsonString = sharedPreferences.getString(Constants.booksChach);
+    if (jsonString != null) {
+      List decodeJsonData = json.decode(jsonString);
+      List<LibraryModel> books =
+          decodeJsonData.map((e) => LibraryModel.formJson(e)).toList();
+
+      print("Store Library Model");
+      print(books);
+
+      return books;
+    }
+    List<LibraryModel> lib = [];
+    return lib;
   }
 }

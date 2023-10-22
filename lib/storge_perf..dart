@@ -49,7 +49,7 @@ class StorgeServece {
   }
 
   String? getStringData(String request) {
-    return _pref.getString('request');
+    return _pref.getString(request);
   }
 
   void setString(String response, String value) {

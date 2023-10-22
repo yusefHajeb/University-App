@@ -5,6 +5,7 @@ import 'package:university/core/color/app_color.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/search_books/search_books_bloc.dart';
 import 'core/Utils/lang/app_localization.dart';
 import 'app/enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) =>
-              di.sl<ScheduleBloc>()..add(GetAllScheduleEvent(index: 0)),
+              di.sl<ScheduleBloc>()..add(GetAllScheduleEvent()),
         ),
         BlocProvider(
           create: (context) => di.sl<AuthenticationBloc>()..add(AuthGetStart()),
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => di.sl<LadingPageBloc>()),
         BlocProvider(create: (context) => di.sl<FormLoginBloc>()),
         BlocProvider(create: (context) => di.sl<ValidateBloc>()),
+        BlocProvider(create: (context) => di.sl<SearchBooksBloc>()),
         BlocProvider(
             create: (context) =>
                 di.sl<DownloadBooksBloc>()..add(StartDownloadEvent()))

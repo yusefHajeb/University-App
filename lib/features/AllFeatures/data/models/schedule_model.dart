@@ -48,14 +48,14 @@ class SchedulModel extends Schedule {
     return {
       // SchedulModelKeys.tabelId: coures,
       SchedulModelKeys.tabelId: tId,
-      SchedulModelKeys.day: instructorName,
+      SchedulModelKeys.day: days,
       SchedulModelKeys.dept: dept,
       SchedulModelKeys.level: level,
       SchedulModelKeys.courseName: classroom,
       SchedulModelKeys.time: time,
-      SchedulModelKeys.classroom: days,
+      SchedulModelKeys.classroom: classroom,
       SchedulModelKeys.batchName: batchName,
-      SchedulModelKeys.instructorName: batchName,
+      SchedulModelKeys.instructorName: instructorName,
       SchedulModelKeys.status: status,
       SchedulModelKeys.note: note,
     };

@@ -1,0 +1,41 @@
+[
+    {
+        "t_id": "47",
+        "std_name": "يوسف عبد الملك حاجب",
+        "std_password": "24434",
+        "std_record": "204023",
+        "std_phone": "711111111",
+        "batch_id": "12",
+        "std_gander": "0",
+        "std_image": "assets/images/4.jpg",
+        " isOnline": "0",
+        "status": "in Company",
+        "std_email": "programingdesingers2@gmail.com"
+    },
+    {
+        "t_id": "47",
+        "std_name": "عمر جميل",
+        "std_password": "12345",
+        "std_record": "12345",
+        "std_phone": "711111111",
+        "batch_id": "12",
+        "std_gander": "0",
+        "std_image": "assets/images/6.jpg",
+        " isOnline": "0",
+        "status": "in Company",
+        "std_email": "programingdesingers2@gmail.com"
+    },
+    {
+        "t_id": "47",
+        "std_name": "عبدالله ",
+        "std_password": "20202422",
+        "std_record": "0",
+        "std_phone": "711111111",
+        "batch_id": "12",
+        "std_gander": "0",
+        "std_image": "assets/images/1.jpg",
+        " isOnline": "0",
+        "status": "in Company",
+        "std_email": "programingdesingers2@gmail.com"
+    }
+]

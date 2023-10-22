@@ -28,6 +28,7 @@ class Constants {
   static const booksChach = "CASH_BOOKS";
   static const headersChach = "CASH_HEADERS_BOOKS";
   static const savedBooks = "DOWNLOAD_BOOKS";
+  static const cachedSchedule = "CACHED_SCHEDUL";
   // static const baseUrl = "https://q97wg.wiremockapi.cloud";
 
   // static const singin = "$baseUrl/auth/singup.php";

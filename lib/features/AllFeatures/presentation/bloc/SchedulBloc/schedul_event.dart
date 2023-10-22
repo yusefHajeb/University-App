@@ -8,11 +8,9 @@ abstract class SchedulEvent extends Equatable {
 }
 
 class GetAllScheduleEvent extends SchedulEvent {
-  final int index;
-
-  const GetAllScheduleEvent({required this.index});
+  const GetAllScheduleEvent();
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [];
 }
 
 class SelectDayScheduleEvent extends SchedulEvent {
