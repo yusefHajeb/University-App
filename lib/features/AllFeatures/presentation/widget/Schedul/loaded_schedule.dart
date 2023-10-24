@@ -17,7 +17,7 @@ showSchedule(int? changeDate, String foramtDateToDay) {
 
   String foramtDateMonth() {
     // return DateFormat('mm').format(DateTime(DateTime.now().month));
-    return "${DateFormat('MMMM').format(DateTime.now())}  ${DateFormat('yyyy').format(DateTime.now())}";
+    return "${DateFormat('MMMM', 'ar').format(DateTime.now())}  ${DateFormat('yyyy').format(DateTime.now())}";
   }
 
   List<String> getMonthDayList() {
@@ -96,11 +96,13 @@ showSchedule(int? changeDate, String foramtDateToDay) {
           listener: (context, index) {},
           builder: (context, state) {
             if (state is LoadedSchedulState) {
-              print(state.day);
-              print(state.index);
-              print(getDay(state.index));
-              if (state.index.toString() ==
-                  DateFormat('dd').format(DateTime.now())) {
+              final now = DateTime.now();
+              final tomorrow = now.add(Duration(days: 1));
+
+              if (state.day.toString() ==
+                      DateFormat('EEEE', 'ar').format(now) ||
+                  state.day.toString() ==
+                      DateFormat('EEEE', 'ar').format(tomorrow)) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   scrollToSelectedData(state.index);
                 });

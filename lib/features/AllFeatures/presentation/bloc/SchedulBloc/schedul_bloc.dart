@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
-import 'package:university/features/AllFeatures/presentation/bloc/search_books/search_books_bloc.dart';
 import '../../../../../core/error/failure.dart';
 import '../../../../../core/function/failure_to_message.dart';
 import '../../../domain/entites/schedule.dart';
@@ -66,11 +65,26 @@ class ScheduleBloc extends Bloc<SchedulEvent, ScheduleState> {
   ) async {
     emit(LoadingSchedulState());
     schedulOrError = await getAllScheduleUsecase();
-    emit(_failureOrSchedualToState(
-        schedulOrError,
-        int.parse(DateFormat('dd').format(DateTime.now())),
-        DateFormat('EEEE', 'ar')
-            .format(DateTime(DateTime.now().year, DateTime.now().month, 12))));
+    final now = DateTime.now();
+    final currentHour = now.hour;
+    print("hour is $currentHour");
+    if (currentHour > 14) {
+      final tomorrow = now.add(Duration(days: 1));
+      print("tomorrow is ");
+      print(DateFormat('EEEE', 'ar').format(tomorrow));
+      print("today is :");
+      print(DateFormat('EEEE', 'ar').format(now));
+
+      emit(_failureOrSchedualToState(
+          schedulOrError,
+          int.parse(DateFormat('dd').format(tomorrow)),
+          DateFormat('EEEE', 'ar').format(tomorrow)));
+    } else {
+      emit(_failureOrSchedualToState(
+          schedulOrError,
+          int.parse(DateFormat('dd').format(DateTime.now())),
+          DateFormat('EEEE', 'ar').format(now)));
+    }
   }
 
   Future<void> _refreshScheduleEvent(
@@ -79,11 +93,26 @@ class ScheduleBloc extends Bloc<SchedulEvent, ScheduleState> {
   ) async {
     emit(LoadingSchedulState());
     schedulOrError = await getAllScheduleUsecase();
-    emit(_failureOrSchedualToState(
-        schedulOrError,
-        int.parse(DateFormat('dd').format(DateTime.now())),
-        DateFormat('EEEE', 'ar')
-            .format(DateTime(DateTime.now().year, DateTime.now().month, 12))));
+    final now = DateTime.now();
+    final currentHour = now.hour;
+    print("hour is $currentHour");
+    if (currentHour > 14) {
+      final tomorrow = now.add(Duration(days: 1));
+      print("tomorrow is ");
+      print(DateFormat('EEEE', 'ar').format(tomorrow));
+      print("today is :");
+      print(DateFormat('EEEE', 'ar').format(now));
+
+      emit(_failureOrSchedualToState(
+          schedulOrError,
+          int.parse(DateFormat('dd').format(tomorrow)),
+          DateFormat('EEEE', 'ar').format(tomorrow)));
+    } else {
+      emit(_failureOrSchedualToState(
+          schedulOrError,
+          int.parse(DateFormat('dd').format(DateTime.now())),
+          DateFormat('EEEE', 'ar').format(now)));
+    }
   }
 
   ScheduleState _failureOrSchedualToState(

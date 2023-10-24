@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university/core/color/app_color.dart';
 import 'package:university/core/widget/application_wedget.dart';
+import 'package:university/features/AllFeatures/data/models/user_data.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/resources/assets_mananger.dart';
+
+import '../../data/models/auth_models/singup_model.dart';
 // import 'package:cached_network_image/cached_network_image.dart';
 
 class ApplicationPage extends StatelessWidget {
@@ -26,6 +29,7 @@ class ApplicationPage extends StatelessWidget {
       builder: (context, state) {
         return SafeArea(
             child: Scaffold(
+          drawer: DrawerWidget(context),
           bottomNavigationBar: Container(
             height: 60,
             decoration: BoxDecoration(
@@ -67,4 +71,62 @@ class ApplicationPage extends StatelessWidget {
       },
     );
   }
+}
+
+Widget DrawerWidget(BuildContext context) {
+  SingUpModel student = userDataModel();
+  return AnimatedContainer(
+    duration: Duration(),
+    transform: Matrix4.translationValues(
+      -200,
+      0,
+      0,
+    ),
+    child: Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage: AssetImage(student.image.toString()),
+                ),
+                SizedBox(height: 10),
+                const Text(
+                  'John Doe',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 300,
+            child: Expanded(
+                child: ListView(shrinkWrap: true, children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Home'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              // ListTile(
+              //   leading: Icon(Icons.settings),
+              //   title: Text('Settings'),
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //   },
+              // ),
+            ])),
+          ),
+        ],
+      ),
+    ),
+  );
 }

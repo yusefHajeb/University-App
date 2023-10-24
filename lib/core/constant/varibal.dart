@@ -29,6 +29,7 @@ class Constants {
   static const headersChach = "CASH_HEADERS_BOOKS";
   static const savedBooks = "DOWNLOAD_BOOKS";
   static const cachedSchedule = "CACHED_SCHEDUL";
+  static const userData = "STUDEN_DATA";
   // static const baseUrl = "https://q97wg.wiremockapi.cloud";
 
   // static const singin = "$baseUrl/auth/singup.php";
@@ -36,4 +37,45 @@ class Constants {
 
   static const schedule = "$baseUrl/test.php";
   static const library = "$baseUrl/university/library";
+  static String apiUser = """[
+    {
+        "t_id": "47",
+        "std_name": "يوسف عبد الملك حاجب",
+        "std_password": "1234",
+        "std_record": "1234",
+        "std_phone": "711111111",
+        "batch_id": "12",
+        "std_gander": "0",
+        "std_image": "assets/images/4.jpg",
+        " isOnline": "0",
+        "status": "in Company",
+        "std_email": "programingdesingers2@gmail.com"
+    },
+    {
+        "t_id": "47",
+        "std_name": "عمر جميل",
+        "std_password": "12345",
+        "std_record": "12345",
+        "std_phone": "711111111",
+        "batch_id": "12",
+        "std_gander": "0",
+        "std_image": "assets/images/6.jpg",
+        " isOnline": "0",
+        "status": "in Company",
+        "std_email": "programingdesingers2@gmail.com"
+    },
+    {
+        "t_id": "47",
+        "std_name": "عبدالله ",
+        "std_password": "20202422",
+        "std_record": "0",
+        "std_phone": "711111111",
+        "batch_id": "12",
+        "std_gander": "0",
+        "std_image": "assets/images/1.jpg",
+        " isOnline": "0",
+        "status": "in Company",
+        "std_email": "programingdesingers2@gmail.com"
+    }
+]""";
 }

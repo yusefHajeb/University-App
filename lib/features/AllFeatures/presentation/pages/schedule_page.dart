@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import '../../../../core/color/app_color.dart';
 import '../widget/Schedul/loaded_schedule.dart';
+import 'application_page.dart';
 
 class SchedulePage extends StatelessWidget {
   const SchedulePage({super.key});
@@ -12,7 +13,9 @@ class SchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.backgroundPages, body: buildBody(context));
+        drawer: DrawerWidget(context),
+        backgroundColor: AppColors.backgroundPages,
+        body: buildBody(context));
   }
 }
 

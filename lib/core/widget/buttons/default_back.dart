@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:university/core/value/style_manager.dart';
 import 'package:university/core/widget/buttons/button_back.dart';
 import 'package:university/core/widget/dummy/profile_dummy.dart';
 
@@ -17,7 +18,8 @@ class DefaultNav extends StatelessWidget {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       AppBackButton(),
       Text(this.title,
-          style: GoogleFonts.lato(fontSize: 20, color: Colors.white)),
+          style:
+              getFontNormal(20, FontWeight.bold, AppColors.bottomHeaderColor)),
       Builder(builder: (context) {
         if (type == ProfileDummyType.icon) {
           return ProfileDummy(
