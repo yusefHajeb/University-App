@@ -10,6 +10,7 @@ import 'package:university/features/AllFeatures/domain/entites/auth_entites/sing
 import 'package:university/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:university/core/network/check_network.dart';
+import '../../../../../core/constant/varibal.dart';
 import '../../../domain/repositories/auth_repositories/student_repository.dart';
 import '../../datasource/AuthDatatSource/auth_remote_database.dart';
 
@@ -41,7 +42,7 @@ class StudentRepositoryImp implements StudentRepository {
         print("remote.toJson()");
         print(remote.toJson());
         Global.storgeServece
-            .setString("STUDEN_DATA", json.encode(remote.toJson()));
+            .setString(Constants.userData, json.encode(remote.toJson()));
         return Right(remote);
       } on ServerException {
         return Left(SingInFailure());
@@ -68,6 +69,13 @@ class StudentRepositoryImp implements StudentRepository {
     } else {
       return Left(OffLineFailure());
     }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> updateDataUser(SingUp singUp) async {
+    SingUpModel user = SingUpModel(email: singUp.email, image: singUp.image);
+    return await _getMessage(() => remoteData.updateDataUser(user));
+    // return  Left(ServerFailure());
   }
 
   Future<Either<Failure, Unit>> _getMessage(

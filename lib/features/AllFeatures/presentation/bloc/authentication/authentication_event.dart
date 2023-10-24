@@ -38,3 +38,9 @@ class SingInSuccessEvent extends AuthenticationEvent {
 class SingUpEvent extends AuthenticationEvent {}
 
 class AuthErrorSingInEvent extends AuthenticationEvent {}
+
+class UpdateDataUser extends AuthenticationEvent {
+  final SingUp user;
+
+  UpdateDataUser({required this.user});
+}

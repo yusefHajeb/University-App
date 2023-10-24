@@ -1,17 +1,16 @@
-// ignore_for_file: equal_keys_in_map
-
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:university/core/error/execptions.dart';
 import 'package:university/features/AllFeatures/data/models/auth_models/singup_model.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../../../core/constant/varibal.dart';
+import '../../../../../core/value/global.dart';
 import '../../models/auth_models/singin_model.dart';
 
 abstract class SingInOrSingUpRemoteDataSource {
   Future<SingUpModel?> singinStudent(SinginModel singin);
   Future<Unit> singUpStudent(SingUpModel singUp);
+  Future<Unit> updateDataUser(SingUpModel user);
 }
 
 class SingInOrSingUpRemoteDataSourceImp
@@ -21,48 +20,7 @@ class SingInOrSingUpRemoteDataSourceImp
   SingInOrSingUpRemoteDataSourceImp({required this.client});
   @override
   Future<SingUpModel?> singinStudent(SinginModel singin) async {
-    const String sinInJson = """[
-    {
-        "t_id": "47",
-        "std_name": "يوسف عبد الملك حاجب",
-        "std_password": "1234",
-        "std_record": "1234",
-        "std_phone": "711111111",
-        "batch_id": "12",
-        "std_gander": "0",
-        "std_image": "assets/images/4.jpg",
-        " isOnline": "0",
-        "status": "in Company",
-        "std_email": "programingdesingers2@gmail.com"
-    },
-    {
-        "t_id": "47",
-        "std_name": "عمر جميل",
-        "std_password": "12345",
-        "std_record": "12345",
-        "std_phone": "711111111",
-        "batch_id": "12",
-        "std_gander": "0",
-        "std_image": "assets/images/6.jpg",
-        " isOnline": "0",
-        "status": "in Company",
-        "std_email": "programingdesingers2@gmail.com"
-    },
-    {
-        "t_id": "47",
-        "std_name": "عبدالله ",
-        "std_password": "20202422",
-        "std_record": "0",
-        "std_phone": "711111111",
-        "batch_id": "12",
-        "std_gander": "0",
-        "std_image": "assets/images/1.jpg",
-        " isOnline": "0",
-        "status": "in Company",
-        "std_email": "programingdesingers2@gmail.com"
-    }
-]""";
-    final List<dynamic> jsonData = jsonDecode(sinInJson);
+    final List<dynamic> jsonData = jsonDecode(Constants.apiUser);
     List<SingUpModel> response =
         (jsonData as List).map((e) => SingUpModel.formJson(e)).toList();
     SingUpModel? studentData;
@@ -131,5 +89,48 @@ class SingInOrSingUpRemoteDataSourceImp
     } else {
       throw ServerException();
     }
+  }
+
+  @override
+  Future<Unit> updateDataUser(SingUpModel user) async {
+    final record = user.record;
+
+    // final requestBody = {
+    //   SingUpModelKeys.name: user.name,
+    //   SingUpModelKeys.password: user.password,
+    //   SingUpModelKeys.image: user.image,
+    //   SingUpModelKeys.phone: user.phone,
+    //   SingUpModelKeys.email: user.email,
+    // };
+
+    final List<dynamic> jsonData = jsonDecode(Constants.apiUser);
+    List<SingUpModel> request =
+        (jsonData as List).map((e) => SingUpModel.formJson(e)).toList();
+
+    request.forEach((element) {
+      if (element.record == record) {
+        element.copyWith(
+            email: user.email,
+            name: user.name,
+            phone: user.phone,
+            password: user.password,
+            image: user.image);
+        Global.storgeServece
+            .setString(Constants.userData, json.encode(element.toJson()));
+      }
+    });
+    final userModelToJson = await request
+        .map<Map<String, dynamic>>((user) => user.toJson())
+        .toList();
+    Constants.apiUser = json.encode(userModelToJson);
+// final response = await client.patch(Uri.parse("api"),
+//         body: requestBody);
+//     if (response.statusCode == 200) {
+//       return Future.value(unit);
+//     } else {
+//       throw ServerException();
+//     }
+    // TODO: implement updateDataUser
+    throw UnimplementedError();
   }
 }

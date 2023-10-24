@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singup.dart';
 
+// ignore: must_be_immutable
 class SingUpModel extends SingUp {
   SingUpModel(
       {String? tId,
@@ -34,6 +35,35 @@ class SingUpModel extends SingUp {
           username: username,
           password: password,
         );
+
+  SingUpModel copyWith(
+      {String? tId,
+      String? image,
+      String? name,
+      String? gender,
+      String? batchId,
+      String? phone,
+      String? isOnline,
+      String? status,
+      String? email,
+      String? record,
+      String? username,
+      String? password}) {
+    return SingUpModel(
+      tId: tId ?? this.tId,
+      image: image ?? this.image,
+      name: name ?? this.name,
+      gender: gender ?? this.gender,
+      batchId: batchId ?? this.batchId,
+      isOnline: isOnline ?? this.isOnline,
+      phone: phone ?? this.phone,
+      status: status ?? this.status,
+      email: email ?? this.email,
+      record: record ?? this.record,
+      username: username ?? this.username,
+      password: password ?? this.password,
+    );
+  }
 
   factory SingUpModel.formJson(Map<String, dynamic> jsonData) {
     return SingUpModel(

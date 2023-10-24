@@ -9,6 +9,7 @@ import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singu
 import '../../../../../core/error/failure.dart';
 import '../../../../../core/function/failure_to_message.dart';
 import '../../../domain/entites/auth_entites/singin.dart';
+import '../../../domain/usecase/auth_singin_singup.dart/update_data_user.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
@@ -16,7 +17,11 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final SingInUsecase singInUsecase;
   final SingUpUsecase singUpUsecase;
-  AuthenticationBloc({required this.singInUsecase, required this.singUpUsecase})
+  final UpdateDataUserUsecase updateUserData;
+  AuthenticationBloc(
+      {required this.updateUserData,
+      required this.singInUsecase,
+      required this.singUpUsecase})
       : super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) async {
       if (event is AuthGetStart) {
@@ -37,6 +42,14 @@ class AuthenticationBloc
         emit(_failureOrSingUpnState(singUp, singUpSuccessfuly));
       } else if (event is SingUpEvent) {
         emit(SingUpState());
+      } else if (event is UpdateDataUser) {
+        final update = await updateUserData(event.user);
+        update.fold(
+            (failure) =>
+                emit(AuthErrorState(message: failureToMessage(failure))),
+            (response) => emit(AuthSuccessState(
+                singIn: SingUp(), message: singUpSuccessfuly)));
+        // emit(_failureOrSingUpnState(update, singUpSuccessfuly));
       }
     });
   }
@@ -46,9 +59,9 @@ class AuthenticationBloc
     return either
         .fold((failure) => AuthErrorState(message: failureToMessage(failure)),
             (singIn) {
-      final data = Global.storgeServece.getStringData("STUDEN_DATA");
+      // final data = Global.storgeServece.getStringData("STUDEN_DATA");
       print("data");
-      print(data);
+      // print(data);
       return AuthSuccessState(message: message, singIn: singIn);
     });
   }

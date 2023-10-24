@@ -8,7 +8,6 @@ import 'package:university/core/function/messages.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
 import 'package:university/features/AllFeatures/presentation/pages/application_page.dart';
-import 'package:university/features/AllFeatures/presentation/pages/schedule_page.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/form_login_widget.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/global.dart';
