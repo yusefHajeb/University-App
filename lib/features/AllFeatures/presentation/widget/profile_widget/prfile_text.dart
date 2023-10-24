@@ -30,7 +30,7 @@ class ProfileTextOption extends StatelessWidget {
                   children: [
                     Icon(icon, color: Colors.white, size: 24),
                     Text(label,
-                        style: GoogleFonts.lato(
+                        style: GoogleFonts.almarai(
                             fontSize: 18, color: Colors.white)),
                   ],
                 ),
