@@ -11,6 +11,7 @@ abstract class ScheduleLocalDataSource {
   Future<List<SchedulModel>> getCachedSchedul();
   Future<Unit> cacheSchedul(List<SchedulModel> schedulModel);
   Future<Unit> cacheSchedulNotifiction(SchedulModel schedulModel);
+  Future<Unit> cachedLetctersToday(List<SchedulModel> schedulModel);
 }
 
 class ScheduleLocalDataSourceImp implements ScheduleLocalDataSource {
@@ -52,5 +53,37 @@ class ScheduleLocalDataSourceImp implements ScheduleLocalDataSource {
         Constants.cachedSchedule, json.encode(schedulModelToJson));
 
     return Future.value(unit);
+  }
+
+  @override
+  Future<Unit> cachedLetctersToday(List<SchedulModel> schedulModel) async {
+    // final schedulModelToJson = await schedulModel
+    //     .map<Map<String, dynamic>>((schedul) => schedul.toJson())
+    //     .toList();
+
+    final jsonString = sharedPreferences.getString(Constants.cachedLetchers);
+    if (jsonString != null) {
+      List decodeJsonData = json.decode(jsonString);
+      List<SchedulModel> extractDataLetchers = decodeJsonData
+          .map<SchedulModel>((jsonData) => SchedulModel.formJson(jsonData))
+          .toList();
+      schedulModel.forEach((element) {
+        extractDataLetchers.add(element);
+      });
+//===============
+      final letchersToJson = await extractDataLetchers
+          .map<Map<String, dynamic>>((schedul) => schedul.toJson())
+          .toList();
+      sharedPreferences.setString(
+          Constants.cachedLetchers, json.encode(letchersToJson));
+      return Future.value(unit);
+    } else {
+      final schedulModelToJson = await schedulModel
+          .map<Map<String, dynamic>>((schedul) => schedul.toJson())
+          .toList();
+      sharedPreferences.setString(
+          Constants.cachedLetchers, json.encode(schedulModelToJson));
+      return Future.value(unit);
+    }
   }
 }

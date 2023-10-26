@@ -5,7 +5,7 @@ import 'package:university/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:university/features/AllFeatures/domain/repositories/schedule_repository.dart';
 import 'package:university/core/network/check_network.dart';
-
+import 'package:university/main.dart';
 import '../datasource/ScheduleDataSource/schedul_local_data_source.dart';
 import '../datasource/ScheduleDataSource/shedul_remote_datasource.dart';
 
@@ -20,7 +20,7 @@ class SchedulRepositoryImp implements ScheduleRepository {
   });
   @override
   Future<Either<Failure, List<Schedule>>> getALLSchedule() async {
-    if (await networkInfo.isConnected) {
+    if (await socket.connected) {
       try {
         final List<SchedulModel> remoteData =
             await remoteSchedul.getAllSchedul();
@@ -51,7 +51,6 @@ class SchedulRepositoryImp implements ScheduleRepository {
         return Right(remoteData);
       } on ServerException {
         print('===============================ERROR schedul  in repository ');
-
         return Left(ServerFailure());
       }
     } else {
@@ -64,5 +63,27 @@ class SchedulRepositoryImp implements ScheduleRepository {
     //     return Left(EmptyCasheFailure());
     //   }
     // }
+  }
+
+  @override
+  Future<Either<Failure, List<Schedule>>> getLetchersToday() async {
+    if (await socket.connected) {
+      try {
+        final List<SchedulModel> remoteData =
+            await remoteSchedul.getLetchersToday();
+        print("$remoteData ============ Data");
+        localSource.cacheSchedul(remoteData);
+        return Right(remoteData);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        List<SchedulModel> localData = await localSource.getCachedSchedul();
+        return Right(localData);
+      } on EmptyCasheException {
+        return Left(EmptyCasheFailure());
+      }
+    }
   }
 }

@@ -120,14 +120,14 @@ Widget Card2(Schedule schedule) {
 
 Widget iconStatusLetchers(String status) {
   switch (status) {
-    case "ملغي":
+    case "Canceled":
       return Icon(
         FontAwesomeIcons.cancel,
         color: AppColors.error,
       );
-    case "مؤكدة":
+    case "Assured":
       return Icon(FontAwesomeIcons.circleCheck, color: AppColors.green);
-    case "قيد الإنتظار":
+    case "Pending":
       return Icon(FontAwesomeIcons.circleQuestion, color: Colors.orange[300]);
     default:
       return Icon(FontAwesomeIcons.question, color: AppColors.greyColor);

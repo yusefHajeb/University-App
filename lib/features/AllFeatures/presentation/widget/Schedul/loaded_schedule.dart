@@ -46,7 +46,7 @@ showSchedule(int? changeDate, String foramtDateToDay) {
     'الخميس',
     'الجمعة',
     'السبت',
-    'الاحد',
+    'الأحد',
   ];
   String getDay(int dayIndex) {
     final now = DateTime.now();
@@ -58,18 +58,18 @@ showSchedule(int? changeDate, String foramtDateToDay) {
   List<String> day = getMonthDayList();
   ScrollController _scrollController = ScrollController();
   void scrollToSelectedData(int selectedData) {
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(selectedData * 50.0,
-          duration: Duration(milliseconds: 300), curve: Curves.easeIn);
-    }
-    // for (int i = 0; i < 8; i++) {
-    //   Future.delayed(Duration(milliseconds: i * 50), () {
-    //     if (_scrollController.hasClients) {
-    //       _scrollController.animateTo(selectedData * 50.0,
-    //           duration: Duration(milliseconds: 300), curve: Curves.easeIn);
-    //     }
-    //   });
+    // if (_scrollController.hasClients) {
+    //   _scrollController.animateTo(selectedData * 50.0,
+    //       duration: Duration(milliseconds: 300), curve: Curves.easeIn);
     // }
+    for (int i = 0; i < 8; i++) {
+      Future.delayed(Duration(milliseconds: i * 50), () {
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(selectedData * 50.0,
+              duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+        }
+      });
+    }
   }
 
   //  final List<String> weekdays = DateFormat.E().narrow;

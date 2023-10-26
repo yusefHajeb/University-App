@@ -6,4 +6,5 @@ import '../../../../core/error/failure.dart';
 abstract class ScheduleRepository {
   Future<Either<Failure, List<Schedule>>> getALLSchedule();
   Future<Either<Failure, Schedule>> getNotification();
+  Future<Either<Failure, List<Schedule>>> getLetchersToday();
 }
