@@ -29,6 +29,8 @@ class Constants {
   static const headersChach = "CASH_HEADERS_BOOKS";
   static const savedBooks = "DOWNLOAD_BOOKS";
   static const cachedSchedule = "CACHED_SCHEDUL";
+  static const cachedLetchers = "CACHED_LETCHERS";
+
   static const userData = "STUDEN_DATA";
   // static const baseUrl = "https://q97wg.wiremockapi.cloud";
 
@@ -37,6 +39,19 @@ class Constants {
 
   static const schedule = "$baseUrl/test.php";
   static const library = "$baseUrl/university/library";
+
+//this is Linls
+  static const String serverIp = "http://192.168.1.10";
+// const String ServerIp = "http://10.0.2.2";
+  static const String linkPuplicNodeServerName = "${serverIp}:3000";
+  static const String singInLink = "$linkPuplicNodeServerName/signIn";
+  static const String test = "$linkPuplicNodeServerName/getsignIn";
+  static const String imageRoute = "$serverIp/UniversitySystem/StudentsImage";
+  static const String scheduleLink =
+      "$linkPuplicNodeServerName/getAllLectuerForAppStudent";
+
+  static const String letchersLinks =
+      "$linkPuplicNodeServerName/getLectuerForAppstudentEquleDay";
   static String apiUser = """[
     {
         "t_id": "47",

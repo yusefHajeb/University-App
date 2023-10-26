@@ -10,6 +10,7 @@ import 'package:university/features/AllFeatures/data/datasource/library/library_
 import 'package:university/features/AllFeatures/data/repositories/library_repository/library_repository_imp.dart';
 import 'package:university/features/AllFeatures/domain/repositories/library_repositories/library_repository.dart';
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
+import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_tody_letchers.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singup_usecase.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/update_data_user.dart';
@@ -40,7 +41,8 @@ Future<void> init() async {
 
   sl.registerFactory(() => DownloadBooksBloc());
   sl.registerFactory(() => LadingPageBloc());
-  sl.registerFactory(() => ScheduleBloc(getAllScheduleUsecase: sl()));
+  sl.registerFactory(() =>
+      ScheduleBloc(getAllScheduleUsecase: sl(), getLetchersUsecase: sl()));
   sl.registerFactory(() => OnBoardingBlocBloc());
   sl.registerFactory(() => SearchBooksBloc(sl()));
   sl.registerFactory(() => FormLoginBloc());
@@ -53,6 +55,8 @@ Future<void> init() async {
   sl.registerFactory(() => Bloc.observer = MyBlocObserver());
   //USECASE ========================
   sl.registerLazySingleton(() => GetAllScheduleUsecase(rerpository: sl()));
+  sl.registerLazySingleton(() => GetLetchersUsecase(rerpository: sl()));
+
   sl.registerLazySingleton(
       () => GetNotificationScheduleUsecase(scheduleRepository: sl()));
   //auth  =======

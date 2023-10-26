@@ -7,6 +7,7 @@ import '../../../../core/value/global.dart';
 
 SingUpModel userDataModel() {
   final jsonString = Global.storgeServece.getStringData(Constants.userData);
+
   late SingUpModel student;
   if (jsonString != null) {
     final decodeJsonData = json.decode(jsonString);

@@ -8,13 +8,18 @@ class BoxDecorationStyles {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          HexColor.fromHex("#EBF5EE"),
-          Color.fromRGBO(218, 223, 255, 1),
-          HexColor.fromHex("#EBF5EE"),
-          HexColor.fromHex("#EBF5EE")
+          AppColors.backgroundPages,
+          // AppColors.primaryLightColor,
+          AppColors.backgrounfContent,
+          AppColors.backgroundAccentColor,
+          // Color.fromRGBO(218, 223, 255, 1),
+
+          AppColors.backgroundAccentColor,
+          AppColors.backgroundPages,
+          // HexColor.fromHex("#EBF5EE")
         ]),
-    borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+    // borderRadius: BorderRadius.only(
+    //     topLeft: Radius.circular(20), topRight: Radius.circular(20)),
     //border: Border.all(color: Colors.red, width: 5)
   );
 

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:university/core/value/style_manager.dart';
 import 'package:university/core/widget/buttons/button_back.dart';
 import 'package:university/core/widget/dummy/profile_dummy.dart';
-
 import '../../../features/AllFeatures/presentation/widget/profile_widget/text_autline.dart';
 import '../../color/app_color.dart';
 
@@ -19,7 +17,7 @@ class DefaultNav extends StatelessWidget {
       AppBackButton(),
       Text(this.title,
           style:
-              getFontNormal(20, FontWeight.bold, AppColors.bottomHeaderColor)),
+              getFontNormal(17, FontWeight.bold, AppColors.bottomHeaderColor)),
       Builder(builder: (context) {
         if (type == ProfileDummyType.icon) {
           return ProfileDummy(
@@ -28,10 +26,15 @@ class DefaultNav extends StatelessWidget {
               image: "assets/man-head.png",
               scale: 1.2);
         } else if (type == ProfileDummyType.image) {
-          return ProfileDummy(
-              color: HexColor.fromHex("9F69F9"),
-              dummyType: ProfileDummyType.icon,
-              scale: 1.0);
+          return InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: ProfileDummy(
+                color: HexColor.fromHex("9F69F9"),
+                dummyType: ProfileDummyType.icon,
+                scale: 1.0),
+          );
         } else if (type == ProfileDummyType.button) {
           return OutlinedButtonWithText(
             width: 75,

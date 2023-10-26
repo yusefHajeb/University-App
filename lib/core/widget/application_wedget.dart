@@ -9,12 +9,17 @@ import '../../features/AllFeatures/presentation/pages/profile/profile_page.dart'
 import '../../features/AllFeatures/presentation/resources/assets_mananger.dart';
 import '../color/app_color.dart';
 
-Widget buildPage(int index, BuildContext context) {
+Widget buildPage(
+  int index,
+  BuildContext context,
+) {
   List libraryCarouslImg = [
     ImageAssets.imageOne,
     ImageAssets.imageTow,
     ImageAssets.imageThree
   ];
+  ScreenUtil.init(context);
+
   final sizeWidth = ScreenUtil().screenWidth;
   final sizeHeight = ScreenUtil().scaleHeight;
   List<Widget> __widget = [
@@ -38,43 +43,48 @@ Widget buildPage(int index, BuildContext context) {
 
 List<BottomNavigationBarItem> bottomNavItems = <BottomNavigationBarItem>[
   BottomNavigationBarItem(
-      label: "Home",
+      label: "الجدول",
       backgroundColor: AppColors.backgroundAccentColor,
       icon: SvgPicture.asset(
         "assets/icons/calendar.svg",
         color: AppColors.white,
-        width: 35.0,
-        height: 30,
+        width: ScreenUtil().screenWidth * .5,
+        height: ScreenUtil().scaleHeight * 20,
       )),
   BottomNavigationBarItem(
-      label: "schedule",
+      backgroundColor: AppColors.backgroundAccentColor,
+      label: "المكتبة",
       icon: SvgPicture.asset(
         "assets/icons/calendar.svg",
         color: AppColors.white,
-        width: 35.0,
-        height: 30,
+        width: ScreenUtil().screenWidth * .5,
+        height: ScreenUtil().scaleHeight * 20,
       )),
   BottomNavigationBarItem(
-      label: "homework",
-      icon: SizedBox(
-          width: 40,
-          height: 30,
-          child: SvgPicture.asset(
-            "assets/icons/homework.svg",
-            width: 35.0,
-            height: 30,
-            color: AppColors.white,
-          ))),
+      backgroundColor: AppColors.backgroundAccentColor,
+      label: "التنزيلات",
+      icon: SvgPicture.asset(
+        "assets/icons/homework.svg",
+        width: ScreenUtil().screenWidth * .5,
+        height: ScreenUtil().scaleHeight * 20,
+        color: AppColors.white,
+      )),
   BottomNavigationBarItem(
-      label: "book",
-      icon: SvgPicture.asset("assets/icons/comment.svg",
-          width: 35.0, height: 30, color: AppColors.white)),
+      backgroundColor: AppColors.backgroundAccentColor,
+      label: "المحادثة",
+      icon: SvgPicture.asset(
+        "assets/icons/comment.svg",
+        width: ScreenUtil().screenWidth * 5,
+        height: ScreenUtil().scaleHeight * 20,
+        color: AppColors.white,
+      )),
   BottomNavigationBarItem(
-      label: "book2",
+      backgroundColor: AppColors.backgroundAccentColor,
+      label: "الملف الشخصي",
       icon: SvgPicture.asset(
         "assets/icons/read_book.svg",
-        width: 35.0,
+        width: ScreenUtil().screenWidth * 5,
         color: AppColors.white,
-        height: 30,
+        height: ScreenUtil().scaleHeight * 20,
       )),
 ];

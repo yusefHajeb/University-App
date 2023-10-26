@@ -66,6 +66,7 @@ class _TestDownloadState extends State<TestDownload> {
         if (folder != "Android") {
           storePath += "/" + folder;
         } else {
+          folder = "University";
           break;
         }
       }
@@ -166,15 +167,18 @@ class _TestDownloadState extends State<TestDownload> {
       for (var element in localBook) {
         if (widget.bookDownload.id == element.id) {
           File filePath = File("${element.pdfUrl}");
-
-          Navigator.push(
+          print("file Name");
+          print(fileName);
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (_) => ReadingBook(
                 file: filePath,
+                fileName: fileName,
               ),
             ),
           );
+
           break;
         }
       }

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/value/global.dart';
+import 'package:university/core/value/style_manager.dart';
 import 'package:university/features/AllFeatures/data/models/auth_models/singup_model.dart';
 import 'package:university/features/AllFeatures/presentation/pages/profile/edite_data_user_page.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/bakground_dark.dart';
-import '../../../../../core/widget/buttons/default_back.dart';
-import '../../../../../core/widget/dummy/profile_dummy.dart';
+import '../../../../../core/widget/dummy/image_net.dart';
 import '../../../data/models/user_data.dart';
 import '../../widget/profile_widget/prfile_text.dart';
 import '../../widget/profile_widget/text_autline.dart';
@@ -56,13 +56,17 @@ class MyProfie extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    DefaultNav(
-                      title: "$tabSpace ",
+                    Center(
+                      child: Text(
+                        "الملف الشخصي",
+                        style:
+                            getFontNormal(16, FontWeight.bold, AppColors.white),
+                      ),
                     ),
                     SizedBox(height: 30),
-                    ProfileDummy(
+                    ProfileDummyNet(
                         color: HexColor.fromHex("94F0F1"),
-                        dummyType: ProfileDummyType.image,
+                        dummyType: ProfileDummyTypeNet.image,
                         scale: 4.0,
                         image: student.image),
                     Padding(
@@ -73,6 +77,8 @@ class MyProfie extends StatelessWidget {
                               fontSize: 30,
                               fontWeight: FontWeight.bold)),
                     ),
+                    // FeatherIconData(FeatherIcons.activity)                    Icon(FeatherIcons.alertTriangle,
+                    //     color: AppColors.white, size: 30),
                     Text("${student.email}",
                         style: GoogleFonts.lato(
                             color: HexColor.fromHex("B0FFE1"), fontSize: 17)),
@@ -138,10 +144,12 @@ class MyProfie extends StatelessWidget {
                             Global.storgeServece.setBool(
                                 Constants.STORGE_USER_LOGED_FIRST, false);
 
-                            Navigator.push(
+                            Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => OnboardingCarousel()));
+                                  builder: (_) => OnboardingCarousel(),
+                                ),
+                                (route) => false);
                           },
                           child: ProfileTextOption(
                             label: '$tabSpace تسجيل خروج',

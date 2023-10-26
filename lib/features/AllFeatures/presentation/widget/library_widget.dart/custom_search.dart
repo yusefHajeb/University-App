@@ -13,6 +13,7 @@ class CustomInputSerch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     final sizeWidth = ScreenUtil().screenWidth;
 
     return Expanded(

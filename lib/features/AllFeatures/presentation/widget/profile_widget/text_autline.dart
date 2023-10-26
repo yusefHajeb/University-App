@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:university/core/value/style_manager.dart';
 
 import '../../../../../core/color/app_color.dart';
 
@@ -27,6 +28,7 @@ class OutlinedButtonWithText extends StatelessWidget {
                             color: HexColor.fromHex("246EFE"), width: 2)))),
             child: Center(
                 child: Text(content,
-                    style: TextStyle(fontSize: 17, color: Colors.white)))));
+                    style: getFontNormal(
+                        15, FontWeight.normal, AppColors.white)))));
   }
 }

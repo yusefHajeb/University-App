@@ -134,9 +134,9 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                                           msg:
                                               'Forgotten password! button pressed',
                                         );
-                                        Global.storgeServece.setBool(
-                                            Constants.STORGE_USER_LOGED_FIRST,
-                                            false);
+                                        //  bool     Global.storgeServece.setBool(
+                                        //           Constants.STORGE_USER_LOGED_FIRST,
+                                        //           false);
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (_) =>

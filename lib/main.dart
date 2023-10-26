@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university/core/color/app_color.dart';
+import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -16,14 +17,21 @@ import 'features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart
 import 'features/AllFeatures/presentation/bloc/library_bloc/library_bloc.dart';
 import 'features/AllFeatures/presentation/bloc/onboarding_bloc/on_boarding_bloc_bloc.dart';
 import 'features/AllFeatures/presentation/cubit/localization/local_cubit_cubit.dart';
+import 'features/AllFeatures/presentation/helpers/bloc_observer.dart';
 import 'features/AllFeatures/presentation/routes.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+var socket = IO.io('${Constants.serverIp}:3000', <String, dynamic>{
+  'transports': ['websocket'],
+  'autoConnect': false,
+});
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await di.init();
-  // Bloc.observer = MyBlocObserver();
+  Bloc.observer = MyBlocObserver();
   // await ScreenUtil.ensureScreenSize();
-
+  socket.connect();
   await Global.init();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -98,11 +106,14 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           onGenerateRoute: RouteGenerator.getRoutes,
           initialRoute: Routes.onBoarding,
+
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            primaryColor: AppColors.backgrounfContent,
             primarySwatch: Colors.blue,
             bottomNavigationBarTheme: BottomNavigationBarThemeData(
               backgroundColor: AppColors.backgroundAccentColor,
+              elevation: 1,
             ),
             appBarTheme: const AppBarTheme(
               systemOverlayStyle: SystemUiOverlayStyle.light,

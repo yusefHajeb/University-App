@@ -2,8 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:university/core/constant/varibal.dart';
+import 'package:university/core/widget/dummy/image_net.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/search_books/search_books_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/convert_book_3d.dart';
 import '../../../../../core/Utils/box_decoration.dart';
@@ -13,9 +16,12 @@ import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
 import '../../../../../core/widget/dummy/profile_dummy.dart';
 import '../../../../../core/widget/fade_effect.dart';
+import '../../../data/models/user_data.dart';
 import '../../bloc/library_bloc/library_bloc.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
+import '../../widget/library_widget.dart/show_loading.dart';
 import '../../widget/library_widget.dart/showdialoge_widget.dart';
+import '../application_page.dart';
 
 final CarouselController carouselController = CarouselController();
 
@@ -33,27 +39,33 @@ class LibraryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return Scaffold(
+      drawerEnableOpenDragGesture: true,
+      drawer: DrawerWidget(context),
       backgroundColor: AppColors.backgroundPages,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
           height: appSize(context).height,
           color: AppColors.backgroundPages,
-          child: Column(children: [
+          child: ListView(shrinkWrap: true, children: [
             Container(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: InkWell(
-                      onTap: () {},
-                      child: ProfileDummy(
+                      onTap: () {
+                        context.read<LadingPageBloc>().add(TabChange(4));
+                      },
+                      child: ProfileDummyNet(
                           color: HexColor.fromHex("94F0F1"),
-                          dummyType: ProfileDummyType.image,
+                          dummyType: ProfileDummyTypeNet.image,
                           scale: 1,
-                          image: "assets/images/slider-background-3.png"),
+                          image: userDataModel().image),
                     ),
                   ),
                   CustomInputSerch(),
@@ -124,9 +136,8 @@ class LibraryPage extends StatelessWidget {
               builder: (context, state) {
                 // int curent = state.curent;
                 if (state is LoadingLibraryState) {
-                  return Container(
-                    width: sizeWidth,
-                    color: const Color.fromARGB(148, 91, 82, 82),
+                  return ShowSktolin(
+                    size: appSize(context),
                   );
                 } else if (state is HeaderBooksLibraryState) {
                   return BlocBuilder<SearchBooksBloc, SearchBooksState>(
@@ -270,17 +281,8 @@ class LibraryPage extends StatelessWidget {
                     child: Image.asset("assets/images/on_3.png"),
                   );
                 } else {
-                  return Column(
-                    children: [
-                      const Text("some  woring"),
-                      ElevatedButton(
-                        child: const Text("try Again"),
-                        onPressed: () {
-                          BlocProvider.of<LibraryBloc>(context)
-                              .add(GetHeaderBooksLibraryEvent(0));
-                        },
-                      )
-                    ],
+                  return ShowSktolin(
+                    size: appSize(context),
                   );
                 }
               },

@@ -9,6 +9,8 @@ class LadingPageBloc extends Bloc<LadingPageEvent, LadingPageState> {
     on<LadingPageEvent>((event, emit) {
       if (event is TabChange) {
         emit(LadingPageState(tabIndex: event.tabIndex));
+      } else {
+        emit(LadingPageState(tabIndex: 1));
       }
     });
   }

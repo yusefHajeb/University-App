@@ -2,13 +2,17 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:university/core/value/app_space.dart';
 
 import '../../../../../core/color/app_color.dart';
+import '../../../../../core/widget/buttons/button_back.dart';
 import '../../../../../core/widget/buttons/default_back.dart';
+import '../../../../../core/widget/dummy/profile_dummy.dart';
 
 class ReadingBook extends StatefulWidget {
   final File file;
-  ReadingBook({required this.file});
+  String? fileName;
+  ReadingBook({required this.file, this.fileName = ""});
 
   @override
   _ReadingBookState createState() => _ReadingBookState();
@@ -36,13 +40,21 @@ class _ReadingBookState extends State<ReadingBook> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.backgrounfContent,
-        title: DefaultNav(title: "\t\t\t "),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AppBackButton(),
+            Text("${widget.fileName?.toString()}"),
+            AppSpaces.horizontalSpace10,
+          ],
+        ),
         leading: isFullScreen
             ? IconButton(
                 icon: const Icon(Icons.close_fullscreen_outlined),
                 onPressed: () {
-                  print("widget.pdfPath");
+                  print("${widget.file.path}");
 
                   setState(() {
                     isFullScreen = false;

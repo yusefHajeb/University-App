@@ -36,6 +36,7 @@ class BooksDownloaded extends StatelessWidget {
                 child: SizedBox(
                     child: SingleChildScrollView(
                         child: Column(children: [
+                  AppSpaces.verticalSpace10,
                   const DefaultNav(title: "\t\t\t المفضلة"),
                   AppSpaces.verticalSpace20,
                   BlocBuilder<DownloadBooksBloc, DownlaodBooksState>(

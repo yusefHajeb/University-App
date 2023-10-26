@@ -7,7 +7,9 @@ class AppBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pop(context);
+      },
       child: RoundedBorderWithIcon(icon: Icons.arrow_back),
     );
   }

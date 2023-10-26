@@ -7,13 +7,16 @@ import 'package:university/core/value/app_space.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singup.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/pages/application_page.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/widget/bakground_dark.dart';
 import '../../../../../core/widget/buttons/default_back.dart';
 import '../../../../../core/widget/custom_input.dart';
+import '../../../../../core/widget/dummy/image_net.dart';
 import '../../../../../core/widget/dummy/profile_dummy.dart';
 import '../../../data/models/auth_models/singup_model.dart';
 import '../../../data/models/user_data.dart';
+import '../../bloc/lading_page/lading_page_bloc.dart';
 import '../../widget/profile_widget/text_autline.dart';
 
 class EditeUserData extends StatefulWidget {
@@ -77,9 +80,9 @@ class _EditeUserDataState extends State<EditeUserData> {
                                   type: ProfileDummyType.image,
                                   title: "\t\t\t تعديل الملف الشخصي")),
                           AppSpaces.verticalSpace20,
-                          ProfileDummy(
+                          ProfileDummyNet(
                               color: HexColor.fromHex("94F0F1"),
-                              dummyType: ProfileDummyType.image,
+                              dummyType: ProfileDummyTypeNet.image,
                               scale: 4.0,
                               image: student.image),
                           LabelledFormInput(
@@ -130,20 +133,20 @@ class _EditeUserDataState extends State<EditeUserData> {
                               child: Text("تعديل"),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: OutlinedButtonWithText(
-                                width: double.infinity,
-                                content: "تعديل",
-                                onPressed: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (_) => const EditeUserData(),
-                                  //     ));
-                                  // Get.to(() => EditProfilePage());
-                                }),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(15.0),
+                          //   child: OutlinedButtonWithText(
+                          //       width: double.infinity,
+                          //       content: "تعديل",
+                          //       onPressed: () {
+                          //         // Navigator.push(
+                          //         //     context,
+                          //         //     MaterialPageRoute(
+                          //         //       builder: (_) => const EditeUserData(),
+                          //         //     ));
+                          //         // Get.to(() => EditProfilePage());
+                          //       }),
+                          // ),
                         ],
                       ),
                     ),
@@ -167,31 +170,37 @@ class _EditeUserDataState extends State<EditeUserData> {
           phone: _phone.text,
           image: _image.text,
           password: _password.text);
-
+      print(user);
       dynamic jsonUser = Global.storgeServece.getStringData(Constants.userData);
-      dynamic decode = jsonDecode(jsonUser);
+      dynamic decode = json.decode(jsonUser);
 
-      SingUpModel dataCashed = SingUpModel.formJson(decode);
+      SingUp dataCashed = SingUpModel.formJson(decode);
 
-      dataCashed.copyWith(
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        password: user.password,
-        image: user.image,
+      SingUp data = dataCashed.copyWith(
+        name: _name.text,
+        email: _gmail.text,
+        phone: _phone.text,
+        password: _password.text,
+        record: student.record,
       );
-      print(dataCashed);
-       Global.storgeServece
-          .setString(Constants.userData, json.encode(dataCashed.toJson()));
-      context.read<AuthenticationBloc>().add(UpdateDataUser(user: dataCashed));
+
+      print("this data after update and i will cashed");
+      print(data);
+      Global.storgeServece.setString(Constants.userData, json.encode(data));
+      // Global.storgeServece
+      //     .setString(Constants.userData, json.encode(dataCashed));
+      context.read<AuthenticationBloc>().add(UpdateDataUser(user: data));
 
       jsonUser = Global.storgeServece.getStringData(Constants.userData);
       decode = jsonDecode(jsonUser);
-      
+
       dataCashed = SingUpModel.formJson(decode);
       print("dataCashed");
       print(dataCashed);
-      Navigator.pop(context);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => ApplicationPage()));
+      context.read<LadingPageBloc>().add(TabChange(4));
+
       // showDialog(
       //     context: context,
       //     builder: (context) {
