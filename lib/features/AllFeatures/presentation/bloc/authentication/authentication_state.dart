@@ -13,17 +13,17 @@ class AuthProgressState extends AuthenticationState {}
 
 class AuthSuccessState extends AuthenticationState {
   final String message;
-  final SingUp singIn;
-  AuthSuccessState({required this.singIn, required this.message});
+
+  const AuthSuccessState({required this.message});
   @override
-  List<Object> get props => [message, singIn];
+  List<Object> get props => [message];
 }
 
 class SingUpSuccessState extends AuthenticationState {
   final String message;
   final SingUp singUp;
 
-  SingUpSuccessState({required this.message, required this.singUp});
+  const SingUpSuccessState({required this.message, required this.singUp});
   List<Object> get props => [message, singUp];
 }
 

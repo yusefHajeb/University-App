@@ -60,7 +60,7 @@ class SingInPage extends StatelessWidget {
                     }
                     return LoadingCircularProgress();
                   },
-                  listener: (context, state) async {
+                  listener: (context, state) {
                     if (state is AuthSuccessState) {
                       print("SingUpSuccessState");
 
@@ -68,9 +68,11 @@ class SingInPage extends StatelessWidget {
                         msg: (singInSuccessfuly).tr(context),
                       );
                       print("lisener ======= ");
-                      await Global.storgeServece
+
+                      Global.storgeServece
                           .setBool(Constants.STORGE_USER_LOGED_FIRST, true);
-                      Navigator.of(context).pushAndRemoveUntil(
+                      Navigator.pushAndRemoveUntil(
+                          context,
                           MaterialPageRoute(builder: (_) => ApplicationPage()),
                           (route) => false);
                     } else if (state is AuthErrorState) {

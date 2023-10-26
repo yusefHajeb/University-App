@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
-import 'package:university/app/extensions.dart';
 
 class SinginModel extends Singin {
   SinginModel(

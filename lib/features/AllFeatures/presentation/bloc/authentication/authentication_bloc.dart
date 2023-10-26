@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:university/core/function/messages.dart';
-import 'package:university/core/value/global.dart';
+
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singup.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singup_usecase.dart';
@@ -47,8 +47,7 @@ class AuthenticationBloc
         update.fold(
             (failure) =>
                 emit(AuthErrorState(message: failureToMessage(failure))),
-            (response) => emit(AuthSuccessState(
-                singIn: SingUp(), message: singUpSuccessfuly)));
+            (response) => emit(AuthSuccessState(message: singUpSuccessfuly)));
         // emit(_failureOrSingUpnState(update, singUpSuccessfuly));
       }
     });
@@ -62,15 +61,17 @@ class AuthenticationBloc
       // final data = Global.storgeServece.getStringData("STUDEN_DATA");
       print("data");
       // print(data);
-      return AuthSuccessState(message: message, singIn: singIn);
+      return AuthSuccessState(message: message);
     });
   }
 
   AuthenticationState _failureOrSingUpnState(
       Either<Failure, SingUp> either, String message) {
-    return either.fold(
-        (failure) => AuthErrorState(message: failureToMessage(failure)),
-        (singUp) => SingUpSuccessState(message: message, singUp: singUp));
+    return either
+        .fold((failure) => AuthErrorState(message: failureToMessage(failure)),
+            (singUp) {
+      return SingUpSuccessState(message: message, singUp: singUp);
+    });
   }
 
   // AuthenticationState _failureOrSingUpState()

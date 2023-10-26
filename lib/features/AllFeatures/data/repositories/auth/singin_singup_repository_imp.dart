@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:university/core/error/execptions.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/data/models/auth_models/singin_model.dart';
@@ -18,6 +19,7 @@ typedef SingInOrSingUpStudent = Future<Unit> Function();
 
 class StudentRepositoryImp implements StudentRepository {
   final SingInOrSingUpRemoteDataSource remoteData;
+  // final SharedPreferences pref;
   // final ScheduleLocalDataSource localSource;
   final NetworkInfo networkInfo;
   StudentRepositoryImp({
@@ -26,36 +28,40 @@ class StudentRepositoryImp implements StudentRepository {
   });
   @override
   Future<Either<Failure, SingUp>> singInStuden(Singin singin) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final singInModel = SinginModel(
-          password: singin.password,
-          record: singin.record,
-        );
-        SingUpModel? remote = await remoteData.singinStudent(singInModel);
+    // if (await networkInfo.isConnected) {
+    try {
+      final singInModel = SinginModel(
+        password: singin.password,
+        record: singin.record,
+      );
 
-        print("===========================$singInModel  repository");
-        // return await _getMessage(() => remoteData.singinStudent(singInModel));
-        if (remote == null) {
-          return Left(SingInFailure());
-        }
-        print("remote.toJson()");
-        print(remote.toJson());
-        Global.storgeServece
-            .setString(Constants.userData, json.encode(remote.toJson()));
-        return Right(remote);
-      } on ServerException {
+      SingUpModel? remote = await remoteData.singinStudent(singInModel);
+      print("===========================$singInModel  repository");
+      // return await _getMessage(() => remoteData.singinStudent(singInModel));
+      if (remote == null) {
         return Left(SingInFailure());
       }
-    } else {
-      return Left(OffLineFailure());
+      print("remote.toJson()");
+      print(remote.toJson());
+
+      Global.storgeServece
+          .setString(Constants.userData, json.encode(remote.toJson()));
+      Global.storgeServece.setBool(Constants.STORGE_USER_LOGED_FIRST, true);
+
+      return Right(remote);
+    } on ServerException {
+      return Left(SingInFailure());
     }
+    // } else {
+    //   return Left(OffLineFailure());
+    // }
   }
 
   @override
   Future<Either<Failure, SingUp>> singUpStudent(SingUp singUp) async {
     if (await networkInfo.isConnected) {
       final SingUpModel singUpModel = SingUpModel(
+        phone: singUp.phone,
         password: singUp.password!,
         email: singUp.email!,
         record: singUp.record!,
@@ -73,8 +79,27 @@ class StudentRepositoryImp implements StudentRepository {
 
   @override
   Future<Either<Failure, Unit>> updateDataUser(SingUp singUp) async {
-    SingUpModel user = SingUpModel(email: singUp.email, image: singUp.image);
-    return await _getMessage(() => remoteData.updateDataUser(user));
+    SingUpModel user = SingUpModel(
+      email: singUp.email,
+      image: singUp.image,
+      name: singUp.name,
+      password: singUp.password,
+      phone: singUp.phone,
+    );
+    if (await networkInfo.isConnected) {
+      try {
+        print("user in implement");
+        print(user);
+        Unit remote = await remoteData.updateDataUser(user);
+        return Right(remote);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(OffLineFailure());
+    }
+
+    // return await _getMessage(() => remoteData.updateDataUser(user));
     // return  Left(ServerFailure());
   }
 
@@ -83,8 +108,6 @@ class StudentRepositoryImp implements StudentRepository {
     if (await networkInfo.isConnected) {
       try {
         singinOrSingUpStudent;
-        print(
-            '=============================== success in repository and remote');
         return const Right(unit);
       } on ServerException {
         print('=============================== Error in repo and remote');

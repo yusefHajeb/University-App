@@ -65,6 +65,37 @@ class SingUpModel extends SingUp {
     );
   }
 
+  factory SingUpModel.fromMap(Map<String, dynamic> jsonData) {
+    return SingUpModel(
+        email: jsonData[SingUpModelKeys.email]?.toString() ?? "",
+        record: jsonData[SingUpModelKeys.record]?.toString() ?? "",
+        image: jsonData[SingUpModelKeys.image]?.toString() ?? "",
+        password: jsonData[SingUpModelKeys.password]?.toString() ?? "",
+        name: jsonData[SingUpModelKeys.name]?.toString() ?? "",
+        batchId: jsonData[SingUpModelKeys.batchId]?.toString() ?? "",
+        tId: jsonData[SingUpModelKeys.tid]?.toString() ?? "",
+        isOnline: jsonData[SingUpModelKeys.isOnline]?.toString() ?? "",
+        gender: jsonData[SingUpModelKeys.gender]?.toString() ?? "",
+        phone: jsonData[SingUpModelKeys.phone]?.toString() ?? "",
+        status: jsonData[SingUpModelKeys.status]?.toString() ?? "");
+  }
+
+  factory SingUpModel.fromJson(String data) {
+    final jsonData = json.decode(data);
+    return SingUpModel(
+        email: jsonData[SingUpModelKeys.email]?.toString() ?? "",
+        record: jsonData[SingUpModelKeys.record]?.toString() ?? "",
+        image: jsonData[SingUpModelKeys.image]?.toString() ?? "",
+        password: jsonData[SingUpModelKeys.password]?.toString() ?? "",
+        name: jsonData[SingUpModelKeys.name]?.toString() ?? "",
+        batchId: jsonData[SingUpModelKeys.batchId]?.toString() ?? "",
+        tId: jsonData[SingUpModelKeys.tid]?.toString() ?? "",
+        isOnline: jsonData[SingUpModelKeys.isOnline]?.toString() ?? "",
+        gender: jsonData[SingUpModelKeys.gender]?.toString() ?? "",
+        phone: jsonData[SingUpModelKeys.phone]?.toString() ?? "",
+        status: jsonData[SingUpModelKeys.status]?.toString() ?? "");
+  }
+
   factory SingUpModel.formJson(Map<String, dynamic> jsonData) {
     return SingUpModel(
         email: jsonData[SingUpModelKeys.email]?.toString() ?? "",
