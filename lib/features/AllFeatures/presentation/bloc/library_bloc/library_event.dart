@@ -11,6 +11,8 @@ class LibraryInitial extends LibraryEvent {}
 
 class GetBooksLibraryEvent extends LibraryEvent {}
 
+class GetDataLibrary extends LibraryEvent {}
+
 class RefreshLibraryEvent extends LibraryEvent {}
 
 // ignore: must_be_immutable
@@ -22,7 +24,7 @@ class GetHeaderBooksLibraryEvent extends LibraryEvent {
 }
 
 class DownloadBookLibraryEvent extends LibraryEvent {
-  final BookDetaile response;
+  final Book response;
   const DownloadBookLibraryEvent({
     required this.response,
   });

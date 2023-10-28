@@ -1,39 +1,28 @@
 import 'package:equatable/equatable.dart';
 
-class BookDetaile extends Equatable {
-  final int? id;
-  final int? category_id;
-  final int? patch_id;
-  final String? subject;
-  final String? img_book;
-  final String? name_book;
-  final String? write_book;
+class Book extends Equatable {
+  final int? course_id;
+  final String? bookName;
+  final String? imgBook;
+  final String? bookAuthor;
   final String? pdfUrl;
-  final bool? isDownload;
-
-  const BookDetaile({
-    this.isDownload,
-    this.id,
-    this.category_id,
-    this.patch_id,
-    this.subject,
-    this.img_book,
-    this.name_book,
-    this.write_book,
-    this.pdfUrl,
-  });
+  final String? bookType;
+  const Book(
+      {this.course_id,
+      this.bookName,
+      this.imgBook,
+      this.bookAuthor,
+      this.pdfUrl,
+      this.bookType});
 
   @override
   List<Object?> get props => [
-        id,
-        patch_id,
-        subject,
-        img_book,
-        name_book,
-        write_book,
-        category_id,
-        pdfUrl,
-        isDownload
+        this.course_id,
+        this.bookName,
+        this.imgBook,
+        this.bookAuthor,
+        this.pdfUrl,
+        this.bookType
       ];
 }
 
@@ -43,6 +32,5 @@ class CategoryBooks extends Equatable {
   CategoryBooks({required this.book_title, required this.book_id});
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [book_title];
+  List<Object?> get props => [book_title, book_id];
 }

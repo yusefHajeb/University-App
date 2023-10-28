@@ -4,7 +4,7 @@ import 'package:university/features/AllFeatures/domain/entites/header_books_enti
 class BookDetailsBio extends StatelessWidget {
   const BookDetailsBio({Key? key, required this.book}) : super(key: key);
 
-  final BookDetaile book;
+  final Book book;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +22,7 @@ class BookDetailsBio extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                book.name_book.toString(),
+                book.bookName.toString(),
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -43,7 +43,7 @@ class BookDetailsBio extends StatelessWidget {
           height: 10,
         ),
         Text(
-          "by ${book.write_book}",
+          "by ${book.bookAuthor}",
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 14,
@@ -54,7 +54,7 @@ class BookDetailsBio extends StatelessWidget {
           height: 30,
         ),
         Text(
-          book.subject.toString(),
+          book.bookName.toString(),
         ),
       ],
     );
