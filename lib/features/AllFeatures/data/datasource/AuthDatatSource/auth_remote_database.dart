@@ -4,7 +4,6 @@ import 'package:university/core/error/execptions.dart';
 import 'package:university/features/AllFeatures/data/datasource/data_access.dart';
 import 'package:university/features/AllFeatures/data/models/auth_models/singup_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:university/main.dart';
 import '../../../../../core/constant/varibal.dart';
 import '../../../../../core/value/global.dart';
 import '../../models/auth_models/singin_model.dart';
@@ -76,8 +75,8 @@ class SingInOrSingUpRemoteDataSourceImp
     var res = await curd.PostRequset(Constants.singInLink,
         {"record": '${int.parse(singin.record)}', "password": singin.password});
 
-    var response = await curd.PostRequset(Constants.singInLink,
-        {"record": '${int.parse(singin.record)}', "password": singin.password});
+    // var response = await curd.PostRequset(Constants.singInLink,
+    //     {"record": '${int.parse(singin.record)}', "password": singin.password});
 
     print("status =====");
     print(res);

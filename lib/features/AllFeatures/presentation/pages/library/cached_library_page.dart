@@ -24,8 +24,8 @@ import '../application_page.dart';
 
 final CarouselController carouselController = CarouselController();
 
-class LibraryPage extends StatelessWidget {
-  const LibraryPage({
+class LibraryCashed extends StatelessWidget {
+  const LibraryCashed({
     Key? key,
     required this.libraryCarouslImg,
     required this.sizeWidth,
@@ -264,13 +264,7 @@ class LibraryPage extends StatelessWidget {
                                           child: FadeInEffect(
                                             child: BookCover3D(
                                               book: stateSearch.books.isEmpty
-                                                  ? state.books[index].copyWith(
-                                                      pdfUrl:
-                                                          Constants.pdfRoute +
-                                                              "/" +
-                                                              state.books[index]
-                                                                  .pdfUrl
-                                                                  .toString())
+                                                  ? state.books[index]
                                                   : stateSearch.books[index],
                                               confige: true,
                                             ),

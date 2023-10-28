@@ -45,46 +45,58 @@ List<BottomNavigationBarItem> bottomNavItems = <BottomNavigationBarItem>[
   BottomNavigationBarItem(
       label: "الجدول",
       backgroundColor: AppColors.backgroundAccentColor,
-      icon: SvgPicture.asset(
-        "assets/icons/calendar.svg",
-        color: AppColors.white,
-        width: ScreenUtil().screenWidth * .5,
-        height: ScreenUtil().scaleHeight * 20,
+      icon: SizedBox(
+        width: 20.w,
+        height: 15.h,
+        child: SvgPicture.asset(
+          "assets/icons/calendar.svg",
+          color: AppColors.white,
+        ),
       )),
   BottomNavigationBarItem(
       backgroundColor: AppColors.backgroundAccentColor,
       label: "المكتبة",
-      icon: SvgPicture.asset(
-        "assets/icons/calendar.svg",
-        color: AppColors.white,
-        width: ScreenUtil().screenWidth * .5,
-        height: ScreenUtil().scaleHeight * 20,
+      icon: SizedBox(
+        width: 20.w,
+        height: 15.h,
+        child: SvgPicture.asset(
+          "assets/icons/calendar.svg",
+          color: AppColors.white,
+          // width: ScreenUtil().screenWidth * .5,
+          // height: ScreenUtil().scaleHeight * 20,
+        ),
       )),
   BottomNavigationBarItem(
       backgroundColor: AppColors.backgroundAccentColor,
       label: "التنزيلات",
-      icon: SvgPicture.asset(
-        "assets/icons/homework.svg",
-        width: ScreenUtil().screenWidth * .5,
-        height: ScreenUtil().scaleHeight * 20,
-        color: AppColors.white,
+      icon: SizedBox(
+        width: 20.w,
+        height: 15.h,
+        child: SvgPicture.asset(
+          "assets/icons/homework.svg",
+          color: AppColors.white,
+        ),
       )),
   BottomNavigationBarItem(
       backgroundColor: AppColors.backgroundAccentColor,
       label: "المحادثة",
-      icon: SvgPicture.asset(
-        "assets/icons/comment.svg",
-        width: ScreenUtil().screenWidth * 5,
-        height: ScreenUtil().scaleHeight * 20,
-        color: AppColors.white,
+      icon: SizedBox(
+        width: 20.w,
+        height: 15.h,
+        child: SvgPicture.asset(
+          "assets/icons/comment.svg",
+          color: AppColors.white,
+        ),
       )),
   BottomNavigationBarItem(
       backgroundColor: AppColors.backgroundAccentColor,
       label: "الملف الشخصي",
-      icon: SvgPicture.asset(
-        "assets/icons/read_book.svg",
-        width: ScreenUtil().screenWidth * 5,
-        color: AppColors.white,
-        height: ScreenUtil().scaleHeight * 20,
+      icon: SizedBox(
+        width: 20.w,
+        height: 15.h,
+        child: SvgPicture.asset(
+          "assets/icons/read_book.svg",
+          color: AppColors.white,
+        ),
       )),
 ];

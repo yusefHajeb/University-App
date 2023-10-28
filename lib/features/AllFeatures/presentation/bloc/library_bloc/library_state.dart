@@ -65,19 +65,3 @@ class LibraryBookDownloadState extends LibraryState {
   @override
   List<Object> get props => [bookDawonload];
 }
-
-class ErrorFetchCourse extends LibraryState {
-  final String errorMessage;
-
-  const ErrorFetchCourse({required this.errorMessage});
-  @override
-  List<Object> get props => [errorMessage];
-}
-
-class ErrorFetchBooks extends LibraryState {
-  final String errorMessage;
-
-  ErrorFetchBooks({required this.errorMessage});
-  @override
-  List<Object> get props => [errorMessage];
-}

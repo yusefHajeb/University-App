@@ -16,8 +16,11 @@ class DefaultNav extends StatelessWidget {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       AppBackButton(),
       Text(this.title,
-          style:
-              getFontNormal(17, FontWeight.bold, AppColors.bottomHeaderColor)),
+          style: getFontNormal(
+            17,
+            FontWeight.bold,
+            AppColors.bottomHeaderColor,
+          )),
       Builder(builder: (context) {
         if (type == ProfileDummyType.icon) {
           return ProfileDummy(
@@ -26,15 +29,10 @@ class DefaultNav extends StatelessWidget {
               image: "assets/man-head.png",
               scale: 1.2);
         } else if (type == ProfileDummyType.image) {
-          return InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: ProfileDummy(
-                color: HexColor.fromHex("9F69F9"),
-                dummyType: ProfileDummyType.icon,
-                scale: 1.0),
-          );
+          return ProfileDummy(
+              color: HexColor.fromHex("9F69F9"),
+              dummyType: ProfileDummyType.icon,
+              scale: 1.0);
         } else if (type == ProfileDummyType.button) {
           return OutlinedButtonWithText(
             width: 75,

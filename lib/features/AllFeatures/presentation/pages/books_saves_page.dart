@@ -7,13 +7,11 @@ import 'package:university/core/Utils/box_decoration.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/value/app_space.dart';
 import 'package:university/core/widget/loading_widget.dart';
-
 import 'package:university/features/AllFeatures/domain/entites/header_books_entites.dart';
 import '../../../../core/color/app_color.dart';
 import '../../../../core/value/style_manager.dart';
 import '../../../../core/widget/bakground_dark.dart';
 import '../../../../core/widget/buttons/custom_button_with_icon.dart';
-import '../../../../core/widget/buttons/default_back.dart';
 import '../bloc/book_favorite_bloc/books_favorite_bloc.dart';
 import '../widget/library_widget.dart/reading_book.dart';
 
@@ -36,8 +34,13 @@ class BooksDownloaded extends StatelessWidget {
                 child: SizedBox(
                     child: SingleChildScrollView(
                         child: Column(children: [
-                  AppSpaces.verticalSpace10,
-                  const DefaultNav(title: "\t\t\t المفضلة"),
+                  AppSpaces.verticalSpace20,
+                  Text("التنزيلات",
+                      style: getFontNormal(
+                        17,
+                        FontWeight.bold,
+                        AppColors.bottomHeaderColor,
+                      )),
                   AppSpaces.verticalSpace20,
                   BlocBuilder<DownloadBooksBloc, DownlaodBooksState>(
                     builder: (context, state) {
@@ -66,7 +69,7 @@ class BooksDownloaded extends StatelessWidget {
 
   Container CardBookSave(
     BuildContext context,
-    BookDetaile favorite,
+    Book favorite,
   ) {
     return Container(
       margin: EdgeInsets.only(bottom: 20),
@@ -95,7 +98,8 @@ class BooksDownloaded extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: CachedNetworkImage(
-                    imageUrl: favorite.img_book.toString(),
+                    imageUrl:
+                        Constants.imageBooksRoute + favorite.imgBook.toString(),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -124,7 +128,7 @@ class BooksDownloaded extends StatelessWidget {
                     children: [
                       Text("اسم الكتاب",
                           style: getFontNormal(
-                              22, FontWeight.w600, AppColors.white)),
+                              17, FontWeight.w600, AppColors.white)),
                     ],
                   ),
                   AppSpaces.verticalSpace10,
@@ -137,7 +141,7 @@ class BooksDownloaded extends StatelessWidget {
                       ),
                       AppSpaces.horizontalSpace10,
                       Text(
-                        favorite.subject.toString(),
+                        favorite.bookName.toString(),
                         style: getFontNormal(
                             13, FontWeight.normal, AppColors.greyColor),
                       )
@@ -153,7 +157,7 @@ class BooksDownloaded extends StatelessWidget {
                       ),
                       AppSpaces.horizontalSpace10,
                       Text(
-                        favorite.subject.toString(),
+                        favorite.bookName.toString(),
                         style: getFontNormal(
                             13, FontWeight.normal, AppColors.greyColor),
                       )
@@ -191,7 +195,7 @@ class BooksDownloaded extends StatelessWidget {
                 onTap: () {
                   context
                       .read<DownloadBooksBloc>()
-                      .add(DeleteFavorites(index: favorite.id ?? 0));
+                      .add(DeleteFavorites(index: favorite.course_id ?? 0));
                 },
                 child: Container(
                   child: RoundedBorderWithIcon(

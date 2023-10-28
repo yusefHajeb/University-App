@@ -7,7 +7,7 @@ import '../../../../../core/constant/varibal.dart';
 import '../../../../../core/value/app_space.dart';
 import '../Auth Widget/submet_login.dart';
 
-funcShow(BuildContext context, LibraryModel list) {
+funcShow(BuildContext context, BookModel list) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -29,7 +29,7 @@ funcShow(BuildContext context, LibraryModel list) {
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       child: Image.network(
-                        list.img_book ?? "",
+                        list.imgBook ?? "",
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -41,7 +41,7 @@ funcShow(BuildContext context, LibraryModel list) {
                   child: Row(
                     children: [
                       Expanded(flex: 1, child: Text("اسم الكتاب")),
-                      Expanded(child: Text(list.name_book.toString()))
+                      Expanded(child: Text(list.bookName.toString()))
                     ],
                   ),
                 ),
@@ -51,7 +51,7 @@ funcShow(BuildContext context, LibraryModel list) {
                   child: Row(
                     children: [
                       Expanded(flex: 1, child: Text("مؤلف الكتاب")),
-                      Expanded(child: Text(list.subject.toString()))
+                      Expanded(child: Text(list.bookName.toString()))
                     ],
                   ),
                 ),

@@ -5,8 +5,7 @@ import '../../../../../core/constant/varibal.dart';
 import '../../../domain/entites/header_books_entites.dart';
 import '../Auth Widget/submet_login.dart';
 
-Container BookOfTheDayCard(
-    BuildContext context, List<BookDetaile> books, int index) {
+Container BookOfTheDayCard(BuildContext context, List<Book> books, int index) {
   return Container(
     margin: EdgeInsets.only(top: 5, bottom: 20),
     width: appSize(context).width / 2 - 30,
@@ -32,7 +31,7 @@ Container BookOfTheDayCard(
             child: Container(
               margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
               child: Text(
-                books[index].name_book.toString(),
+                books[index].bookName.toString(),
                 style: TextStyle(
                   fontSize: 12,
                   color: AppColors.kBlackColor,
@@ -62,7 +61,7 @@ Container BookOfTheDayCard(
               //     ))),
 
               Image.asset(
-            books[index].img_book.toString(),
+            books[index].imgBook.toString(),
             width: appSize(context).width * .34,
           ),
         ),

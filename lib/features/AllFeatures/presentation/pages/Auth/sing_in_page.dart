@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/function/messages.dart';
+import 'package:university/core/widget/flutter_toast.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
 import 'package:university/features/AllFeatures/presentation/pages/application_page.dart';
@@ -53,7 +53,7 @@ class SingInPage extends StatelessWidget {
                       // return SizedBox();
                     }
                     // else if (state is AuthSuccessState) {
-                    //   return LoadingCircularProgress();
+                    // return LoadingCircularProgress();
                     // }
                     else if (state is AuthErrorState) {
                       return FormLoginWidget();
@@ -63,12 +63,9 @@ class SingInPage extends StatelessWidget {
                   listener: (context, state) {
                     if (state is AuthSuccessState) {
                       print("SingUpSuccessState");
-
-                      Fluttertoast.showToast(
+                      toastInfo(
                         msg: (singInSuccessfuly).tr(context),
                       );
-                      print("lisener ======= ");
-
                       Global.storgeServece
                           .setBool(Constants.STORGE_USER_LOGED_FIRST, true);
                       Navigator.pushAndRemoveUntil(
@@ -76,9 +73,10 @@ class SingInPage extends StatelessWidget {
                           MaterialPageRoute(builder: (_) => ApplicationPage()),
                           (route) => false);
                     } else if (state is AuthErrorState) {
-                      Fluttertoast.showToast(
-                        msg: (state.message).tr(context),
-                      );
+                      toastInfo(msg: (state.message).tr(context));
+                      // Fluttertoast.showToast(
+                      //   msg: (state.message).tr(context),
+                      // );
                     } else if (state is SingUpState) {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (_) => SingUpPage()),

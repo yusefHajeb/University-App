@@ -31,8 +31,8 @@ class DownloadBooksBloc extends Bloc<DownloadBooksEvent, DownlaodBooksState> {
     if (decodeJsonData != null) {
       List decodeBooks = json.decode(decodeJsonData);
 
-      List<LibraryModel> localBook = decodeBooks
-          .map<LibraryModel>((jsonData) => LibraryModel.formJson(jsonData))
+      List<BookModel> localBook = decodeBooks
+          .map<BookModel>((jsonData) => BookModel.formJson(jsonData))
           .toList();
 
       emit(BookDownloadState(favrit: localBook));
@@ -41,17 +41,17 @@ class DownloadBooksBloc extends Bloc<DownloadBooksEvent, DownlaodBooksState> {
 
   Future<void> _deleteFavorites(
       DeleteFavorites event, Emitter<DownlaodBooksState> emit) async {
-    List<BookDetaile> books = [];
+    List<Book> books = [];
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final decodeJsonData = sharedPreferences.getString(Constants.savedBooks);
     if (decodeJsonData != null) {
       List decodeBooks = json.decode(decodeJsonData);
 
-      List<LibraryModel> localBook = decodeBooks
-          .map<LibraryModel>((jsonData) => LibraryModel.formJson(jsonData))
+      List<BookModel> localBook = decodeBooks
+          .map<BookModel>((jsonData) => BookModel.formJson(jsonData))
           .toList();
       for (var element in localBook) {
-        if (element.id != event.index) {
+        if (element.course_id != event.index) {
           books.add(element);
         }
       }

@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:university/core/error/execptions.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/data/models/auth_models/singin_model.dart';

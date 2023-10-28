@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/color/app_color.dart';
+
 class Skelton extends StatelessWidget {
   const Skelton({
     Key? key,
@@ -14,7 +16,7 @@ class Skelton extends StatelessWidget {
       width: width,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.04),
+          color: AppColors.backgrounfContent,
           borderRadius: const BorderRadius.all(Radius.circular(16))),
     );
   }

@@ -92,7 +92,7 @@ class ScheduleTest extends StatelessWidget {
                   }
                   print("state.schedule");
                   print(state.schedule);
-                  return Text(
+                  Text(
                       "${state.schedule.where((element) => element.days == state.day).toList()} ===");
                   return Padding(
                     padding: const EdgeInsets.all(8.0),

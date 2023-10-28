@@ -3,12 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:university/core/value/app_space.dart';
-
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/widget/buttons/button_back.dart';
-import '../../../../../core/widget/buttons/default_back.dart';
-import '../../../../../core/widget/dummy/profile_dummy.dart';
 
+// ignore: must_be_immutable
 class ReadingBook extends StatefulWidget {
   final File file;
   String? fileName;
@@ -42,8 +40,13 @@ class _ReadingBookState extends State<ReadingBook> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.backgrounfContent,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        title: Wrap(
+          direction: Axis.horizontal,
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          textDirection: TextDirection.rtl,
+          spacing: 60,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AppBackButton(),
             Text("${widget.fileName?.toString()}"),

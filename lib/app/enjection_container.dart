@@ -14,6 +14,8 @@ import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/ge
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singup_usecase.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/update_data_user.dart';
+import 'package:university/features/AllFeatures/domain/usecase/library_usecase/books_usecase.dart';
+import 'package:university/features/AllFeatures/domain/usecase/library_usecase/curse_usecase.dart';
 import 'package:university/features/AllFeatures/domain/usecase/library_usecase/library_usecase.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:university/core/network/check_network.dart';
@@ -48,7 +50,8 @@ Future<void> init() async {
   sl.registerFactory(() => FormLoginBloc());
   sl.registerFactory(() => AuthenticationBloc(
       updateUserData: sl(), singInUsecase: sl(), singUpUsecase: sl()));
-  sl.registerFactory(() => LibraryBloc(getAllBooksUsecase: sl()));
+  sl.registerFactory(() => LibraryBloc(
+      getAllBooksUsecase: sl(), getBookUsecase: sl(), getCoursesUsecase: sl()));
   // sl.registerFactory(() => LibraryBloc());
 
   sl.registerFactory(() => ValidateBloc());
@@ -64,6 +67,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SingInUsecase(repository: sl()));
   sl.registerLazySingleton(() => SingUpUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetAllBooksUsecase(rerpository: sl()));
+  sl.registerLazySingleton(() => GetBookUsecase(rerpository: sl()));
+  sl.registerLazySingleton(() => GetCoursesUsecase(rerpository: sl()));
 
   //Repository Imp  ================
 

@@ -17,7 +17,7 @@ import '../../../data/models/library_models/library_model.dart';
 import '../../widget/library_widget.dart/reading_book.dart';
 
 class TestDownload extends StatefulWidget {
-  final LibraryModel bookDownload;
+  final BookModel bookDownload;
   const TestDownload({
     required this.bookDownload,
     super.key,
@@ -39,7 +39,7 @@ class _TestDownloadState extends State<TestDownload> {
   File? saveFile;
   late CancelToken cancelToken;
   String linkStor = "";
-  List<LibraryModel> localBook = [];
+  List<BookModel> localBook = [];
   Future<void> getInstate() async {
     await di.init();
   }
@@ -98,25 +98,23 @@ class _TestDownloadState extends State<TestDownload> {
         if (decodeJsonData != null) {
           List decodeBooks = json.decode(decodeJsonData);
           localBook = decodeBooks
-              .map<LibraryModel>((jsonData) => LibraryModel.formJson(jsonData))
+              .map<BookModel>((jsonData) => BookModel.formJson(jsonData))
               .toList();
           localBook.add(widget.bookDownload.copyWith(
               pdfUrl: saveFile!.path,
-              img_book: widget.bookDownload.img_book,
-              name_book: widget.bookDownload.name_book));
+              bookImage: widget.bookDownload.imgBook,
+              bookName: widget.bookDownload.bookName));
           confige = await sharedPreferences.setString(
               Constants.savedBooks, json.encode(localBook));
         } else {
-          List<LibraryModel> lib = [];
-          LibraryModel model = widget.bookDownload;
+          List<BookModel> lib = [];
+          BookModel model = widget.bookDownload;
           lib.add(widget.bookDownload.copyWith(
               pdfUrl: saveFile!.path,
-              id: model.id,
-              category_id: model.category_id,
-              img_book: model.img_book,
-              name_book: model.name_book,
-              subject: model.subject,
-              write_book: model.write_book));
+              courseId: model.course_id,
+              bookImage: model.imgBook,
+              bookName: model.bookName,
+              bookAuther: model.bookAuthor));
           confige = await sharedPreferences.setString(
             Constants.savedBooks,
             json.encode(lib),
@@ -160,16 +158,16 @@ class _TestDownloadState extends State<TestDownload> {
     if (decodeJsonData != null) {
       List decodeBooks = json.decode(decodeJsonData);
       localBook = decodeBooks
-          .map<LibraryModel>((jsonData) => LibraryModel.formJson(jsonData))
+          .map<BookModel>((jsonData) => BookModel.formJson(jsonData))
           .toList();
     }
     if (localBook.isNotEmpty) {
       for (var element in localBook) {
-        if (widget.bookDownload.id == element.id) {
+        if (widget.bookDownload.course_id == element.course_id) {
           File filePath = File("${element.pdfUrl}");
           print("file Name");
           print(fileName);
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (_) => ReadingBook(
@@ -191,13 +189,13 @@ class _TestDownloadState extends State<TestDownload> {
     if (decodeJsonData != null) {
       List decodeBooks = json.decode(decodeJsonData);
       localBook = decodeBooks
-          .map<LibraryModel>((jsonData) => LibraryModel.formJson(jsonData))
+          .map<BookModel>((jsonData) => BookModel.formJson(jsonData))
           .toList();
     }
     if (localBook.isNotEmpty) {
       localBook.forEach(
         (element) {
-          if (widget.bookDownload.id == element.id) {
+          if (widget.bookDownload.course_id == element.course_id) {
             confige = true;
           }
         },

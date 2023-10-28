@@ -11,9 +11,6 @@ import 'package:university/features/AllFeatures/presentation/pages/application_p
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/custom_textfiled.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
 
-import '../../../../../core/constant/varibal.dart';
-import '../../../../../core/value/global.dart';
-
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
 

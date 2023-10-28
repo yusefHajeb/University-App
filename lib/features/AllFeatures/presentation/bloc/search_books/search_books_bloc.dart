@@ -16,15 +16,15 @@ class SearchBooksBloc extends Bloc<SearchBooksEvent, SearchBooksState> {
     Emitter<SearchBooksState> emit,
   ) async {
     print("====================xxxx ${event.value}");
-    List<LibraryModel> books = localDataSource.getAllBooksCashed();
+    List<BookModel> books = localDataSource.getAllBooksCashed();
     if (books.isEmpty) {
       emit(SearchBooksState(books: []));
     } else {
       print(
-          "===${books.where((element) => element.subject == event.value).toList()}");
+          "===${books.where((element) => element.bookName == event.value).toList()}");
       emit(SearchBooksState(
           books: books
-              .where((element) => element.subject == event.value)
+              .where((element) => element.bookName == event.value)
               .toList()));
     }
   }

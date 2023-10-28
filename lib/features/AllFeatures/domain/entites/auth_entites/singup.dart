@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class SingUp extends Equatable {
   String? tId;
   String? username;

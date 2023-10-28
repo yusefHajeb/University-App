@@ -16,129 +16,59 @@ class ShowSktolin extends StatelessWidget {
         const SizedBox(
           height: 30,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-                child: Column(
-              children: [
-                Skelton(
-                  height: 20,
-                  width: 230,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Skelton(
-                  height: 20,
-                  width: 230,
-                ),
-              ],
-            )),
-            Skelton(
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            // crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                  child: Column(
+                children: [
+                  Skelton(
+                    height: 24,
+                    width: 230,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Skelton(
+                    height: 24,
+                    width: 230,
+                  ),
+                ],
+              )),
+              Skelton(
+                height: 30,
+                width: 120,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Container(
+          padding: EdgeInsets.all(10.0),
+          child: GridView.builder(
+            itemBuilder: (context, index) => Skelton(
               height: 30,
               width: 120,
             ),
-          ],
+            itemCount: 6,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 10,
+                childAspectRatio: 0.8,
+                mainAxisSpacing: 10),
+          ),
         ),
         const SizedBox(
           height: 40,
-        ),
-        Column(
-          children: [
-            Skelton(
-              width: size.width - 50,
-              height: size.height / 3,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              // crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                    child: Column(
-                  children: [
-                    Skelton(
-                      height: 20,
-                      width: 230,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Skelton(
-                      height: 20,
-                      width: 230,
-                    ),
-                  ],
-                )),
-                Skelton(
-                  height: 30,
-                  width: 120,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              // crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                    child: Column(
-                  children: [
-                    Skelton(
-                      height: 20,
-                      width: 230,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Skelton(
-                      height: 20,
-                      width: 230,
-                    ),
-                  ],
-                )),
-                Skelton(
-                  height: 30,
-                  width: 120,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              // crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                    child: Column(
-                  children: [
-                    Skelton(
-                      height: 20,
-                      width: 230,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Skelton(
-                      height: 20,
-                      width: 230,
-                    ),
-                  ],
-                )),
-                Skelton(
-                  height: 25,
-                  width: 120,
-                ),
-              ],
-            ),
-          ],
         ),
       ],
     );

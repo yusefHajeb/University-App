@@ -3,7 +3,7 @@
 part of 'books_favorite_bloc.dart';
 
 class DownlaodBooksState extends Equatable {
-  List<BookDetaile> favrit;
+  List<Book> favrit;
   DownlaodBooksState({required this.favrit});
 
   @override
@@ -22,7 +22,7 @@ class BookDownloadState extends DownlaodBooksState {
 }
 
 class ShowAllBooksSavedState extends DownlaodBooksState {
-  final List<BookDetaile> favorite;
+  final List<Book> favorite;
   ShowAllBooksSavedState({required this.favorite, required super.favrit});
 
   @override

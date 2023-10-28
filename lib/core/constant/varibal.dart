@@ -52,6 +52,14 @@ class Constants {
 
   static const String letchersLinks =
       "$linkPuplicNodeServerName/getLectuerForAppstudentEquleDay";
+
+  static const String libraryLink =
+      "$linkPuplicNodeServerName/getcouresForAppstudent";
+
+  static const String imageBooksRoute =
+      "$serverIp/UniversitySystem/booksImage/";
+
+  static const String pdfRoute = "$serverIp/UniversitySystem/booksDocument";
   static String apiUser = """[
     {
         "t_id": "47",

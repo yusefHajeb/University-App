@@ -17,7 +17,6 @@ import '../../../../../core/widget/dummy/profile_dummy.dart';
 import '../../../data/models/auth_models/singup_model.dart';
 import '../../../data/models/user_data.dart';
 import '../../bloc/lading_page/lading_page_bloc.dart';
-import '../../widget/profile_widget/text_autline.dart';
 
 class EditeUserData extends StatefulWidget {
   const EditeUserData({super.key});

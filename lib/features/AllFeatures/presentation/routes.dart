@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:university/core/color/app_color.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/presentation/pages/Auth/sing_in_page.dart';
 import 'package:university/features/AllFeatures/presentation/pages/Auth/singup_page.dart';
@@ -73,9 +73,7 @@ class RouteGenerator {
   static Route<dynamic> unDefineRoute() {
     return MaterialPageRoute(
         builder: (_) => Scaffold(
-              appBar: AppBar(
-                title: const Text("No Rout Found"),
-              ),
+              backgroundColor: AppColors.backgroundPages,
               body: Center(
                 child: InkWell(
                     onTap: () {

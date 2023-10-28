@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:university/core/constant/varibal.dart';
 // import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
 
 import '../../../../../core/color/app_color.dart';
@@ -22,7 +23,7 @@ import '../../pages/library/downoad_widget.dart';
 
 class BookCover3D extends StatelessWidget {
   final bool confige;
-  final LibraryModel book;
+  final BookModel book;
   const BookCover3D({super.key, required this.book, required this.confige});
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,8 @@ class BookCover3D extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: CachedNetworkImage(
-                    imageUrl: book.img_book.toString(),
+                    imageUrl:
+                        Constants.imageBooksRoute + book.imgBook.toString(),
                     fit: BoxFit.cover,
                   ),
                 ),

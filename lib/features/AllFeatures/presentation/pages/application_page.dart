@@ -54,57 +54,62 @@ class ApplicationPage extends StatelessWidget {
           builder: (context, state) {
             // final sizeWidth = ScreenUtil().screenWidth;
             // final sizeHeight = ScreenUtil().scaleHeight;
-            return SafeArea(
-                child: Scaffold(
-              drawer: DrawerWidget(context),
-              bottomNavigationBar: Container(
-                height: 60,
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.greyColor.withOpacity(0.1),
-                        spreadRadius: 1,
-                        blurRadius: 1,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(20))),
-                child: BottomNavigationBar(
-                  items: bottomNavItems,
-                  // enableFeedback: true,
-                  // fixedColor: AppColors.greyColor,
-                  // elevation: 0,
-                  // backgroundColor: AppColors.error,
-                  showUnselectedLabels: true,
+            return Container(
+              color: AppColors.backgroundPages,
+              child: SafeArea(
+                  child: Scaffold(
+                body: buildPage(state.tabIndex, context),
+                drawer: DrawerWidget(context),
+                bottomNavigationBar: Container(
+                  height: 59.h,
+                  width: 375.w,
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.greyColor.withOpacity(0.1),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.h),
+                          topRight: Radius.circular(20.h))),
+                  child: BottomNavigationBar(
+                    items: bottomNavItems,
+                    // enableFeedback: true,
+                    // fixedColor: AppColors.greyColor,
+                    // elevation: 0,
+                    // backgroundColor: AppColors.error,
+                    showUnselectedLabels: true,
 
-                  selectedIconTheme: IconThemeData(
-                    color: AppColors.error,
+                    selectedIconTheme: IconThemeData(
+                      color: AppColors.error,
+                    ),
+                    currentIndex: state.tabIndex,
+                    showSelectedLabels: true,
+                    selectedLabelStyle:
+                        getFontNormal(10, FontWeight.bold, AppColors.greyColor),
+                    unselectedItemColor: AppColors.greyColor,
+                    selectedItemColor: AppColors.white,
+
+                    unselectedLabelStyle: getFontNormal(
+                        10, FontWeightManager.black, AppColors.greyColor),
+
+                    onTap: ((value) {
+                      //get data to index in bloc and refresh value in ui
+                      BlocProvider.of<LadingPageBloc>(context)
+                          .add(TabChange(value));
+                    }),
                   ),
-                  currentIndex: state.tabIndex,
-                  showSelectedLabels: true,
-                  selectedLabelStyle:
-                      getFontNormal(10, FontWeight.bold, AppColors.greyColor),
-                  unselectedItemColor: AppColors.greyColor,
-                  selectedItemColor: AppColors.white,
-                  unselectedLabelStyle: getFontNormal(
-                      10, FontWeightManager.black, AppColors.greyColor),
-
-                  onTap: ((value) {
-                    //get data to index in bloc and refresh value in ui
-                    BlocProvider.of<LadingPageBloc>(context)
-                        .add(TabChange(value));
-                  }),
                 ),
-              ),
-              // body: buildPage(state.tabIndex),
+                // body: buildPage(state.tabIndex),
 
-              // when state.tabindex =1 not use singleChil... .becuase show error
-              body: buildPage(state.tabIndex, context),
-              // ? buildPage(state.tabIndex, context)
-              // : SingleChildScrollView(
-              //     child: buildPage(state.tabIndex, context)),
-            ));
+                // when state.tabindex =1 not use singleChil... .becuase show error
+                // ? buildPage(state.tabIndex, context)
+                // : SingleChildScrollView(
+                //     child: buildPage(state.tabIndex, context)),
+              )),
+            );
           },
         ),
       ),

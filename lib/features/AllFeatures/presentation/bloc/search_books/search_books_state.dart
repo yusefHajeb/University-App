@@ -1,7 +1,7 @@
 part of 'search_books_bloc.dart';
 
 class SearchBooksState extends Equatable {
-  final List<LibraryModel> books;
+  final List<BookModel> books;
   SearchBooksState({required this.books});
 
   @override
