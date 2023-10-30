@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/widget/dummy/image_net.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/onboarding_bloc/on_boarding_bloc_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/search_books/search_books_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/convert_book_3d.dart';
 import '../../../../../core/Utils/box_decoration.dart';
@@ -19,13 +20,10 @@ import '../../../data/models/user_data.dart';
 import '../../bloc/library_bloc/library_bloc.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
 import '../../widget/library_widget.dart/show_loading.dart';
-import '../../widget/library_widget.dart/showdialoge_widget.dart';
 import '../application_page.dart';
 
-final CarouselController carouselController = CarouselController();
-
-class LibraryPage extends StatelessWidget {
-  const LibraryPage({
+class LibraryPage extends StatefulWidget {
+  LibraryPage({
     Key? key,
     required this.libraryCarouslImg,
     required this.sizeWidth,
@@ -37,10 +35,27 @@ class LibraryPage extends StatelessWidget {
   final double sizeHeight;
 
   @override
+  State<LibraryPage> createState() => _LibraryPageState();
+}
+
+class _LibraryPageState extends State<LibraryPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  late CarouselController carouselController;
+  int curent = 0;
+
+  @override
+  initState() {
+    carouselController = CarouselController();
+    curent = 0;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
 
     return Scaffold(
+      key: _scaffoldKey,
       drawerEnableOpenDragGesture: true,
       drawer: DrawerWidget(context),
       backgroundColor: AppColors.backgroundPages,
@@ -54,82 +69,102 @@ class LibraryPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
+                  Builder(
+                    builder: (context) => IconButton(
+                      icon: new Icon(
+                        Icons.menu,
+                        color: AppColors.greyColor,
+                      ),
+                      onPressed: () => Scaffold.of(context).openDrawer(),
+                    ),
+                  ),
+                  CustomInputSerch(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: InkWell(
                       onTap: () {
                         context.read<LadingPageBloc>().add(TabChange(4));
                       },
-                      child: ProfileDummyNet(
-                          color: HexColor.fromHex("94F0F1"),
-                          dummyType: ProfileDummyTypeNet.image,
-                          scale: 1,
-                          image: userDataModel().image),
+                      // child: ProfileDummyNet(
+                      //     color: HexColor.fromHex("94F0F1"),
+                      //     dummyType: ProfileDummyTypeNet.image,
+                      //     scale: 1,
+                      //     image: userDataModel().image),
                     ),
                   ),
-                  CustomInputSerch(),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.notifications_none_rounded,
-                        color: AppColors.backgrounfContent,
-                        size: 29,
-                      )),
+                  // IconButton(
+                  //     onPressed: () {},
+                  //     icon: Icon(
+                  //       Icons.notifications_none_rounded,
+                  //       color: AppColors.backgrounfContent,
+                  //       size: 29,
+                  //     )),
                 ],
               ),
             ),
             AppSpaces.verticalSpace10,
-            Container(
-              child: CarouselSlider.builder(
-                carouselController: carouselController,
-                // useing this code when show img from internet
+            Stack(
+              children: [
+                CarouselSlider.builder(
+                  carouselController: carouselController,
+                  itemCount: widget.libraryCarouslImg.length,
+                  itemBuilder: (context, index, realIndex) {
+                    context
+                        .read<OnBoardingBlocBloc>()
+                        .add(SetValueChange(value: index));
 
-                options: CarouselOptions(
-                    height: 120,
-                    onPageChanged: (int val, _) {},
-                    animateToClosest: false,
-                    autoPlayAnimationDuration: const Duration(seconds: 1),
-                    initialPage: 0,
-                    enableInfiniteScroll: true,
-                    enlargeCenterPage:
-                        true, //to image show is biger than behaind
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    autoPlayInterval: const Duration(seconds: 4),
-                    autoPlay: false),
-                itemBuilder: (BuildContext context, int index, int realIndex) {
-                  return Container(
-                    width: double.infinity,
-                    decoration: BoxDecorationStyles.fadingInnerDecor,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      child: InteractiveViewer(
-                        clipBehavior: Clip.hardEdge,
-                        child: Image.asset(
-                          libraryCarouslImg[index],
-                          fit: BoxFit.cover,
+                    return SizedBox(
+                      width: double.infinity,
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        child: InteractiveViewer(
+                          clipBehavior: Clip.hardEdge,
+                          child: Image.asset(
+                            widget.libraryCarouslImg[index],
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-                itemCount: libraryCarouslImg.length,
-              ),
-            ),
-            Container(
-              child: DotsIndicator(
-                dotsCount: 4,
-                position: 3,
-                decorator: DotsDecorator(
-                    color: AppColors.darkGrey,
-                    size: const Size.square(8.0),
-                    activeSize: const Size(18.0, 8.0),
-                    activeShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                    activeColor: AppColors.primaryAccentColor),
-              ),
+                    );
+                  },
+                  options: CarouselOptions(
+                      animateToClosest: false,
+                      autoPlayAnimationDuration: const Duration(seconds: 1),
+                      initialPage: 0,
+                      height: 120,
+                      enableInfiniteScroll: true,
+                      enlargeCenterPage:
+                          true, //to image show is biger than behaind
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      autoPlayInterval: const Duration(seconds: 4),
+                      autoPlay: true),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 10,
+                  child: BlocConsumer<OnBoardingBlocBloc, OnBoardingBlocState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      return DotsIndicator(
+                        dotsCount: widget.libraryCarouslImg.length,
+                        position: state.page,
+                        onTap: (val) {},
+                        decorator: DotsDecorator(
+                            color: AppColors.darkGrey,
+                            size: const Size.square(8.0),
+                            activeSize: const Size(18.0, 8.0),
+                            activeShape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            activeColor: AppColors.primaryAccentColor),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
             AppSpaces.verticalSpace10,
-
             BlocConsumer<LibraryBloc, LibraryState>(
               listener: (context, state) {},
               builder: (context, state) {
@@ -148,15 +183,15 @@ class LibraryPage extends StatelessWidget {
                             Container(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 5),
-                              width: sizeWidth,
-                              height: sizeHeight * 40,
+                              width: widget.sizeWidth,
+                              height: widget.sizeHeight * 40,
                               child: Stack(children: [
                                 Positioned(
                                   bottom: 3,
                                   left: 2,
                                   child: Container(
-                                    width: sizeWidth,
-                                    height: sizeHeight * 30,
+                                    width: widget.sizeWidth,
+                                    height: widget.sizeHeight * 30,
                                     padding: const EdgeInsets.only(right: 5.0),
                                     child: ListView.builder(
                                       itemCount: state.header.length,
@@ -236,7 +271,7 @@ class LibraryPage extends StatelessWidget {
                                   physics: const NeverScrollableScrollPhysics(),
                                   scrollDirection: Axis.vertical,
                                   gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                      SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 3,
                                           crossAxisSpacing: 10,
                                           childAspectRatio: 0.8,
@@ -246,8 +281,10 @@ class LibraryPage extends StatelessWidget {
                                       keepAlive: true,
                                       child: InkWell(
                                           onTap: () async {
-                                            funcShow(
-                                                context, state.books[index]);
+                                            print("state.books.toList()");
+                                            print(state.books.toList());
+                                            // funcShow(
+                                            //     context, state.books[index]);
                                             // Either<Failure, BookDetaile> x= await downloadPDF(
                                             //     pdfUrl, pdfFilename, books[index]);
                                             // x.fold(( failure) =>  , (loaded) => null)
@@ -264,13 +301,13 @@ class LibraryPage extends StatelessWidget {
                                           child: FadeInEffect(
                                             child: BookCover3D(
                                               book: stateSearch.books.isEmpty
-                                                  ? state.books[index].copyWith(
-                                                      pdfUrl:
-                                                          Constants.pdfRoute +
-                                                              "/" +
-                                                              state.books[index]
-                                                                  .pdfUrl
-                                                                  .toString())
+                                                  ? state.books[index]
+
+                                                  // Constants.pdfRoute +
+                                                  //     "/" +
+                                                  //     state.books[index]
+                                                  //         .pdfUrl
+                                                  //         .toString())
                                                   : stateSearch.books[index],
                                               confige: true,
                                             ),
@@ -293,9 +330,6 @@ class LibraryPage extends StatelessWidget {
               },
             ),
             AppSpaces.verticalSpace20,
-            // TestDownload(
-            //     bookDownload: LibraryModel(
-            //         pdfUrl: "https://www.fluttercampus.com/sample.pdf"))
           ]),
         ),
       ),

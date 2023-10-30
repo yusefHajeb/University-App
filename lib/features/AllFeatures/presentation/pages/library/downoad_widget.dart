@@ -161,12 +161,14 @@ class _TestDownloadState extends State<TestDownload> {
           .map<BookModel>((jsonData) => BookModel.formJson(jsonData))
           .toList();
     }
+
     if (localBook.isNotEmpty) {
       for (var element in localBook) {
         if (widget.bookDownload.course_id == element.course_id) {
           File filePath = File("${element.pdfUrl}");
+
           print("file Name");
-          print(fileName);
+          print(filePath);
           Navigator.push(
             context,
             MaterialPageRoute(

@@ -6,9 +6,11 @@ part 'on_boarding_bloc_state.dart';
 
 class OnBoardingBlocBloc
     extends Bloc<OnBoardingBlocEvent, OnBoardingBlocState> {
-  OnBoardingBlocBloc() : super(OnBoardingBlocState()) {
-    on<OnBoardingBlocEvent>((event, emit) {
-      emit(OnBoardingBlocState(page: state.page));
+  OnBoardingBlocBloc() : super(OnBoardingBlocState(page: 0)) {
+    on<SetValueChange>((event, emit) {
+      print(" ======  state in bloc");
+      // final page = state.page + event.value;
+      emit(OnBoardingBlocState(page: event.value));
     });
   }
 }

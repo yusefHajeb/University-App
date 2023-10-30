@@ -11,6 +11,7 @@ import '../../../../../core/value/style_manager.dart';
 import '../../../../../core/widget/bakground_dark.dart';
 import '../../bloc/onboarding_bloc/on_boarding_bloc_bloc.dart';
 import '../../cubit/localization/local_cubit_cubit.dart';
+import '../../widget/onBoarding/custom_change_lang.dart';
 import '../../widget/onBoarding/slider_image.dart';
 import '../Auth/sing_in_page.dart';
 
@@ -57,52 +58,49 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                   position: "bottomRight",
                 ),
               ),
+              // BlocConsumer<OnBoardingBlocBloc, OnBoardingBlocState>(
+              //     listener: ((context, state) {
+              //   // ignore: unnecessary_type_check
+              //   if (state is OnBoardingBlocState) {
+              //     indexPage = state.page;
+              //   }
+              // }), builder: (context, state) {
+              // });
+
               BlocConsumer<OnBoardingBlocBloc, OnBoardingBlocState>(
                   listener: ((context, state) {
                 // ignore: unnecessary_type_check
-                if (state is OnBoardingBlocState) {
-                  indexPage = state.page;
-                }
+                // if (state is OnBoardingBlocState) {
+                //   indexPage = state.page;
+                // }
               }), builder: (context, state) {
                 return Column(children: [
                   Container(
                     height: appSize(context).width * 1.3 - 20,
-                    child: PageView(
+                    child: PageView.builder(
                       physics: ClampingScrollPhysics(),
                       controller: _pageController,
                       onPageChanged: (index) {
                         print("the index is $index  && state is ${state.page}");
-                        state.page = index;
-                        BlocProvider.of<OnBoardingBlocBloc>(context)
-                            .add(OnBoardingBlocEvent());
 
-                        // _pageController.animateToPage(state.page,
-                        //     duration: const Duration(
-                        //       milliseconds: 3,
-                        //     ),
-                        //     curve: Curves.bounceInOut);
-
-                        // viewMoldel.goNext();
-                        // if (viewMoldel.currentPageIndex == 4) {
-                        //   Navigator.push(context,
-                        //       MaterialPageRoute(builder: (_) => SchedulePage()));
-                        // }
+                        _pageController.animateToPage(
+                          state.page,
+                          duration: const Duration(
+                            milliseconds: 3,
+                          ),
+                          curve: Curves.bounceInOut,
+                        );
                       },
-                      children: [
-                        OnBoardingPage(0),
-                        OnBoardingPage(1),
-                        OnBoardingPage(2)
-                      ],
-                      // itemBuilder: (context, index) {
-                      //   return OnBoardingPage(index);
-                      // },
-                      // itemCount: _getSliderData.length,
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        return OnBoardingPage(index);
+                      },
                     ),
                   ),
-                  // ChangeLang(localCubit: localCubit),
+                  ChangeLang(localCubit: localCubit),
                   Padding(
-                    padding:
-                        EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20.0, bottom: 20.0),
                     child: SingleChildScrollView(
                       child: Container(
                         child: Column(children: [
@@ -110,7 +108,7 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             // children: _buildPageIndicator(),
                           ),
-                          SizedBox(height: 50),
+                          const SizedBox(height: 50),
                           Container(
                             padding: EdgeInsets.all(10),
                             child: SmoothPageIndicator(
@@ -121,6 +119,7 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                                   activeDotColor: AppColors.primaryColor),
                               // offset: 3,
                               count: 3,
+
                               // size: Size.square(8.0),
                               onDotClicked: ((index) =>
                                   _pageController.animateToPage(index,
@@ -134,11 +133,13 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                               child: ElevatedButton(
                                   onPressed: () {
                                     // state.page = indexPage;
+                                    // // final x = state.page + 1;
                                     BlocProvider.of<OnBoardingBlocBloc>(context)
-                                        .add(OnBoardingBlocEvent());
+                                        .add(SetValueChange(
+                                            value: ++state.page));
                                     // indexPage = state.page;
                                     print('${state.page} ================');
-                                    if (state.page < 3) {
+                                    if (state.page <= 3) {
                                       print("${state.page} ======");
                                       _pageController.animateToPage(state.page,
                                           duration: Duration(milliseconds: 500),
