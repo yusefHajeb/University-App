@@ -57,8 +57,7 @@ class BookCover3D extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: CachedNetworkImage(
-                    imageUrl:
-                        Constants.imageBooksRoute + book.imgBook.toString(),
+                    imageUrl: book.imgBook.toString(),
                     fit: BoxFit.cover,
                   ),
                 ),

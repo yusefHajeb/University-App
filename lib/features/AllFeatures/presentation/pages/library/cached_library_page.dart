@@ -19,7 +19,6 @@ import '../../../data/models/user_data.dart';
 import '../../bloc/library_bloc/library_bloc.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
 import '../../widget/library_widget.dart/show_loading.dart';
-import '../../widget/library_widget.dart/showdialoge_widget.dart';
 import '../application_page.dart';
 
 final CarouselController carouselController = CarouselController();
@@ -55,18 +54,18 @@ class LibraryCashed extends StatelessWidget {
               child: Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: InkWell(
-                      onTap: () {
-                        context.read<LadingPageBloc>().add(TabChange(4));
-                      },
-                      child: ProfileDummyNet(
-                          color: HexColor.fromHex("94F0F1"),
-                          dummyType: ProfileDummyTypeNet.image,
-                          scale: 1,
-                          image: userDataModel().image),
-                    ),
-                  ),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: InkWell(
+                        onTap: () {
+                          context.read<LadingPageBloc>().add(TabChange(4));
+                        },
+                        // child:
+                        //  ProfileDummyNet(
+                        //     color: HexColor.fromHex("94F0F1"),
+                        //     dummyType: ProfileDummyTypeNet.image,
+                        //     scale: 1,
+                        //     image: userDataModel().image),
+                      )),
                   CustomInputSerch(),
                   IconButton(
                       onPressed: () {},
@@ -246,8 +245,8 @@ class LibraryCashed extends StatelessWidget {
                                       keepAlive: true,
                                       child: InkWell(
                                           onTap: () async {
-                                            funcShow(
-                                                context, state.books[index]);
+                                            // funcShow(
+                                            //     context, state.books[index]);
                                             // Either<Failure, BookDetaile> x= await downloadPDF(
                                             //     pdfUrl, pdfFilename, books[index]);
                                             // x.fold(( failure) =>  , (loaded) => null)

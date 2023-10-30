@@ -64,11 +64,11 @@ class MyProfie extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 30),
-                    ProfileDummyNet(
-                        color: HexColor.fromHex("94F0F1"),
-                        dummyType: ProfileDummyTypeNet.image,
-                        scale: 4.0,
-                        image: student.image),
+                    // ProfileDummyNet(
+                    //     color: HexColor.fromHex("94F0F1"),
+                    //     dummyType: ProfileDummyTypeNet.image,
+                    //     scale: 4.0,
+                    //     image: student.image),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text("${student.name}",

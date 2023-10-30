@@ -81,7 +81,7 @@ class ApplicationPage extends StatelessWidget {
                     // elevation: 0,
                     // backgroundColor: AppColors.error,
                     showUnselectedLabels: true,
-
+                    type: BottomNavigationBarType.fixed,
                     selectedIconTheme: IconThemeData(
                       color: AppColors.error,
                     ),

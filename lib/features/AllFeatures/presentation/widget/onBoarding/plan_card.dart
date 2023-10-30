@@ -5,6 +5,7 @@ import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/constant/varibal.dart';
 import '../../../../../core/widget/dummy/don_icon.dart';
+import '../Schedul/green_done_icon.dart';
 
 class PlanCard extends StatelessWidget {
   final int selectedIndex;
@@ -81,7 +82,8 @@ class PlanCard extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: HexColor.fromHex("181a1f")),
-                                  child: GreenDoneIcon()),
+                                  child:
+                                      GreenDoneIcon(Icons.done, Colors.amber)),
                             ),
                             Center(
                                 child: Column(

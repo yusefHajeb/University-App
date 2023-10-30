@@ -63,9 +63,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 di.sl<LibraryBloc>()..add(GetBooksLibraryEvent())),
-        BlocProvider(
-            create: (context) =>
-                di.sl<OnBoardingBlocBloc>()..add(OnBoardingBlocEvent())),
+        BlocProvider(create: (context) => di.sl<OnBoardingBlocBloc>()),
         BlocProvider(create: (context) => di.sl<LadingPageBloc>()),
         BlocProvider(create: (context) => di.sl<FormLoginBloc>()),
         BlocProvider(create: (context) => di.sl<ValidateBloc>()),

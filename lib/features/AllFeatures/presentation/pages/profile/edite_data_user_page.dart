@@ -79,11 +79,11 @@ class _EditeUserDataState extends State<EditeUserData> {
                                   type: ProfileDummyType.image,
                                   title: "\t\t\t تعديل الملف الشخصي")),
                           AppSpaces.verticalSpace20,
-                          ProfileDummyNet(
-                              color: HexColor.fromHex("94F0F1"),
-                              dummyType: ProfileDummyTypeNet.image,
-                              scale: 4.0,
-                              image: student.image),
+                          // ProfileDummyNet(
+                          //     color: HexColor.fromHex("94F0F1"),
+                          //     dummyType: ProfileDummyTypeNet.image,
+                          //     scale: 4.0,
+                          //     image: student.image),
                           LabelledFormInput(
                               hint: student.name ?? "",
                               controller: _name,

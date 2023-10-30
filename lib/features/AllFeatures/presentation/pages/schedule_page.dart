@@ -8,11 +8,13 @@ import '../widget/Schedul/loaded_schedule.dart';
 import 'application_page.dart';
 
 class SchedulePage extends StatelessWidget {
-  const SchedulePage({super.key});
+  SchedulePage({super.key});
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         drawer: DrawerWidget(context),
         backgroundColor: AppColors.backgroundPages,
         body: buildBody(context));

@@ -22,7 +22,7 @@ class AppColors {
   static const kTextColor = Color.fromARGB(255, 143, 149, 152);
   static const kBlackColor = Color.fromARGB(255, 39, 68, 78);
   static final lightGrey = Color.fromARGB(255, 143, 149, 152);
-  static final green = Color.fromARGB(255, 28, 112, 22);
+  static final green = HexColor.fromHex("78B462");
 
   static final shadowColor =
       const Color.fromARGB(255, 115, 123, 122).withOpacity(.84);

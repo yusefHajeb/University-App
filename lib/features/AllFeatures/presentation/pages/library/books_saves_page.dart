@@ -3,20 +3,34 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:university/core/Utils/box_decoration.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/value/app_space.dart';
+import 'package:university/core/widget/flutter_toast.dart';
 import 'package:university/core/widget/loading_widget.dart';
 import 'package:university/features/AllFeatures/domain/entites/header_books_entites.dart';
-import '../../../../core/color/app_color.dart';
-import '../../../../core/value/style_manager.dart';
-import '../../../../core/widget/bakground_dark.dart';
-import '../../../../core/widget/buttons/custom_button_with_icon.dart';
-import '../bloc/book_favorite_bloc/books_favorite_bloc.dart';
-import '../widget/library_widget.dart/reading_book.dart';
+import '../../../../../core/color/app_color.dart';
+import '../../../../../core/value/style_manager.dart';
+import '../../../../../core/widget/bakground_dark.dart';
+import '../../../../../core/widget/buttons/custom_button_with_icon.dart';
+import '../../bloc/book_favorite_bloc/books_favorite_bloc.dart';
+import '../../widget/library_widget.dart/reading_book.dart';
 
 class BooksDownloaded extends StatelessWidget {
   const BooksDownloaded({super.key});
+  void shareFile(String filePath) async {
+    print("shareFile");
+    // print(filePath);
+    String path = File(filePath).path;
+    print(path);
+    final result = await Share.shareXFiles([XFile('${filePath}')],
+        subject: "ملف من تطبيق جامعتي");
+
+    if (result.status == ShareResultStatus.success) {
+      toastInfo(msg: "تم ارسال الكتاب بنجاح");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,8 +112,7 @@ class BooksDownloaded extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: CachedNetworkImage(
-                    imageUrl:
-                        Constants.imageBooksRoute + favorite.imgBook.toString(),
+                    imageUrl: favorite.imgBook.toString(),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -132,34 +145,40 @@ class BooksDownloaded extends StatelessWidget {
                     ],
                   ),
                   AppSpaces.verticalSpace10,
-                  Row(
+                  Wrap(
+                    direction: Axis.horizontal,
+                    crossAxisAlignment: WrapCrossAlignment.end,
+                    runAlignment: WrapAlignment.start,
                     children: [
                       Text(
                         "تصنيف :",
-                        style:
-                            getFontNormal(15, FontWeight.w600, AppColors.white),
+                        style: getFontNormal(
+                            15, FontWeight.w600, AppColors.greyColor),
                       ),
                       AppSpaces.horizontalSpace10,
                       Text(
-                        favorite.bookName.toString(),
+                        favorite.bookType.toString(),
                         style: getFontNormal(
-                            13, FontWeight.normal, AppColors.greyColor),
+                            13, FontWeight.normal, AppColors.white),
                       )
                     ],
                   ),
                   AppSpaces.verticalSpace10,
-                  Row(
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.end,
+                    direction: Axis.horizontal,
+                    alignment: WrapAlignment.start,
                     children: [
                       Text(
                         "المؤلف:",
-                        style:
-                            getFontNormal(15, FontWeight.w600, AppColors.white),
+                        style: getFontNormal(
+                            15, FontWeight.w600, AppColors.greyColor),
                       ),
                       AppSpaces.horizontalSpace10,
                       Text(
-                        favorite.bookName.toString(),
+                        favorite.bookAuthor.toString(),
                         style: getFontNormal(
-                            13, FontWeight.normal, AppColors.greyColor),
+                            13, FontWeight.normal, AppColors.white),
                       )
                     ],
                   ),
@@ -206,11 +225,13 @@ class BooksDownloaded extends StatelessWidget {
               ),
               AppSpaces.verticalSpace5,
               InkWell(
-                onTap: () async {},
+                onTap: () async {
+                  shareFile("${favorite.pdfUrl}");
+                },
                 child: Container(
                   child: RoundedBorderWithIcon(
                     icon: Icons.share,
-                    color: AppColors.error,
+                    color: AppColors.white,
                   ),
                 ),
               ),
