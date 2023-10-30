@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:university/core/fonts/app_fonts.dart';
 import 'package:university/features/AllFeatures/domain/entites/schedule.dart';
+import 'package:university/features/AllFeatures/presentation/widget/Schedul/green_done_icon.dart';
 import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/app_space.dart';
@@ -36,7 +38,7 @@ class CardSchedule extends StatelessWidget {
               },
               itemBuilder: ((context, index) {
                 print("you are in list show data");
-                return AnimateInEffect(child: Card2(data[index]));
+                return AnimateInEffect(child: CardLetchers(data[index]));
               }),
             ),
           ),
@@ -46,45 +48,72 @@ class CardSchedule extends StatelessWidget {
   }
 }
 
-Widget Card2(Schedule schedule) {
+Widget CardLetchers(Schedule schedule) {
   return Container(
-    margin: EdgeInsets.only(top: 10),
+    margin: EdgeInsets.only(
+      top: 10,
+    ),
     padding: EdgeInsets.all(10.0),
     height: 130,
-    decoration: BoxDecorationStyles.testStyle,
+    decoration: BoxDecorationStyles.headerTab,
     child: Row(
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(schedule.time.toString(),
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: AppColors.greyColor)),
+            Container(
+              padding: const EdgeInsets.all(18.0),
+              child: Text(schedule.time.toString(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: AppColors.greyColor)),
+            ),
             // Text("AM",
             //     style: TextStyle(
             //         fontWeight: FontWeight.bold, color: AppColors.greyColor)),
           ],
         ),
         AppSpaces.horizontalSpace10,
-        Column(
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          runSpacing: 1.0,
+          direction: Axis.vertical,
           children: [
-            iconStatusLetchers(schedule.status ?? ""),
-            Container(
-              height: 80,
-              width: 1,
-              color: AppColors.greyColor.withOpacity(0.5),
-            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.backgrounfContent,
+                  ),
+                  child: iconStatusLetchers(schedule.status ?? ""),
+                ),
+                Container(
+                  height: 50,
+                  width: 1,
+                  color: AppColors.greyColor.withOpacity(0.5),
+                ),
+              ],
+            )
           ],
         ),
         AppSpaces.horizontalSpace10,
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             AppSpaces.verticalSpace20,
-            Text(
-              schedule.courseName ?? "",
-              style: getFontNormal(13, FontWeight.w600, AppColors.white),
+            Center(
+              // padding: const EdgeInsets.only(right: 0),
+              child: Text(
+                schedule.courseName ?? "",
+                style:
+                    getFontNormal(15, FontWeightManager.bold, AppColors.white),
+              ),
             ),
+            AppSpaces.verticalSpace5,
             Row(
               children: [
                 Icon(
@@ -122,14 +151,17 @@ Widget iconStatusLetchers(String status) {
   switch (status) {
     case "Canceled":
       return Icon(
-        FontAwesomeIcons.cancel,
+        FontAwesomeIcons.xmark,
         color: AppColors.error,
       );
     case "Assured":
-      return Icon(FontAwesomeIcons.circleCheck, color: AppColors.green);
+      return GreenDoneIcon(FontAwesomeIcons.circleCheck, AppColors.green);
     case "Pending":
-      return Icon(FontAwesomeIcons.circleQuestion, color: Colors.orange[300]);
+      return GreenDoneIcon(
+          FontAwesomeIcons.hourglass, Color.fromARGB(202, 185, 154, 41));
+    // Icon(FontAwesomeIcons.circleQuestion, color: Colors.orange[300]);
     default:
-      return Icon(FontAwesomeIcons.question, color: AppColors.greyColor);
+      return GreenDoneIcon(
+          FontAwesomeIcons.question, Color.fromARGB(202, 185, 154, 41));
   }
 }
