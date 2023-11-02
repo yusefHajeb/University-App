@@ -21,6 +21,7 @@ class SchedulRepositoryImp implements ScheduleRepository {
   @override
   Future<Either<Failure, List<Schedule>>> getALLSchedule() async {
     if (await socket.connected) {
+      print("conacted with socket");
       try {
         final List<SchedulModel> remoteData =
             await remoteSchedul.getAllSchedul();
@@ -32,6 +33,7 @@ class SchedulRepositoryImp implements ScheduleRepository {
       }
     } else {
       try {
+        print("not socet connections");
         List<SchedulModel> localData = await localSource.getCachedSchedul();
         return Right(localData);
       } on EmptyCasheException {
@@ -66,23 +68,29 @@ class SchedulRepositoryImp implements ScheduleRepository {
   }
 
   @override
-  Future<Either<Failure, List<Schedule>>> getLetchersToday() async {
+  Future<Either<Failure, List<Schedule>>> getLetchersToday(
+      String dateDay) async {
     if (await socket.connected) {
       try {
         final List<SchedulModel> remoteData =
-            await remoteSchedul.getLetchersToday();
+            await remoteSchedul.getLetchersToday(dateDay);
         print("$remoteData ============ Data");
         localSource.cacheSchedul(remoteData);
+        localSource.cachedLetctersToday(remoteData);
+
         return Right(remoteData);
       } on ServerException {
+        // List<SchedulModel> localData = await localSource.getCachedSchedul();
         return Left(ServerFailure());
+        // return Left(EmptyCasheFailure());
       }
     } else {
       try {
-        List<SchedulModel> localData = await localSource.getCachedSchedul();
+        List<SchedulModel> localData = await localSource
+            .getCachedLetchers("${DateTime.now().month} / $dateDay");
         return Right(localData);
-      } on EmptyCasheException {
-        return Left(EmptyCasheFailure());
+      } on NotFountLetchersFailure {
+        return Left(NotFountLetchersFailure());
       }
     }
   }

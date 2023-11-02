@@ -20,7 +20,9 @@ class ScheduleTest extends StatelessWidget {
 
     List<String> getMonthDayList() {
       final now = DateTime.now();
-      final dayesInMonth = DateTime(now.year, now.month, 0).day;
+      print("now mounth : && mounth +1");
+      print("${now.month.bitLength}  : ${now.month + 1} ");
+      final dayesInMonth = DateTime(now.year, now.month + 1, 0).day;
       final monthDayList = List<String>.generate(
           dayesInMonth, (index) => (index + 1).toString());
       return monthDayList;
@@ -269,6 +271,7 @@ class ScheduleTest extends StatelessWidget {
                                         }),
                                   ),
                                   CardSchedule(
+                                    check: state.check,
                                     state.schedule
                                         .where((element) =>
                                             element.days == state.day)

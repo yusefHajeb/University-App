@@ -12,6 +12,7 @@ abstract class ScheduleLocalDataSource {
   Future<Unit> cacheSchedul(List<SchedulModel> schedulModel);
   Future<Unit> cacheSchedulNotifiction(SchedulModel schedulModel);
   Future<Unit> cachedLetctersToday(List<SchedulModel> schedulModel);
+  Future<List<SchedulModel>> getCachedLetchers(String date);
 }
 
 class ScheduleLocalDataSourceImp implements ScheduleLocalDataSource {
@@ -84,6 +85,25 @@ class ScheduleLocalDataSourceImp implements ScheduleLocalDataSource {
       sharedPreferences.setString(
           Constants.cachedLetchers, json.encode(schedulModelToJson));
       return Future.value(unit);
+    }
+  }
+
+  @override
+  Future<List<SchedulModel>> getCachedLetchers(String dateDay) {
+    print("Get data Letchers from ShardPrefrance");
+    final jsonString = sharedPreferences.getString(Constants.cachedLetchers);
+    if (jsonString != null) {
+      List decodeJsonData = json.decode(jsonString);
+      List<SchedulModel> jsonToSchedulModel =
+          decodeJsonData.map<SchedulModel>((jsonData) {
+        if (SchedulModel.formJson(jsonData).date ==
+            "${DateTime.now().year} / $dateDay") ;
+        return SchedulModel.formJson(jsonData);
+      }).toList();
+
+      return Future.value(jsonToSchedulModel);
+    } else {
+      throw EmptyCasheException();
     }
   }
 }

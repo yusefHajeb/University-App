@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +8,7 @@ import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/ge
 import 'package:university/main.dart';
 import '../../../../../core/error/failure.dart';
 import '../../../../../core/function/failure_to_message.dart';
+import '../../../../../core/string/failure_message.dart';
 import '../../../domain/entites/schedule.dart';
 part 'schedul_event.dart';
 part 'schedul_state.dart';
@@ -61,15 +63,26 @@ class ScheduleBloc extends Bloc<SchedulEvent, ScheduleState> {
     SelectDayScheduleEvent event,
     Emitter<ScheduleState> emit,
   ) async {
-    if (event.index > DateTime.now().day) {
-      emit(_failureOrSchedualToState(schedulOrError, event.index, event.day));
+    // print("========================${event.index}");
+    final day = DateTime.now().day;
+    if (event.index <= (day + 1) && event.index >= (day)) {
+      print("true in index event >  today or tw");
+      print("${event.index}");
+      newletchersOrOld = await getLetchersUsecase(event.index.toString());
+      emit(_failureOrSchedualToState(newletchersOrOld, event.index, event.day,
+          check: true));
+    } else if ((event.index < (DateTime.now().day))) {
+      print("true in index event >  today or tw");
+      print("${event.index}");
+      newletchersOrOld = await getLetchersUsecase(event.index.toString());
+      emit(
+        _failureOrSchedualToState(newletchersOrOld, event.index, event.day,
+            check: false),
+      );
     } else {
       emit(
-        _failureOrSchedualToState(
-          newletchersOrOld,
-          event.index,
-          event.day,
-        ),
+        _failureOrSchedualToState(schedulOrError, event.index, event.day,
+            check: true),
       );
     }
   }
@@ -84,11 +97,12 @@ class ScheduleBloc extends Bloc<SchedulEvent, ScheduleState> {
     final currentHour = now.hour;
     print("hour is $currentHour");
     // final tomorrow = now.add(const Duration(days: 1));
-    newletchersOrOld = await getLetchersUsecase();
     if (currentHour >= 17) {
       final tomorrow = now.add(const Duration(days: 1));
       print("curent Houwer <17");
       if (await socket.connected) {
+        newletchersOrOld =
+            await getLetchersUsecase(DateFormat('dd').format(tomorrow));
         print("socket =====");
         // newletchersOrOld = await getLetchersUsecase();
         emit(_failureOrSchedualToState(
@@ -96,8 +110,8 @@ class ScheduleBloc extends Bloc<SchedulEvent, ScheduleState> {
             int.parse(DateFormat('dd').format(tomorrow)),
             DateFormat('EEEE', 'ar').format(tomorrow)));
       } else {
+        schedulOrError = await getAllScheduleUsecase();
         print("no socket");
-
         print(DateFormat('EEEE', 'ar').format(tomorrow));
         print("today is :");
         print(DateFormat('EEEE', 'ar').format(tomorrow));
@@ -107,14 +121,27 @@ class ScheduleBloc extends Bloc<SchedulEvent, ScheduleState> {
             DateFormat('EEEE', 'ar').format(tomorrow)));
       }
     } else {
-      print("no socket");
-      print(DateFormat('EEEE', 'ar').format(now));
-      print("today is :");
-      print(DateFormat('EEEE', 'ar').format(now));
-      emit(_failureOrSchedualToState(
-          schedulOrError,
-          int.parse(DateFormat('dd').format(now)),
-          DateFormat('EEEE', 'ar').format(now)));
+      if (await socket.connected) {
+        newletchersOrOld =
+            await getLetchersUsecase(DateFormat('dd').format(now));
+        print("no socket");
+        print(DateFormat('EEEE', 'ar').format(now));
+        print("today is :");
+        print(DateFormat('EEEE', 'ar').format(now));
+        emit(_failureOrSchedualToState(
+            newletchersOrOld,
+            int.parse(DateFormat('dd').format(now)),
+            DateFormat('EEEE', 'ar').format(now)));
+      } else {
+        print("no socket");
+        print(DateFormat('EEEE', 'ar').format(now));
+        print("today is :");
+        print(DateFormat('EEEE', 'ar').format(now));
+        emit(_failureOrSchedualToState(
+            schedulOrError,
+            int.parse(DateFormat('dd').format(now)),
+            DateFormat('EEEE', 'ar').format(now)));
+      }
     }
     //  else if (currentHour > 17) {
     //   print("tomorrow is ");
@@ -146,37 +173,154 @@ class ScheduleBloc extends Bloc<SchedulEvent, ScheduleState> {
     final now = DateTime.now();
     final currentHour = now.hour;
     print("hour is $currentHour");
-    if (currentHour > 14) {
-      final tomorrow = now.add(Duration(days: 1));
-      print("tomorrow is ");
-      print(DateFormat('EEEE', 'ar').format(tomorrow));
-      print("today is :");
-      print(DateFormat('EEEE', 'ar').format(now));
+    if (currentHour >= 17) {
+      final tomorrow = now.add(const Duration(days: 1));
 
-      emit(_failureOrSchedualToState(
-          schedulOrError,
-          int.parse(DateFormat('dd').format(tomorrow)),
-          DateFormat('EEEE', 'ar').format(tomorrow)));
+      print("curent Houwer <17");
+      if (await socket.connected) {
+        newletchersOrOld =
+            await getLetchersUsecase(DateFormat('dd').format(tomorrow));
+
+        print("socket =====");
+        // newletchersOrOld = await getLetchersUsecase();
+        emit(_failureOrSchedualToState(
+            newletchersOrOld,
+            int.parse(DateFormat('dd').format(tomorrow)),
+            DateFormat('EEEE', 'ar').format(tomorrow)));
+      } else {
+        schedulOrError = await getAllScheduleUsecase();
+        print("no socket");
+        print(DateFormat('EEEE', 'ar').format(tomorrow));
+        print("today is :");
+        print(DateFormat('EEEE', 'ar').format(tomorrow));
+        emit(_failureOrSchedualToState(
+            schedulOrError,
+            int.parse(DateFormat('dd').format(tomorrow)),
+            DateFormat('EEEE', 'ar').format(tomorrow)));
+      }
     } else {
-      emit(_failureOrSchedualToState(
-          schedulOrError,
-          int.parse(DateFormat('dd').format(DateTime.now())),
-          DateFormat('EEEE', 'ar').format(now)));
+      if (await socket.connected) {
+        newletchersOrOld =
+            await getLetchersUsecase(DateFormat('dd').format(now));
+
+        print("no socket");
+        print(DateFormat('EEEE', 'ar').format(now));
+        print("today is :");
+        print(DateFormat('EEEE', 'ar').format(now));
+        emit(_failureOrSchedualToState(
+            newletchersOrOld,
+            int.parse(DateFormat('dd').format(now)),
+            DateFormat('EEEE', 'ar').format(now)));
+      } else {
+        print("no socket");
+        print(DateFormat('EEEE', 'ar').format(now));
+        print("today is :");
+        print(DateFormat('EEEE', 'ar').format(now));
+        emit(_failureOrSchedualToState(
+            schedulOrError,
+            int.parse(DateFormat('dd').format(now)),
+            DateFormat('EEEE', 'ar').format(now)));
+      }
     }
   }
 
   ScheduleState _failureOrSchedualToState(
-      Either<Failure, List<Schedule>> either, int index, String day) {
-    return either.fold(
-        (failure) => ErrorSchedulState(message: failureToMessage(failure)),
-        (schedula) {
+      Either<Failure, List<Schedule>> either, int index, String day,
+      {bool check = true}) {
+    return either.fold((failure) {
+      print("failure");
+      print(failure);
+      if (either != schedulOrError) {
+        if (failureToMessage(failure) == noLecture ||
+            failureToMessage(failure) == serverFailureMessage) {
+          return schedulOrError.fold((fail) {
+            return ErrorSchedulState(message: failureToMessage(fail));
+          }, (getScheduls) {
+            return LoadedSchedulState(
+              schedule: getScheduls,
+              index: index,
+              day: day,
+              check: check,
+            );
+          });
+        }
+        // return ErrorSchedulState(message: failureToMessage(failure));
+      }
+      return ErrorSchedulState(message: failureToMessage(failure));
+    }, (schedula) {
+      print("eiter == new Letchers");
+      print(either == newletchersOrOld);
+      // if((either != schedulOrError)){
+      if (either == newletchersOrOld) {
+        return schedulOrError.fold((fail) {
+          return ErrorSchedulState(message: failureToMessage(fail));
+        }, (sucess) {
+          if (schedula.length >= 0) {
+            List<Schedule> listData = [];
+            int i = 0;
+            for (var element in sucess) {
+              if (element.tId == schedula[i].tId) {
+                print("element == schedula");
+                print(schedula[i].courseName);
+                listData.add(schedula[i]);
+                if ((i + 1) < schedula.length) {
+                  i++;
+                }
+              } else {
+                if (element.days == day) {
+                  listData.add(element);
+                }
+              }
+            }
+            print("listData");
+            print(listData);
+            return LoadedSchedulState(
+                schedule: listData, index: index, day: day, check: check);
+          }
+          return LoadedSchedulState(
+              schedule: sucess, index: index, day: day, check: check);
+        });
+      }
+      // }
       // print("days");
       // print(day.toString());
       // print("in failure print");
       // print(schedula.where((element) => element.days == day).toList());
       // List<Schedule> cash =
       //     schedula.where((element) => element.days == day).toList();
-      return LoadedSchedulState(schedule: schedula, index: index, day: day);
+
+      // List<Schedule> schdeual = [
+      //   Schedule(
+      //     courseName: "قواعد بيانات",
+      //     classroom: "الرازي",
+      //     instructorName: "د/ نشوان المجمر",
+      //     status: "Pending",
+      //     time: "الثانية",
+      //     days: "السبت",
+      //   ),
+      //   Schedule(
+      //     courseName: "شبكات",
+      //     classroom: "الرازي",
+      //     instructorName: "د/ندى الحميدي",
+      //     status: "Assured",
+      //     time: "الاولى",
+      //     days: "الثلاثاء",
+      //   ),
+      //   Schedule(
+      //     courseName: "شبكات",
+      //     classroom: "الرازي",
+      //     instructorName: "د/منير السروري",
+      //     status: "Assured",
+      //     time: "الاولى",
+      //     days: "السبت",
+      //   ),
+      // ];
+      else {
+        print("element != schedula");
+
+        return LoadedSchedulState(
+            schedule: schedula, index: index, day: day, check: check);
+      }
     });
   }
 }

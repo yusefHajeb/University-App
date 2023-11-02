@@ -8,13 +8,12 @@ import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../../../core/value/style_manager.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
+import '../../pages/notification/notification_all.dart';
 
 class CardSchedule extends StatelessWidget {
   final List<Schedule> data;
-  CardSchedule(
-    this.data, {
-    Key? key,
-  }) : super(key: key);
+  bool check;
+  CardSchedule(this.data, {required this.check});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,16 @@ class CardSchedule extends StatelessWidget {
               },
               itemBuilder: ((context, index) {
                 print("you are in list show data");
-                return AnimateInEffect(child: CardLetchers(data[index]));
+                print(data[index].note);
+                if (data[index].note != "") {
+                  return NoteLetcher(
+                    schedul: data[index],
+                    showStyleOld: check,
+                  );
+                } else {
+                  return AnimateInEffect(
+                      child: CardLetchers(data[index], check));
+                }
               }),
             ),
           ),
@@ -48,14 +56,15 @@ class CardSchedule extends StatelessWidget {
   }
 }
 
-Widget CardLetchers(Schedule schedule) {
+Widget CardLetchers(Schedule schedule, check) {
   return Container(
     margin: EdgeInsets.only(
       top: 10,
     ),
     padding: EdgeInsets.all(10.0),
     height: 130,
-    decoration: BoxDecorationStyles.headerTab,
+    decoration:
+        check ? BoxDecorationStyles.testStyle : BoxDecorationStyles.headerTab,
     child: Row(
       children: [
         Column(
@@ -67,9 +76,6 @@ Widget CardLetchers(Schedule schedule) {
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: AppColors.greyColor)),
             ),
-            // Text("AM",
-            //     style: TextStyle(
-            //         fontWeight: FontWeight.bold, color: AppColors.greyColor)),
           ],
         ),
         AppSpaces.horizontalSpace10,
@@ -88,7 +94,7 @@ Widget CardLetchers(Schedule schedule) {
                     shape: BoxShape.circle,
                     color: AppColors.backgrounfContent,
                   ),
-                  child: iconStatusLetchers(schedule.status ?? ""),
+                  child: iconStatusLetchers(schedule.status ?? "", check),
                 ),
                 Container(
                   height: 50,
@@ -109,8 +115,8 @@ Widget CardLetchers(Schedule schedule) {
               // padding: const EdgeInsets.only(right: 0),
               child: Text(
                 schedule.courseName ?? "",
-                style:
-                    getFontNormal(15, FontWeightManager.bold, AppColors.white),
+                style: getFontNormal(15, FontWeightManager.bold,
+                    check ? AppColors.white : AppColors.backgrounfContent),
               ),
             ),
             AppSpaces.verticalSpace5,
@@ -118,26 +124,28 @@ Widget CardLetchers(Schedule schedule) {
               children: [
                 Icon(
                   Icons.location_on,
-                  color: AppColors.greyColor,
+                  color:
+                      check ? AppColors.greyColor : AppColors.backgrounfContent,
                   size: 20,
                 ),
                 AppSpaces.horizontalSpace10,
                 Text(schedule.classroom ?? "",
-                    style: getFontNormal(
-                        12, FontWeight.normal, AppColors.greyColor)),
+                    style: getFontNormal(12, FontWeight.normal,
+                        check ? AppColors.white : AppColors.backgrounfContent)),
               ],
             ),
             Row(
               children: [
                 Icon(
                   Icons.person_outline,
-                  color: AppColors.greyColor,
+                  color:
+                      check ? AppColors.greyColor : AppColors.backgrounfContent,
                   size: 20,
                 ),
                 AppSpaces.horizontalSpace10,
                 Text(schedule.instructorName ?? "",
-                    style: getFontNormal(
-                        12, FontWeight.normal, AppColors.greyColor)),
+                    style: getFontNormal(12, FontWeight.normal,
+                        check ? AppColors.white : AppColors.backgrounfContent)),
               ],
             )
           ],
@@ -147,21 +155,21 @@ Widget CardLetchers(Schedule schedule) {
   );
 }
 
-Widget iconStatusLetchers(String status) {
+Widget iconStatusLetchers(String status, check) {
   switch (status) {
     case "Canceled":
-      return Icon(
-        FontAwesomeIcons.xmark,
-        color: AppColors.error,
-      );
+      return GreenDoneIcon(FontAwesomeIcons.xmark,
+          check ? AppColors.error : AppColors.backgrounfContent);
     case "Assured":
-      return GreenDoneIcon(FontAwesomeIcons.circleCheck, AppColors.green);
+      return GreenDoneIcon(FontAwesomeIcons.check,
+          check ? AppColors.green : AppColors.backgrounfContent);
     case "Pending":
       return GreenDoneIcon(
-          FontAwesomeIcons.hourglass, Color.fromARGB(202, 185, 154, 41));
+          check ? FontAwesomeIcons.hourglass : FontAwesomeIcons.xmark,
+          check ? AppColors.darkRadialBackground : AppColors.backgrounfContent);
     // Icon(FontAwesomeIcons.circleQuestion, color: Colors.orange[300]);
     default:
       return GreenDoneIcon(
-          FontAwesomeIcons.question, Color.fromARGB(202, 185, 154, 41));
+          FontAwesomeIcons.question, AppColors.darkRadialBackground);
   }
 }

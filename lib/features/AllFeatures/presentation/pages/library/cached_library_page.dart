@@ -224,7 +224,7 @@ class LibraryCashed extends StatelessWidget {
                                           ? state.books
                                               .where(
                                                 (element) =>
-                                                    element.course_id ==
+                                                    element.courseId ==
                                                     state.index,
                                               )
                                               .toList()

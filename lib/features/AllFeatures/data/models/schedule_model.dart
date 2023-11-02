@@ -3,6 +3,7 @@ import '../../domain/entites/schedule.dart';
 // ignore: must_be_immutable
 class SchedulModel extends Schedule {
   SchedulModel({
+    String? date,
     String? tId,
     String? courseName,
     String? instructorName,
@@ -14,6 +15,7 @@ class SchedulModel extends Schedule {
     String? batchName,
     String? status,
     String? note,
+    String? imageInstractor,
   }) : super(
           tId: tId,
           status: status,
@@ -26,21 +28,25 @@ class SchedulModel extends Schedule {
           batchName: batchName,
           level: level,
           dept: dept,
+          imageInstractor: imageInstractor,
+          date: date,
         );
 
   factory SchedulModel.formJson(Map<String, dynamic> data) {
     return SchedulModel(
       tId: data[SchedulModelKeys.tabelId]?.toString(),
       courseName: data[SchedulModelKeys.courseName]?.toString(),
-      instructorName: data[SchedulModelKeys.instructorName]?.toString(),
+      instructorName: data[SchedulModelKeys.instructorName]?.toString() ?? "",
       // dept: data[SchedulModelKeys.dept]?.toString(),
       // level: data[SchedulModelKeys.level]?.toString(),
-      classroom: data[SchedulModelKeys.classroom]?.toString(),
-      time: data[SchedulModelKeys.time]?.toString(),
-      days: data[SchedulModelKeys.day]?.toString(),
+      classroom: data[SchedulModelKeys.classroom]?.toString() ?? "",
+      time: data[SchedulModelKeys.time]?.toString() ?? "",
+      days: data[SchedulModelKeys.day]?.toString() ?? "",
       // batchName: data[SchedulModelKeys.batchName]?.toString(),
       status: data[SchedulModelKeys.status]?.toString(),
-      note: data[SchedulModelKeys.note]?.toString(),
+      note: data[SchedulModelKeys.note]?.toString() ?? "",
+      imageInstractor: data[SchedulModelKeys.imageInstractor]?.toString() ?? "",
+      date: data[SchedulModelKeys.date]?.toString() ?? "",
     );
   }
 
@@ -58,6 +64,8 @@ class SchedulModel extends Schedule {
       SchedulModelKeys.instructorName: instructorName,
       SchedulModelKeys.status: status,
       SchedulModelKeys.note: note,
+      SchedulModelKeys.imageInstractor: imageInstractor,
+      SchedulModelKeys.date: date,
     };
   }
 }
@@ -72,8 +80,10 @@ class SchedulModelKeys {
   static const classroom = "classroom_name";
   static const instructorName = "instructor_name";
   static const status = "state_lectuer";
-  static const note = "note";
+  static const note = "note_lectuer";
   static const String date = "";
+  static const String imageInstractor = "image_profile";
+  static const String dateLectue = "date_lectuer";
 }
 
   //  t_id: 64,

@@ -7,7 +7,7 @@ import '../../../../../core/constant/varibal.dart';
 abstract class SchedulRemoteDataSource {
   Future<List<SchedulModel>> getAllSchedul();
   Future<SchedulModel> getScheduleNotification();
-  Future<List<SchedulModel>> getLetchersToday();
+  Future<List<SchedulModel>> getLetchersToday(String date);
 }
 
 // const String baseUrl = "https://jsonplaceholder.typicode.com";
@@ -145,23 +145,33 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
     }
   }
 
+// "${now.year}-${now.month}-${now.day}"
   @override
-  Future<List<SchedulModel>> getLetchersToday() async {
+  Future<List<SchedulModel>> getLetchersToday(String date) async {
     print("---------- getLetchers");
+    final now = DateTime.now();
+    String? today;
+    if (int.parse(date) < 10) {
+      today = "0${date}";
+    } else {
+      today = date;
+    }
     try {
-      final now = DateTime.now();
       final response = await http.post(Uri.parse(Constants.letchersLinks),
           body: {
             "batch_id": '${12}',
-            "date_lectuer": '${now.year}-${now.month}-${now.day}'
+            "date_lectuer": "${now.year}-${now.month}-${today}"
           });
       print("response");
       print(response.body);
       if (response.statusCode == 200) {
         var responsbody = jsonDecode(response.body);
-        print(response.body);
+        print("responsbody['status']");
+        print(responsbody['status']);
+
+        // print(response.body);
         final List decodedJson = responsbody["data"];
-        print(decodedJson);
+        // print(decodedJson);
         final List<SchedulModel> scheduleModel = decodedJson
             .map((jsonPostModel) => SchedulModel.formJson(jsonPostModel))
             .toList();
@@ -169,7 +179,8 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
       }
     } catch (e) {
       print(" ================  $e");
+      // throw ServerException();
     }
-    return throw ServerException();
+    throw ServerException();
   }
 }

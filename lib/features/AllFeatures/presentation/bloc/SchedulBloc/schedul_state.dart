@@ -16,9 +16,14 @@ class LoadedSchedulState extends ScheduleState {
   final List<Schedule> schedule;
   int index;
   String day;
-  LoadedSchedulState({required this.schedule, this.index = 0, this.day = ''});
+  bool check;
+  LoadedSchedulState(
+      {required this.schedule,
+      this.index = 0,
+      this.day = '',
+      this.check = false});
   @override
-  List<Object> get props => [schedule, index, day];
+  List<Object> get props => [schedule, index, day, check];
 }
 
 class ErrorSchedulState extends ScheduleState {
