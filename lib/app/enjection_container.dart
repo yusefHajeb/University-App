@@ -7,8 +7,12 @@ import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSour
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/shedul_remote_datasource.dart';
 import 'package:university/features/AllFeatures/data/datasource/library/library_local_data.dart';
 import 'package:university/features/AllFeatures/data/datasource/library/library_remote_data.dart';
+import 'package:university/features/AllFeatures/data/datasource/notification/notification_local.dart';
+import 'package:university/features/AllFeatures/data/datasource/notification/ontification_remote.dart';
 import 'package:university/features/AllFeatures/data/repositories/library_repository/library_repository_imp.dart';
+import 'package:university/features/AllFeatures/data/repositories/notefications_repository/notifications_imp.dart';
 import 'package:university/features/AllFeatures/domain/repositories/library_repositories/library_repository.dart';
+import 'package:university/features/AllFeatures/domain/repositories/notification/notification_repository.dart';
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_all_schedule.dart';
 import 'package:university/features/AllFeatures/domain/usecase/ScheduleUsecae/get_tody_letchers.dart';
 import 'package:university/features/AllFeatures/domain/usecase/auth_singin_singup.dart/singin_usecase.dart';
@@ -22,6 +26,7 @@ import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/notifications/notefications_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/search_books/search_books_bloc.dart';
 import '../features/AllFeatures/data/datasource/AuthDatatSource/auth_remote_database.dart';
 import '../features/AllFeatures/data/repositories/auth/singin_singup_repository_imp.dart';
@@ -29,6 +34,7 @@ import '../features/AllFeatures/data/repositories/schudul_repository_imp.dart';
 import '../features/AllFeatures/domain/repositories/auth_repositories/student_repository.dart';
 import '../features/AllFeatures/domain/repositories/schedule_repository.dart';
 import '../features/AllFeatures/domain/usecase/ScheduleUsecae/notificatin_schedule_usecase.dart';
+import '../features/AllFeatures/domain/usecase/notification/note_usecase.dart';
 import '../features/AllFeatures/presentation/bloc/book_favorite_bloc/books_favorite_bloc.dart';
 import '../features/AllFeatures/presentation/bloc/form_bloc/bloc/validate_bloc.dart';
 import '../features/AllFeatures/presentation/bloc/form_bloc/form_login_bloc.dart';
@@ -56,6 +62,7 @@ Future<void> init() async {
 
   sl.registerFactory(() => ValidateBloc());
   sl.registerFactory(() => Bloc.observer = MyBlocObserver());
+  sl.registerFactory(() => NotificationsBloc(getAllNotifications: sl()));
   //USECASE ========================
   sl.registerLazySingleton(() => GetAllScheduleUsecase(rerpository: sl()));
   sl.registerLazySingleton(() => GetLetchersUsecase(rerpository: sl()));
@@ -69,7 +76,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetAllBooksUsecase(rerpository: sl()));
   sl.registerLazySingleton(() => GetBookUsecase(rerpository: sl()));
   sl.registerLazySingleton(() => GetCoursesUsecase(rerpository: sl()));
-
+  sl.registerLazySingleton(() => GetAllNotifications(repository: sl()));
   //Repository Imp  ================
 
   sl.registerLazySingleton<ScheduleRepository>(() => SchedulRepositoryImp(
@@ -79,7 +86,8 @@ Future<void> init() async {
 
   sl.registerLazySingleton<LibraryRepository>(() => LibraryRepositoryImp(
       localSource: sl(), remoteDataSource: sl(), networkInfo: sl()));
-
+  sl.registerLazySingleton<NotificationRepository>(() =>
+      NotificationRepositoryImp(remote: sl(), local: sl(), networkInfo: sl()));
   //Database =======================
   sl.registerLazySingleton<SchedulRemoteDataSource>(
     () => SchedulRemoteDataSourceImp(
@@ -108,8 +116,13 @@ Future<void> init() async {
   //     () => LibraryLocalDataSourceImp(sharedPreferences: sl()));
 
   sl.registerLazySingleton<LibraryLocalDataSource>(
-    () => LibraryLocalDataSourceImp(sharedPreferences: sl()),
-  );
+      () => LibraryLocalDataSourceImp(
+            sharedPreferences: sl(),
+          ));
+
+  sl.registerLazySingleton<NotificationsRemote>(() => NotificationsRemoteImp());
+  sl.registerLazySingleton<NotificationsLocal>(
+      () => NotificationsLocalImp(sharedPreferences: sl()));
 
   // Core ===========================
 
