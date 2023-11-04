@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../domain/entites/notification_enitites.dart';
 
-class NotificationModel extends Notificatons {
+class NotificationModel extends Notifications {
   NotificationModel(
       {String? title, String? contant, String? instructor, String? date})
       : super(
