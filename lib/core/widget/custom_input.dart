@@ -36,8 +36,8 @@ class LabelledFormInput extends StatelessWidget {
         AppSpaces.verticalSpace10,
         Text(
           label!.toUpperCase(),
-          textAlign: TextAlign.left,
-          style: myTheme.copyWith(color: HexColor.fromHex("3C3E49")),
+          textAlign: TextAlign.center,
+          style: myTheme.copyWith(color: AppColors.white, fontSize: 13),
           // style: Theme.of(context).textTheme.bodyMedium.backgroundColor(color: HexColor.fromHex("3C3E49")),
         ),
         TextFormField(
@@ -49,7 +49,8 @@ class LabelledFormInput extends StatelessWidget {
 
           keyboardType:
               (isNumber ?? false) ? TextInputType.number : TextInputType.text,
-          validator: (val) => val!.isEmpty ? "$label Can/'t be empty" : null,
+          validator: (val) =>
+              val!.isEmpty ? "$label لايمكن أن يكون الحقل فارغا" : null,
           //initialValue: initialValue,
 
           decoration: InputDecoration(
@@ -60,15 +61,15 @@ class LabelledFormInput extends StatelessWidget {
               suffixIcon: _suffixWidget(controller),
               filled: false,
               hintText: hint,
-              hintStyle: GoogleFonts.lato(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: HexColor.fromHex("3C3E49")),
+              hintStyle: GoogleFonts.almarai(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: AppColors.greyColor),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: HexColor.fromHex("3C3E49")),
               ),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: HexColor.fromHex("BEF0B2")),
+                borderSide: BorderSide(color: AppColors.underLine),
               ),
               border: UnderlineInputBorder(
                   borderSide: BorderSide(color: HexColor.fromHex("BEF0B2")))),

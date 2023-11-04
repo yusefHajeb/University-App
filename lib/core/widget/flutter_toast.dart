@@ -8,8 +8,8 @@ toastInfo({required String msg}) {
       msg: msg,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: AppColors.backgroundPages,
-      textColor: AppColors.greyColor,
-      fontSize: 15.sp);
+      timeInSecForIosWeb: 3,
+      backgroundColor: AppColors.underLine,
+      textColor: AppColors.darkRadialBackground,
+      fontSize: 14.sp);
 }

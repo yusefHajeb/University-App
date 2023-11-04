@@ -71,6 +71,19 @@ class NotificationPage extends StatelessWidget {
                         AppColors.bottomHeaderColor,
                       ),
                     ),
+                    AppSpaces.verticalSpace20,
+                    NotificationCard(
+                      date: "${DateTime.now().day} / ${DateTime.now().month}",
+                      // imageBackground: "#181a1f",
+                      mentioned: false,
+                      mention: "8",
+                      image: Constants.imageRoute +
+                          userDataModel().image.toString(),
+                      message: "schedul.note ?? " "",
+                      read: false,
+                      userOnline: true,
+                      userName: "${userDataModel().name}",
+                    ),
                     // CardLetchers(
                     //     Schedule(
                     //       classroom: "الرازي",
@@ -81,15 +94,15 @@ class NotificationPage extends StatelessWidget {
                     //     ),
                     //     false),
                     AppSpaces.verticalSpace10,
-                    NoteLetcher(
-                        schedul: Schedule(
-                          classroom: "الرازي",
-                          instructorName: "ندى الحميدي",
-                          status: "Assured",
-                          time: "الاولى",
-                          days: "",
-                        ),
-                        showStyleOld: false),
+                    // NoteLetcher(
+                    //     schedul: Schedule(
+                    //       classroom: "الرازي",
+                    //       instructorName: "ندى الحميدي",
+                    //       status: "Assured",
+                    //       time: "الاولى",
+                    //       days: "",
+                    //     ),
+                    //     showStyleOld: false),
                   ])
               //     AppSpaces.verticalSpace20,
               //     // ...notificationCards,
