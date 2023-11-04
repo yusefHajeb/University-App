@@ -11,7 +11,6 @@ import '../../../../../core/value/style_manager.dart';
 import '../../../../../core/widget/bakground_dark.dart';
 import '../../bloc/onboarding_bloc/on_boarding_bloc_bloc.dart';
 import '../../cubit/localization/local_cubit_cubit.dart';
-import '../../widget/onBoarding/custom_change_lang.dart';
 import '../../widget/onBoarding/slider_image.dart';
 import '../Auth/sing_in_page.dart';
 
@@ -83,13 +82,13 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                       onPageChanged: (index) {
                         print("the index is $index  && state is ${state.page}");
 
-                        _pageController.animateToPage(
-                          state.page,
-                          duration: const Duration(
-                            milliseconds: 3,
-                          ),
-                          curve: Curves.bounceInOut,
-                        );
+                        // _pageController.animateToPage(
+                        //   state.page,
+                        //   duration: const Duration(
+                        //     milliseconds: 3,
+                        //   ),
+                        //   curve: Curves.bounceInOut,
+                        // );
                       },
                       itemCount: 3,
                       itemBuilder: (context, index) {
@@ -97,17 +96,13 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                       },
                     ),
                   ),
-                  ChangeLang(localCubit: localCubit),
+                  // ChangeLang(localCubit: localCubit),
                   Padding(
                     padding: const EdgeInsets.only(
                         left: 20.0, right: 20.0, bottom: 20.0),
                     child: SingleChildScrollView(
                       child: Container(
                         child: Column(children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            // children: _buildPageIndicator(),
-                          ),
                           const SizedBox(height: 50),
                           Container(
                             padding: EdgeInsets.all(10),
@@ -139,7 +134,7 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                                             value: ++state.page));
                                     // indexPage = state.page;
                                     print('${state.page} ================');
-                                    if (state.page <= 3) {
+                                    if (state.page <= 2) {
                                       print("${state.page} ======");
                                       _pageController.animateToPage(state.page,
                                           duration: Duration(milliseconds: 500),
@@ -154,6 +149,9 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
                                           MaterialPageRoute(
                                               builder: (_) => SingInPage()),
                                           (route) => false);
+                                      context
+                                          .read<OnBoardingBlocBloc>()
+                                          .add(SetValueChange(value: 0));
                                     }
 
                                     // Navigator.push(

@@ -3,13 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:university/core/Utils/box_decoration.dart';
+import 'package:university/core/fonts/app_fonts.dart';
 import 'package:university/core/value/app_space.dart';
 import 'package:university/core/Utils/lang/app_localization.dart';
+import 'package:university/core/value/style_manager.dart';
+import 'package:university/core/widget/flutter_toast.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/pages/application_page.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/custom_textfiled.dart';
 import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
+import 'package:university/main.dart';
+
+import '../../../../../core/color/app_color.dart';
+import '../../../../../core/widget/custom_input.dart';
+import '../profile_widget/text_autline.dart';
 
 class FormLoginWidget extends StatefulWidget {
   const FormLoginWidget({super.key});
@@ -79,44 +88,58 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                 child: Container(
                     width: sizeWidth * .9,
                     height: sizeWidth * .9,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(.1),
-                          blurRadius: 90,
-                        ),
-                      ],
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecorationStyles.headerTab,
+                    // decoration: BoxDecoration(
+                    //   color: Colors.white,
+                    //   borderRadius: BorderRadius.circular(15),
+                    //   boxShadow: [
+                    //     BoxShadow(
+                    //       color: Colors.black.withOpacity(.1),
+                    //       blurRadius: 90,
+                    //     ),
+                    //   ],
+                    // ),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const SizedBox(),
-                          Text(
-                            'SignUp'.tr(context),
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black.withOpacity(.7),
-                            ),
-                          ),
+                          Text('SignUp'.tr(context),
+                              style: getFontNormal(
+                                  15, FontWeight.w600, AppColors.white)),
                           AppSpaces.verticalSpace10,
-                          CustomTextFilde(
+                          LabelledFormInput(
+                              hint: "ادخل رقم القيد هنا",
                               controller: _recordStd,
-                              icon: Icons.account_circle_outlined,
-                              hintText: 'Record Number..'.tr(context)),
-                          CustomTextFilde(
+                              label: "القيد",
+                              isNumber: true,
+                              placeholder: ""),
+
+                          LabelledFormInput(
+                              hint: " ادخل كلمة المرور",
                               controller: _passwordStd,
-                              icon: Icons.lock_outline,
-                              hintText: 'Password...'.tr(context)),
+                              label: "كلمة المرور",
+                              placeholder: ""),
+                          // CustomTextFilde(
+                          //     controller: _recordStd,
+                          //     icon: Icons.account_circle_outlined,
+                          //     hintText: 'Record Number..'.tr(context)),
+                          // CustomTextFilde(
+                          //     controller: _passwordStd,
+                          //     icon: Icons.lock_outline,
+                          //     hintText: 'Password...'.tr(context)),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SubmitFormBtn(
+                              OutlinedButtonWithText(
+                                content: 'LOGIN'.tr(context),
+                                width: 146,
                                 onPressed: validateFormLogin,
-                                btnName: 'LOGIN'.tr(context),
                               ),
+                              // SubmitFormBtn(
+                              //   onPressed: validateFormLogin,
+                              //   btnName: 'LOGIN'.tr(context),
+                              // ),
                               SizedBox(width: sizeWidth / 25),
                               Container(
                                 width: sizeWidth / 2.6,
@@ -124,10 +147,11 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                                 child: RichText(
                                   text: TextSpan(
                                     text: 'Forgotten password!'.tr(context),
-                                    style: TextStyle(color: Colors.blueAccent),
+                                    style: getFontNormal(13, FontWeight.w400,
+                                        AppColors.underLine),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        Fluttertoast.showToast(
+                                        toastInfo(
                                           msg:
                                               'Forgotten password! button pressed',
                                         );
@@ -164,10 +188,8 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                             child: RichText(
                               text: TextSpan(
                                 text: 'Create a new Account',
-                                style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontSize: 15,
-                                ),
+                                style: getFontNormal(15, FontWeightManager.bold,
+                                    AppColors.underLine),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     BlocProvider.of<AuthenticationBloc>(context)
@@ -188,19 +210,23 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
   }
 
   void validateFormLogin() {
-    print("recored and password");
-    print(_recordStd.text);
-    print(_passwordStd.text);
-    final isValid = _formKey.currentState!.validate();
-    final Singin login = Singin(
-      record: _recordStd.text,
-      password: _passwordStd.text,
-    );
-    if (isValid) {
-      print("$login ============$isValid filed Data");
+    if (socket.connected) {
+      print("recored and password");
+      print(_recordStd.text);
+      print(_passwordStd.text);
+      final isValid = _formKey.currentState!.validate();
+      final Singin login = Singin(
+        record: _recordStd.text,
+        password: _passwordStd.text,
+      );
+      if (isValid) {
+        print("$login ============$isValid filed Data");
 
-      BlocProvider.of<AuthenticationBloc>(context)
-          .add(SingInStudintEvent(singIn: login));
+        BlocProvider.of<AuthenticationBloc>(context)
+            .add(SingInStudintEvent(singIn: login));
+      }
+    } else {
+      toastInfo(msg: "يرجى فحص الاتصال بالشبكة");
     }
   }
 }
