@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/color/app_color.dart';
 
+// ignore: must_be_immutable
 class GreenDoneIcon extends StatelessWidget {
   Color? color;
   IconData icon;

@@ -6,6 +6,7 @@ import 'package:university/features/AllFeatures/data/datasource/library/library_
 import 'package:university/features/AllFeatures/data/datasource/library/library_remote_data.dart';
 import 'package:university/features/AllFeatures/data/models/library_models/library_model.dart';
 import 'package:university/features/AllFeatures/domain/entites/header_books_entites.dart';
+import 'package:university/main.dart';
 import '../../../../../core/error/execptions.dart';
 import '../../../../../core/network/check_network.dart';
 import '../../../domain/repositories/library_repositories/library_repository.dart';
@@ -21,7 +22,7 @@ class LibraryRepositoryImp implements LibraryRepository {
       required this.networkInfo});
   @override
   Future<Either<Failure, Library>> getALLBooks() async {
-    if (await networkInfo.isConnected) {
+    if (await socket.connected) {
       try {
         print("library repository imp ");
         var dataRespnse = await remoteDataSource.getAllBooks();
@@ -59,7 +60,7 @@ class LibraryRepositoryImp implements LibraryRepository {
 
   @override
   Future<Either<Failure, List<BookModel>>> getBooks() async {
-    if (await networkInfo.isConnected) {
+    if (await socket.connected) {
       try {
         final List<BookModel> dataRespnse = await remoteDataSource.getBooks();
         print(dataRespnse);

@@ -70,13 +70,10 @@ class SingInOrSingUpRemoteDataSourceImp
     // print("00000000000000000000000000 remote${?.toJson()}");
     // try {
     final SingUpModel? singinModel;
-    Crud curd = new Crud();
+    Crud curd = Crud();
 
     var res = await curd.PostRequset(Constants.singInLink,
         {"record": '${int.parse(singin.record)}', "password": singin.password});
-
-    // var response = await curd.PostRequset(Constants.singInLink,
-    //     {"record": '${int.parse(singin.record)}', "password": singin.password});
 
     print("status =====");
     print(res);
@@ -89,7 +86,7 @@ class SingInOrSingUpRemoteDataSourceImp
       );
       return singinModel;
     } else {
-      print("no respons? ");
+      throw ServerException();
     }
     // final response = await http.post(
     //   Uri.parse(Constants.singInLink),
@@ -136,8 +133,6 @@ class SingInOrSingUpRemoteDataSourceImp
     // print("============================ remote + faild");
 
     // throw
-
-    throw ServerException();
 
     // return singinModel!;
   }

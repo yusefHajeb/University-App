@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:university/core/constant/varibal.dart';
 
 enum ProfileDummyTypeNet { icon, image, button }
 
@@ -21,6 +20,8 @@ class ProfileDummyNet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("image");
+    print(image.toString());
     return Container(
       width: 40 * scale,
       height: 40 * scale,
@@ -29,7 +30,7 @@ class ProfileDummyNet extends StatelessWidget {
         child: this.dummyType == ProfileDummyTypeNet.icon
             ? Icon(Icons.person, color: Colors.white, size: 30 * scale)
             : CachedNetworkImage(
-                imageUrl: "${Constants.imageRoute}/$image",
+                imageUrl: image.toString(),
                 fit: BoxFit.fill,
               ),
       ),

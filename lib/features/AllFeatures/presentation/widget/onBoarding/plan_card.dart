@@ -4,7 +4,6 @@ import '../../../../../core/value/app_space.dart';
 import '../../../../../core/Utils/box_decoration.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/constant/varibal.dart';
-import '../../../../../core/widget/dummy/don_icon.dart';
 import '../Schedul/green_done_icon.dart';
 
 class PlanCard extends StatelessWidget {

@@ -1,0 +1,753 @@
+
+const express = require("express");
+var {createServer} = require("http");
+var {Server} = require("socket.io");
+const app = express();
+var httpserver = createServer(app);
+var io = new Server(httpserver);
+const mysql = require('mysql');
+const dbConnection = require('./dbConnection');
+
+// Package for Uplode file;
+const multer = require('multer');
+const path = require('path');
+const MB = 1048576;
+const uploadPath = path.join(__dirname, '../UniversitySystem/instructorProfile');
+const uploadPathForChatgroup = path.join(__dirname, '../UniversitySystem/ChatMadia');
+// Define the allowed file extensions
+const allowedExtensions = ['jpg', 'png', 'gif', 'mp3', 'mp4', 'pdf', 'doc', 'txt'];
+//server listen of port
+httpserver.listen(3000, () => {
+  console.log("server started");
+});
+
+app.use(express.urlencoded());
+app.use(express.json());
+
+
+var clients = {};
+
+//fatch all Group 
+app.post('/getGroup',(req,res)=>{
+  const batch_id=req.body.batch_id;
+  console.log(">>>Send Group to Device");
+  const sql = `
+  SELECT
+  g.groupId,
+  g.groupName,
+  g.groupProfileImage,
+  g.creationTime,
+  g.std_admin_id,
+  g.batch_id,
+  gm.content AS lastMessage,
+  gm.time AS TimelastMessage,
+  (
+    SELECT MAX(time)
+    FROM group_message
+    WHERE channelId = g.groupId
+  ) AS lastMessageTime,
+  gm2.content AS latestMessage,
+  gm2.time AS latestMessageTime,
+  s.std_name AS adminName
+FROM
+  \`group\` g
+  LEFT JOIN (
+    SELECT DISTINCT
+      channelId,
+      content,
+      time
+    FROM group_message
+  ) gm ON g.groupId = gm.channelId
+  LEFT JOIN (
+    SELECT DISTINCT
+      channelId,
+      content,
+      time
+    FROM group_message
+  ) gm2 ON g.groupId = gm2.channelId AND gm.time = gm2.time
+  LEFT JOIN student s ON g.std_admin_id = s.t_id
+WHERE
+  gm2.time = (
+    SELECT MAX(time)
+    FROM group_message
+    WHERE channelId = g.groupId
+  )
+  AND g.batch_id = ?
+GROUP BY
+  g.groupId`;
+  dbConnection.query(sql, [batch_id],(err, results) => {
+  if (err) {
+    console.error('Failed to fetch groups:', err);
+    return;
+  }
+  
+  if (results.length > 0) {
+    return res.json({ status: 'success', data: results });
+  } else {
+    return res.json({ status: 'fail' });
+  }
+});
+});
+
+//fetch all student
+app.post('/getStudent',(req,res)=>{
+  const batch_id= req.body.batch_id; 
+  const sql ="SELECT * FROM `student` WHERE batch_id=?";
+  dbConnection.query(sql, [batch_id],(err, results) => {
+  if (err) {
+    console.error('Failed to fetch groups:', err);
+    return;
+  }  
+  if (results.length > 0) {
+    return res.json({ status: 'success', data: results });
+  } else {
+    return res.json({ status: 'fail' });
+  }
+});
+});
+
+//fetch data about Current Student
+app.post('/CurrentStudent', (req, res) => {
+  const record = req.body.record;
+  const password = req.body.password;
+  console.log(">>> device Open app");
+  const sql = "SELECT * FROM `student` WHERE `std_record`=? AND `std_password`=?";
+  dbConnection.query(sql, [record, password], (err, results) => {
+    if (err) {
+      console.error('Failed to fetch groups:', err);
+      res.status(500).json({ status: 'fail', error: err.message });
+      return;
+    }
+    if (results.length > 0) {
+      res.json({ status: 'success', data: results });
+    } else {
+      res.json({ status: 'fail' });
+    }
+  });
+});
+
+io.on("connection", (socket) => {
+  socket.join("anomynous_group");
+  console.log("connetetd");  
+  socket.on("Sendmessage", (msg) => {
+    io.to("anomynous_group").emit("resend", msg);
+    console.log(msg);    
+  });
+
+  io.on('ConuntNewMessage',(data)=> {
+    console.log(data["messageId"]);
+    const connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'universitymanagment',
+    });
+    connection.connect((err) => {
+      if (err) {
+        console.error('Connection failed:', err.message);
+        return;
+      }
+      console.log('Connected to MySQL database.');
+    });  
+  
+    const sql ="SELECT COUNT(*) AS rowCount FROM `group_message` WHERE messageId > ? AND channelId = ?";
+    connection.query(sql, [data["messageId"],data["channelId"]],(err, results) => {
+    if (err) {
+      console.error('Failed to fetch groups:', err);
+      return;
+    }
+    if (results.length > 0) {
+      socket.emit("reslCount",{results});
+      console.log(results);
+    } else {
+      //emit('reslCount',{ status: 'fial', data: 0 });
+      console.log("dfsdf");
+    }
+  });
+  });
+  
+});
+
+
+app.post('/addMessage', (req, res) => {
+  const channelId = req.body.channelId;
+  const senderId = req.body.senderId;
+  const typeMes = req.body.type_message;
+  const time = req.body.time;
+  const content = req.body.content;
+  const url_madia = req.body.url_madia;
+  console.log(">>> device send message");
+  const sql = "INSERT INTO `group_message` (channelId, senderId, type_message, content,url_madia,time) VALUES (?, ?, ?, ?, ?,?)";
+  dbConnection.query(sql, [channelId, senderId,typeMes,content,url_madia,time], (err, results) => {
+    if (err) {
+      console.error('Failed to fetch student:', err);
+      res.status(500).json({ status: 'fail', error: err.message });
+      return;
+    }
+    if (results) {      
+      res.json({ status: 'success', data: true });
+    } else {
+      res.json({ status: 'fail' });
+    }
+  });  
+});
+
+
+app.post('/updateMessage', (req, res) => {
+  const messageId = req.body.messageId;
+  const time = req.body.time;
+  const content = req.body.content;
+  console.log(">>> device Update message,"+content);
+  // Update the password field in the instructor table with the new password
+  const updatePasswordQuery = `UPDATE group_message SET content = '${content}' WHERE messageId = ${messageId}`;
+  // Execute the query in the database
+  dbConnection.query(updatePasswordQuery, (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Failed to update the password field in the instructor table' });
+    }
+    return res.json({ status: 'success', });  
+  });  
+});
+
+app.post('/deleteMessage', (req, res) => {
+  const messageId = req.body.messageId;
+  console.log(">>> device delete message: "+messageId);
+  // Update the password field in the instructor table with the new password
+  const updatePasswordQuery = `DELETE FROM group_message WHERE messageId = ${messageId}`;
+  // Execute the query in the database
+  dbConnection.query(updatePasswordQuery, (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Failed to update the password field in the instructor table' });
+    }
+    return res.json({ status: 'success', });  
+  });  
+});
+//Sign in app by student
+app.post('/signIn', (req, res) => {
+  const record = req.body.record;
+  const password = req.body.password;
+  console.log(">>> device sign In app");
+  const sql = "SELECT * FROM `student` WHERE `std_record`=? AND `std_password`=?";
+  dbConnection.query(sql, [record, password], (err, results) => {
+    if (err) {
+      console.error('Failed to fetch student:', err);
+      res.status(500).json({ status: 'fail', error: err.message });
+      return;
+    }
+    if (results.length > 0) {
+      const data = results[0];
+      res.json({ status: 'success', data: data });
+    } else {
+      res.json({ status: 'fail' });
+    }
+  });  
+});
+
+
+app.post('/uploadImageForChatgroup', (req, res) => {
+  uploadchatMadi(req, res, (err) => {
+  const channelId = req.body.channelId;
+  const senderId = req.body.senderId;
+  const typeMes = req.body.type_message;
+  const time = req.body.time;
+  const content = req.body.content;
+  const url_madia = req.body.url_madia;
+  const sql = "INSERT INTO `group_message` (channelId, senderId, type_message, content,url_madia,time) VALUES (?, ?, ?, ?, ?,?)";
+  dbConnection.query(sql, [channelId, senderId,typeMes,content,url_madia,time], (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'فشل في تحديث حقل الصورة في جدول المعلمين' });
+      }
+      console.log(" تم تحديث حقل الصورة بنجاح");      
+      res.json({ "status": "success" });
+    });
+  });
+});
+      
+// Create a multer storage instance
+const storagechatMadi = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadPathForChatgroup);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+
+// Create a multer upload instance
+const uploadchatMadi = multer({
+  storage: storagechatMadi,
+  fileFilter: (req, file, cb) => {
+    // Check if the file extension is allowed
+    const ext = path.extname(file.originalname).toLowerCase().slice(1);
+    if (!allowedExtensions.includes(ext)) {
+      return cb(new Error('Invalid file extension'));
+    }
+    // Check if the file size exceeds the limit
+    if (file.size > 10 * MB) {
+      return cb(new Error('File size exceeds the limit'));
+    }
+    cb(null, true);
+  }
+}).single('file');
+
+//Sign in app
+app.get('/getsignIn', (req, res) => {
+  // const record = req.body.record;
+  // const password = req.body.password;
+  console.log(">>> device sign In app");
+  const sql = "SELECT * FROM `student`";
+  dbConnection.query(sql, (err, results) => {
+    if (err) {
+      console.error('Failed to fetch student:', err);
+      res.status(500).json({ status: 'fail', error: err.message });
+      return;
+    }
+    if (results.length > 0) {
+      const data = results;
+      res.json({ status: 'success', data: data });
+    } else {
+      res.json({ status: 'fail' });
+    }
+  });  
+});
+
+
+app.post('/getmessages', (req, res) => {
+  const channelId = req.body.channelId;
+  console.log(">>> Open chanel: " +channelId);
+  getMessages(channelId)
+    .then((result) => {
+      return res.json({ status: 'success', data: result });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ status: 'fail', error: error.message });
+    });
+});
+
+//this function get all message for student
+function getMessages(channelId) {
+  return new Promise((resolve, reject) => {
+    dbConnection.query(
+      `SELECT group_message.*, student.std_name AS senderName, student.std_image AS senderProfile
+      FROM group_message
+      JOIN student ON group_message.senderId = student.t_id
+      WHERE channelId = ?
+      ORDER BY group_message.time ASC`, [channelId],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          if (results.length > 0) {
+            resolve(results);
+          } else {
+            resolve({ status: 'fail' });
+          }
+        }
+      }
+    );
+  });
+}
+
+
+// app.post("/getAllLectuerForAppStudent",(req,res)=>{  
+//   const valueColumne = req.body.value;
+//   console.log(valueColumne);
+//   const query =
+//    `SELECT 
+//       lect.t_id,
+//       lect.day_id,
+//       d.dept_name,
+//       l.level_name,
+//       c.coures_name,
+//       t.time_name,
+//       r.classroom_name,
+//       lect.state_leture,
+//       b.batch_name,
+//       b.start_year
+//     FROM 
+//       schedule lect
+//       JOIN batch b ON lect.batch_id = b.t_id
+//       JOIN level l ON b.level_id = l.t_id
+//       JOIN dept d ON b.dept_id = d.t_id
+//       JOIN coures c ON lect.coures_id = c.t_id
+//       JOIN time t ON lect.time_id = t.t_id
+//       JOIN classroom r ON lect.classroom_id = r.t_id    
+//     WHERE 
+//       lect.batch_id = ?`;
+
+//   dbConnection.query(query, [valueColumne], (err, result) => {
+//     if (err) {
+//       console.error('Error executing the query: ', err);
+//       return;
+//     }
+//     if (result.length > 0) {
+//       console.log(result);
+//       return res.json({ status: 'success', data: result });   
+//     } else {
+//       console.log('Fail');
+//     }
+//   });
+// });
+
+
+/////////////////////////////////////////////////
+app.post("/getAllLectuerForAppDoctor",(req,res)=>{  
+  const valueColumne = req.body.value;
+  const query =
+  `SELECT 
+      lect.t_id,
+      lect.day_id,
+      d.dept_name,
+      l.level_name,
+      c.coures_name,
+      t.time_name,
+      r.classroom_name,
+      b.batch_name,
+      b.start_year
+    FROM 
+      schedule lect
+      JOIN batch b ON lect.batch_id = b.t_id
+      JOIN level l ON b.level_id = l.t_id
+      JOIN dept d ON b.dept_id = d.t_id
+      JOIN coures c ON lect.coures_id = c.t_id
+      JOIN time t ON lect.time_id = t.t_id
+      JOIN classroom r ON lect.classroom_id = r.t_id    
+    WHERE 
+      lect.instructor_id = ?`;
+  dbConnection.query(query, [valueColumne,"2023-10-17"], (err, result) => {
+    if (err) {
+      console.error('Error executing the query: ', err);
+      return;
+    }
+    if (result.length > 0) {
+      return res.json({ status: 'success', data: result });   
+    } else {
+      console.log('Fail');
+      res.status(500).json({ status: 'fail', error: error.message });
+    }
+  });
+});
+
+app.post("/getLectuerForAppDoctorEquleDay",(req,res)=>{  
+  const valueColumne = req.body.value;
+  const query =
+   `SELECT 
+   lect.t_id,
+   lect.day_id,
+   d.dept_name,
+   l.level_name,
+   c.coures_name,
+   t.time_name,
+   r.classroom_name,
+   det.state_lectuer,
+   det.note_lectuer,
+   b.batch_name,
+   b.start_year
+ FROM 
+   schedule lect
+   JOIN batch b ON lect.batch_id = b.t_id
+   JOIN level l ON b.level_id = l.t_id
+   JOIN dept d ON b.dept_id = d.t_id
+   JOIN coures c ON lect.coures_id = c.t_id
+   JOIN time t ON lect.time_id = t.t_id
+   JOIN classroom r ON lect.classroom_id = r.t_id    
+   JOIN determine_lecture det ON lect.t_id = det.schedule_id
+ WHERE 
+   lect.instructor_id = ? AND   
+   det.date_lectuer = ?`;
+
+  dbConnection.query(query, [valueColumne,"2023-10-17"], (err, result) => {
+    if (err) {
+      console.error('Error executing the query: ', err);
+      return;
+    }
+    if (result.length > 0) {
+      console.log(result);
+      return res.json({ status: 'success', data: result });   
+    } else {
+      console.log('Fail');
+      res.status(500).json({ status: 'fail', error: error.message });
+    }
+  });
+});
+
+app.post("/update_on_stateLecture", (req, res) => {
+  const idLecture = req.body.idLecture;
+  const stateLecture = req.body.State;
+  const noteLecture = req.body.Note;
+  const date = req.body.date;
+  // Check if lecture exists on the same date
+  const selectQuery = 'SELECT * FROM `determine_lecture` WHERE schedule_id = ? AND date_lectuer = ?';
+  const selectValues = [idLecture, date];
+  dbConnection.query(selectQuery, selectValues, (selectErr, selectResult) => {
+    if (selectErr) {
+      console.error('Error querying database: ', selectErr);
+      res.json({ status: 'fail' });
+    } else {
+      if (selectResult.length > 0) {
+        // Lecture exists on the same date, update the state and note
+        const updateQuery = 'UPDATE `determine_lecture` SET state_lectuer = ?, note_lectuer = ? WHERE schedule_id = ? AND date_lectuer = ?';
+        const updateValues = [stateLecture, noteLecture, idLecture, date];
+        dbConnection.query(updateQuery, updateValues, (updateErr, updateResult) => {
+          if (updateErr) {
+            console.error('Error updating data in database: ', updateErr);
+            res.json({ status: 'fail' });
+          } else {
+            console.log('Data updated successfully in database.');
+            res.json({ status: 'success' });
+          }
+        });
+      } else {
+        // Lecture does not exist on the same date, insert a new one
+        const insertQuery = 'INSERT INTO `determine_lecture` (schedule_id, state_lectuer, note_lectuer, date_lectuer) VALUES (?, ?, ?, ?)';
+        const insertValues = [idLecture, stateLecture, noteLecture, date];
+        dbConnection.query(insertQuery, insertValues, (insertErr, insertResult) => {
+          if (insertErr) {
+            console.error('Error inserting data into database: ', insertErr);
+            res.json({ status: 'fail' });
+          } else {
+            res.json({ status: 'success' });
+          }
+        });
+      }
+    }
+  });
+});
+app.post("/signInFromAppDoctor",(req,res)=>{
+    let email = req.body.Email;
+    let password = req.body.Password;        
+    dbConnection.query("SELECT * FROM instructor WHERE instructor_email = ? AND instructor_password = ?", [email, password], function (err, result, fields) {
+      if (err) throw err;      
+      if(result.length > 0) {
+        console.log(">>> Doctor Sign in: "+email+"/"+password);    
+        return res.json({ status: 'success', data: result[0] });        
+      } else {
+        res.json({
+          status: "fail"  
+        });
+      }
+    });  
+});
+
+app.post("/GetAllNotifictionToInstructor",(req,res)=>{
+  let instructor_id = req.body.value;
+  dbConnection.query("SELECT * FROM `notifications` WHERE instructor_id = ?", [instructor_id], function (err, result, fields) {
+    if (err) throw err;      
+    if(result.length > 0) {
+      
+      return res.json({ status: 'success', data: result });        
+    } else {
+      res.json({
+        status: "fail"  
+      });
+    }
+  });  
+});
+
+////////////////////////////////
+app.post("/getAllLectuerForAppStudent",(req,res)=>{  
+  const batch_id = req.body.batch_id;
+  const query =
+  `SELECT 
+  lect.t_id,
+  c.coures_name,
+  t.time_name,
+  r.classroom_name,
+  i.instructor_name,
+  da.day_name
+FROM 
+  schedule lect
+  JOIN study_phase p ON lect.phase_id = p.t_id  
+  JOIN batch b ON b.phase_id = p.t_id  
+  JOIN days da ON da.t_id = lect.day_id
+  JOIN coures c ON lect.coures_id = c.t_id
+  JOIN time t ON lect.time_id = t.t_id
+  JOIN classroom r ON lect.classroom_id = r.t_id
+  JOIN instructor i ON lect.instructor_id = i.t_id
+WHERE 
+b.t_id = ?;`;
+  dbConnection.query(query, [batch_id], (err, result) => {
+    if (err) {
+      console.error('Error executing the query: ', err);
+      return;
+    }
+    if (result.length > 0) {
+      // console.log(result);
+      return res.json({ status: 'success', data: result });   
+    } else {
+      // console.log('Fail');
+      res.status(500).json({ status: 'fail'});
+    }
+  });
+});
+
+
+app.post("/getLectuerForAppstudentEquleDay",(req,res)=>{  
+  const batch_id = req.body.batch_id;
+  const date_lectuer = req.body.date_lectuer;
+  const query =
+   `SELECT 
+   lect.t_id,
+   c.coures_name,
+   t.time_name,
+   r.classroom_name,
+   i.instructor_name,
+   i.image_profile,
+   da.day_name,
+   det.state_lectuer,
+   det.note_lectuer,
+   det.date_lectuer   
+ FROM 
+   schedule lect
+   JOIN study_phase p ON lect.phase_id = p.t_id  
+   JOIN batch b ON b.phase_id = p.t_id  
+   JOIN days da ON da.t_id = lect.day_id
+   JOIN coures c ON lect.coures_id = c.t_id
+   JOIN time t ON lect.time_id = t.t_id
+   JOIN classroom r ON lect.classroom_id = r.t_id
+   JOIN instructor i ON lect.instructor_id = i.t_id
+  JOIN determine_lecture det ON lect.t_id = det.schedule_id
+ WHERE 
+  b.t_id = ? AND   
+  det.date_lectuer = ?`;
+  dbConnection.query(query, [batch_id,date_lectuer], (err, result) => {
+    if (err) {
+      console.error('Error executing the query: ', err);
+      res.status(500).json({ status: 'fail',});
+      return;
+    }
+    if (result.length > 0) {
+      //console.log(result);
+      return res.json({ status: 'success', data: result });   
+    } else {
+      console.log('Fail');
+      res.status(500).json({ status: 'fail'});
+    }
+  });
+});
+
+
+app.post("/getcouresForAppstudent",(req,res)=>{  
+  const batch_id = req.body.batch_id;
+  const query =
+   `SELECT b.coures_id,b.t_id,b.book_name, b.book_type, b.book_img, b.book_author, b.book_url
+   FROM batch AS ba
+   JOIN study_phase AS p ON ba.phase_id = p.t_id
+   JOIN schedule AS s ON s.phase_id = p.t_id
+   JOIN coures AS c ON s.coures_id = c.t_id
+   JOIN books AS b ON s.coures_id = b.coures_id
+   WHERE ba.t_id = ?`;
+   const query1 =
+   `SELECT c.coures_name,c.t_id
+   FROM batch AS ba
+   JOIN study_phase AS p ON ba.phase_id = p.t_id
+   JOIN schedule AS s ON s.phase_id = p.t_id
+   JOIN coures AS c ON s.coures_id = c.t_id
+   WHERE ba.t_id = ?`;
+   dbConnection.query(query, [batch_id], (err, result) => {
+    if (err) {
+      console.error('Error executing the query: ', err);
+      res.status(500).json({ status: 'fail'});
+      return;
+    }
+    
+    dbConnection.query(query1, [batch_id], (err, result1) => {
+      if (err) {
+        console.error('Error executing the query: ', err);
+        res.status(500).json({ status: 'fail',});
+        return;
+      }  
+      if (result.length > 0) {
+        console.log(result);
+        return res.json({ status: 'success', data: result,headers:result1 });   
+      } else {
+        console.log('Fail');
+        res.status(500).json({ status: 'fail' });
+      }
+    });
+  });   
+});
+
+
+// Create a multer storage instance
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+
+// Create a multer upload instance
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    // Check if the file extension is allowed
+    const ext = path.extname(file.originalname).toLowerCase().slice(1);
+    if (!allowedExtensions.includes(ext)) {
+      return cb(new Error('Invalid file extension'));
+    }
+    // Check if the file size exceeds the limit
+    if (file.size > 10 * MB) {
+      return cb(new Error('File size exceeds the limit'));
+    }
+    cb(null, true);
+  }
+}).single('file');
+
+// Express route handler for file upload
+app.post('/upload', (req, res) => {
+  upload(req, res, (err) => {
+    const instructorId = req.body.t_id;
+    const imageUrl = req.body.imageUrl;
+    //console.log(imageUrl);
+    // قم بتحديث حقل الصورة في جدول المعلمين بالمسار الجديد للصورة
+    const updateQuery = `UPDATE instructor SET image_profile = '${imageUrl}' WHERE t_id = ${instructorId}`;  
+    // قم بتنفيذ الاستعلام في قاعدة البيانات
+    dbConnection.query(updateQuery, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'فشل في تحديث حقل الصورة في جدول المعلمين' });
+      }
+      //console.log(" تم تحديث حقل الصورة بنجاح");      
+      res.json({ success: true });
+    });
+  });
+});
+
+app.post('/UpdatePasswordInstructor', (req, res) => {
+    const instructorId = req.body.t_id;
+    const newPassword = req.body.NewPassword; // Add the new password field      
+    console.log(newPassword);
+    // Update the password field in the instructor table with the new password
+      const updatePasswordQuery = `UPDATE instructor SET instructor_password = '${newPassword}' WHERE t_id = ${instructorId}`;
+      // Execute the query in the database
+      dbConnection.query(updatePasswordQuery, (err, result) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ error: 'Failed to update the password field in the instructor table' });
+        }
+        return res.json({ status: 'success', });  
+      });
+    });
+
+    app.get('/Hi', (req, res) => {     
+      // Update the password field in the instructor table with the new password
+      const sql ="SELECT * FROM `student`";
+      // Execute the query in the database
+        dbConnection.query(sql, (err, result) => {
+          if (err) {
+            
+            console.error(err);
+            return res.status(500).json({ error: 'Failed to update the password field in the instructor table' });
+          }
+          return res.json({ status: 'success', });  
+        });
+      });
+  
+  

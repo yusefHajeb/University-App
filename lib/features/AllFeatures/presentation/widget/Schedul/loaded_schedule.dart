@@ -29,15 +29,20 @@ showSchedule(int? changeDate, String foramtDateToDay) {
     return monthDayList;
   }
 
+  print("getMonthDayList().length");
+
+  print(getMonthDayList().length);
+
+  print(DateTime.now());
   // ignore: unused_local_variable
   final List<String> weekDaysEn = [
-    'Mon',
+    'Sun'
+        'Mon',
     'Tue',
     'Wed',
     'Thu',
     'holeDay',
     'Sat',
-    'Sun'
   ];
 
   final List<String> weekDaysAr = [
@@ -108,12 +113,14 @@ showSchedule(int? changeDate, String foramtDateToDay) {
                   builder: (context, state) {
                     if (state is LoadedSchedulState) {
                       final now = DateTime.now();
+
                       final tomorrow = now.add(Duration(days: 1));
 
-                      if (state.day.toString() ==
-                              DateFormat('EEEE', 'ar').format(now) ||
-                          state.day.toString() ==
-                              DateFormat('EEEE', 'ar').format(tomorrow)) {
+                      if ((state.day.toString() ==
+                                  DateFormat('EEEE', 'ar').format(now) ||
+                              state.day.toString() ==
+                                  DateFormat('EEEE', 'ar').format(tomorrow)) &&
+                          state.index > 7) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           scrollToSelectedData(state.index);
                         });
@@ -128,28 +135,24 @@ showSchedule(int? changeDate, String foramtDateToDay) {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Container(
-                                  width: 30,
-                                  height: 30,
-                                  child: Builder(
-                                    builder: (context) => IconButton(
-                                      icon: new Icon(
-                                        Icons.menu,
-                                        color: AppColors.greyColor,
-                                      ),
-                                      onPressed: () =>
-                                          Scaffold.of(context).openDrawer(),
-                                    ),
-                                  ),
-                                ),
                                 Row(
                                   children: [
+                                    Builder(
+                                      builder: (context) => IconButton(
+                                        icon: new Icon(
+                                          Icons.menu,
+                                          color: AppColors.greyColor,
+                                        ),
+                                        onPressed: () =>
+                                            Scaffold.of(context).openDrawer(),
+                                      ),
+                                    ),
                                     Text(
                                       foramtDateMonth(),
                                       style: getBlackStyleEn(
                                           color: AppColors.greyColor),
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     IconButton(
                                       padding: EdgeInsets.all(0),
                                       onPressed: () {},
@@ -170,134 +173,134 @@ showSchedule(int? changeDate, String foramtDateToDay) {
                                         color: AppColors.backgrounfContent),
                                   ),
                                   child: ListView.builder(
-                                      controller: _scrollController,
-                                      shrinkWrap: true,
-                                      itemExtent: 60.0,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: getMonthDayList().length,
-                                      itemBuilder: (context, index) {
-                                        return GestureDetector(
-                                          onTap: () {},
-                                          child: InkWell(
-                                            onTap: () {
-                                              print(
-                                                  "=============$changeDate ===");
-                                              state.day = getDay(index + 1);
-                                              state.index = index + 1;
+                                    controller: _scrollController,
+                                    shrinkWrap: true,
+                                    itemExtent: 60.0,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: getMonthDayList().length,
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: InkWell(
+                                          onTap: () {
+                                            print(
+                                                "=============$changeDate ===");
+                                            state.day = getDay(index + 1);
+                                            state.index = index + 1;
 
-                                              if (state.index != 0) {
-                                                print("index");
-                                                print(
-                                                    "${state.index}-----------------------");
-                                              }
-                                              print("=================");
+                                            if (state.index != 0) {
+                                              print("index");
                                               print(
-                                                getMonthDayList()[index],
-                                              );
-                                              print(state.schedule
-                                                  .where(
-                                                    (element) =>
-                                                        element.days ==
-                                                        getMonthDayList()[
-                                                            index],
-                                                  )
-                                                  .toList());
-                                              BlocProvider.of<ScheduleBloc>(
-                                                      context)
-                                                  .add(SelectDayScheduleEvent(
-                                                      index: state.index,
-                                                      day: getDay(index)));
-                                            },
-                                            child: AnimatedContainer(
-                                              duration: const Duration(
-                                                  milliseconds: 300),
-                                              width: 62,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(29),
-                                                color: (state.index != 0
-                                                    ? (state.index.toString() ==
-                                                            day[index]
-                                                        ? AppColors
-                                                            .backgrounfContent
-                                                        : Colors.blue
-                                                            .withOpacity(0))
-                                                    : (foramtDateToDay ==
-                                                            day[index]
-                                                        ? AppColors
-                                                            .backgrounfContent
-                                                        : Colors.blue
-                                                            .withOpacity(0)))
-                                                // ? Colors.blue.shade100.withOpacity(0.5)
-                                                // : Colors.blue.withOpacity(0),
-                                                ,
-                                                // border: Border.all(
-                                                //   color: (changeDate != null
-                                                //       ? (changeDate.toString() == day[index]
-                                                //           ? Colors.blue.shade100.withOpacity(0.7)
-                                                //           : Colors.blue.withOpacity(0))
-                                                //       : (int.parse(foramtDateToDay()) == day
-                                                //           ? Colors.blue.shade100.withOpacity(0.7)
-                                                //           : Colors.blue.withOpacity(0))),
-                                                //   width: 1.5,
-                                                // ),
-                                              ),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    getDay(index),
-                                                    style: getFontNormal(
-                                                        12,
-                                                        FontWeight.bold,
-                                                        (state.index != 0
-                                                            ? (state.index
-                                                                        .toString() ==
-                                                                    day[index]
-                                                                ? AppColors
-                                                                    .white
-                                                                : AppColors
-                                                                    .greyColor)
-                                                            : (foramtDateToDay ==
-                                                                    day[index]
-                                                                ? AppColors
-                                                                    .white
-                                                                : AppColors
-                                                                    .greyColor))),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Text(
-                                                    getMonthDayList()[index],
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: (state.index != 0
-                                                            ? (state.index
-                                                                        .toString() ==
-                                                                    day[index]
-                                                                ? AppColors
-                                                                    .greyColor
-                                                                : AppColors
-                                                                    .backgroundAccentColor)
-                                                            : (foramtDateToDay ==
-                                                                    day[index]
-                                                                ? AppColors
-                                                                    .greyColor
-                                                                : AppColors
-                                                                    .backgroundAccentColor))),
-                                                  ),
-                                                ],
-                                              ),
+                                                  "${state.index}--- ${state.day}--------------------");
+                                            }
+                                            print("=================");
+                                            print(
+                                              getMonthDayList()[index],
+                                            );
+                                            print(state.schedule
+                                                .where(
+                                                  (element) =>
+                                                      element.days ==
+                                                      getMonthDayList()[index],
+                                                )
+                                                .toList());
+                                            BlocProvider.of<ScheduleBloc>(
+                                                    context)
+                                                .add(SelectDayScheduleEvent(
+                                                    index: state.index,
+                                                    day: getDay(index)));
+                                          },
+                                          child: AnimatedContainer(
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            width: 62,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(29),
+                                              color: (state.index != 0
+                                                  ? (state.index.toString() ==
+                                                          day[index]
+                                                      ? AppColors
+                                                          .backgrounfContent
+                                                      : Colors.blue
+                                                          .withOpacity(0))
+                                                  : (foramtDateToDay ==
+                                                          day[index]
+                                                      ? AppColors
+                                                          .backgrounfContent
+                                                      : Colors.blue
+                                                          .withOpacity(0)))
+                                              // ? Colors.blue.shade100.withOpacity(0.5)
+                                              // : Colors.blue.withOpacity(0),
+                                              ,
+                                              // border: Border.all(
+                                              //   color: (changeDate != null
+                                              //       ? (changeDate.toString() == day[index]
+                                              //           ? Colors.blue.shade100.withOpacity(0.7)
+                                              //           : Colors.blue.withOpacity(0))
+                                              //       : (int.parse(foramtDateToDay()) == day
+                                              //           ? Colors.blue.shade100.withOpacity(0.7)
+                                              //           : Colors.blue.withOpacity(0))),
+                                              //   width: 1.5,
+                                              // ),
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  getDay(index),
+                                                  style: getFontNormal(
+                                                      12,
+                                                      FontWeight.bold,
+                                                      (state.index != 0
+                                                          ? (state.index
+                                                                      .toString() ==
+                                                                  day[index]
+                                                              ? AppColors.white
+                                                              : AppColors
+                                                                  .greyColor)
+                                                          : (foramtDateToDay ==
+                                                                  day[index]
+                                                              ? AppColors.white
+                                                              : AppColors
+                                                                  .greyColor))),
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  getMonthDayList()[index],
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: (state.index != 0
+                                                          ? (state.index
+                                                                      .toString() ==
+                                                                  day[index]
+                                                              ? AppColors
+                                                                  .greyColor
+                                                              : AppColors
+                                                                  .backgroundAccentColor)
+                                                          : (foramtDateToDay ==
+                                                                  day[index]
+                                                              ? AppColors
+                                                                  .greyColor
+                                                              : AppColors
+                                                                  .backgroundAccentColor))),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        );
-                                      }),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
+
                                 CardSchedule(
+                                  check: state.check,
                                   state.schedule
                                       .where((element) =>
                                           element.days == state.day)

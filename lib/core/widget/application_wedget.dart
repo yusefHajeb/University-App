@@ -32,11 +32,11 @@ Widget buildPage(
         sizeWidth: sizeWidth,
       ),
     ),
-    Center(child: BooksDownloaded()),
-    Center(
+    const Center(child: BooksDownloaded()),
+    const Center(
       child: ScheduleTest(),
     ),
-    NotificationPage()
+    const NotificationPage()
   ];
   return __widget[index];
 }

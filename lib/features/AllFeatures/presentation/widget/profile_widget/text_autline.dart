@@ -24,8 +24,10 @@ class OutlinedButtonWithText extends StatelessWidget {
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50.0),
-                        side: BorderSide(
-                            color: HexColor.fromHex("246EFE"), width: 2)))),
+                        side:
+                            BorderSide(color: AppColors.underLine, width: 2)))),
+
+            // color: HexColor.fromHex("246EFE"), width: 2)))),
             child: Center(
                 child: Text(content,
                     style: getFontNormal(

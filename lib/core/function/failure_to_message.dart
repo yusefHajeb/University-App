@@ -13,6 +13,8 @@ String failureToMessage(Failure failure) {
       return singInError;
     case SingUpFailure:
       return singInError;
+    case NotFountLetchersFailure:
+      return noLecture;
     default:
       return "Unexpected Error, Please try again later.";
   }

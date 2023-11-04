@@ -7,14 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart' as path;
 import 'package:university/core/constant/varibal.dart';
-import 'package:university/features/AllFeatures/presentation/bloc/book_favorite_bloc/books_favorite_bloc.dart';
 import '../../../../../app/enjection_container.dart' as di;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../data/models/library_models/library_model.dart';
+import '../../bloc/book_favorite_bloc/books_favorite_bloc.dart';
 import '../../widget/library_widget.dart/reading_book.dart';
+import '../../widget/profile_widget/text_autline.dart';
 
 class TestDownload extends StatefulWidget {
   final BookModel bookDownload;
@@ -44,16 +45,25 @@ class _TestDownloadState extends State<TestDownload> {
     await di.init();
   }
 
+  @override
+  void dispose() {
+    confige = false;
+    fileName = "";
+    super.dispose();
+  }
+
+  @override
   void initState() {
     sharedPreferences = di.sl<SharedPreferences>();
     super.initState();
     setState(() {
-      fileName = path.basename(widget.bookDownload.pdfUrl ?? "");
+      confige = false;
     });
   }
 
   startDownload() async {
     cancelToken = CancelToken();
+    localBook = [];
     pathes = await getDownloadsDirectory();
     PermissionStatus status = await Permission.storage.request();
     status = await Permission.storage.status;
@@ -74,6 +84,8 @@ class _TestDownloadState extends State<TestDownload> {
         await pathes!.create(recursive: true);
       }
       pathes = Directory(storePath);
+      fileName = path.basename(widget.bookDownload.pdfUrl ?? "");
+
       filePath = "$storePath/$fileName";
       saveFile = File(filePath);
       print("saveFile!.path");
@@ -85,7 +97,7 @@ class _TestDownloadState extends State<TestDownload> {
       });
       try {
         await Dio().download(
-          widget.bookDownload.pdfUrl ?? "",
+          Constants.pdfRoute + widget.bookDownload.pdfUrl.toString(),
           filePath,
           onReceiveProgress: (count, total) => setState(() {
             progress = (count / total);
@@ -102,22 +114,26 @@ class _TestDownloadState extends State<TestDownload> {
               .toList();
           localBook.add(widget.bookDownload.copyWith(
               pdfUrl: saveFile!.path,
+              courseId: widget.bookDownload.courseId,
+              tId: widget.bookDownload.tId,
               bookImage: widget.bookDownload.imgBook,
               bookName: widget.bookDownload.bookName));
           confige = await sharedPreferences.setString(
               Constants.savedBooks, json.encode(localBook));
         } else {
-          List<BookModel> lib = [];
+          print("not Found any Books");
+
           BookModel model = widget.bookDownload;
-          lib.add(widget.bookDownload.copyWith(
+          localBook.add(widget.bookDownload.copyWith(
               pdfUrl: saveFile!.path,
-              courseId: model.course_id,
+              courseId: model.courseId,
               bookImage: model.imgBook,
               bookName: model.bookName,
+              tId: model.tId,
               bookAuther: model.bookAuthor));
           confige = await sharedPreferences.setString(
             Constants.savedBooks,
-            json.encode(lib),
+            json.encode(localBook),
           );
         }
         setState(() {
@@ -144,16 +160,20 @@ class _TestDownloadState extends State<TestDownload> {
     });
   }
 
-  checkFileExist() async {
-    String storePath = await pathes!.path;
-    filePath = "$storePath/$fileName";
-    bool isFileExist = await File(filePath).exists();
-    setState(() {
-      fileExists = isFileExist;
-    });
-  }
+  // checkFileExist() async {
+  //   String storePath = await pathes!.path;
+
+  //   filePath = "$storePath/$fileName";
+  //   bool isFileExist = await File(filePath).exists();
+  //   setState(() {
+  //     fileExists = isFileExist;
+  //   });
+  // }
 
   openFile() async {
+    localBook = [];
+    print("widget.bookDownload ==== ");
+    print(widget.bookDownload);
     final decodeJsonData = sharedPreferences.getString(Constants.savedBooks);
     if (decodeJsonData != null) {
       List decodeBooks = json.decode(decodeJsonData);
@@ -162,25 +182,36 @@ class _TestDownloadState extends State<TestDownload> {
           .toList();
     }
 
-    if (localBook.isNotEmpty) {
-      for (var element in localBook) {
-        if (widget.bookDownload.course_id == element.course_id) {
+    // if (localBook.isNotEmpty) {
+    for (var element in localBook) {
+      if (widget.bookDownload.tId == element.tId) {
+        bool isFileExist = await File("${element.pdfUrl}").exists();
+        if (isFileExist) {
           File filePath = File("${element.pdfUrl}");
-
-          print("file Name");
-          print(filePath);
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (_) => ReadingBook(
                 file: filePath,
-                fileName: fileName,
+                fileName: element.bookName,
               ),
             ),
           );
-
+          print(filePath);
+          print("file Name");
           break;
         }
+
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (_) => ReadingBook(
+        //       file: filePath,
+        //       fileName: element.bookName,
+        //     ),
+        //   ),
+        // );
+        // }
       }
     }
   }
@@ -188,16 +219,17 @@ class _TestDownloadState extends State<TestDownload> {
   @override
   Widget build(BuildContext context) {
     final decodeJsonData = sharedPreferences.getString(Constants.savedBooks);
+    List<BookModel> lib = [];
     if (decodeJsonData != null) {
       List decodeBooks = json.decode(decodeJsonData);
-      localBook = decodeBooks
+      lib = decodeBooks
           .map<BookModel>((jsonData) => BookModel.formJson(jsonData))
           .toList();
     }
-    if (localBook.isNotEmpty) {
-      localBook.forEach(
+    if (lib.isNotEmpty) {
+      lib.forEach(
         (element) {
-          if (widget.bookDownload.course_id == element.course_id) {
+          if (widget.bookDownload.tId == element.tId) {
             confige = true;
           }
         },
@@ -208,10 +240,6 @@ class _TestDownloadState extends State<TestDownload> {
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text("P D F"),
-              ),
               Stack(
                 alignment: Alignment.center,
                 children: [
@@ -226,16 +254,22 @@ class _TestDownloadState extends State<TestDownload> {
                           const AlwaysStoppedAnimation<Color>(Colors.green),
                     ),
                   ),
-                  Center(
-                    child: Text(
-                      "${(progress * 100).toStringAsFixed(2)}%",
-                      style: const TextStyle(fontSize: 15, color: Colors.white),
+                  CircleAvatar(
+                    backgroundColor: AppColors.backgrounfContent,
+                    radius: 45,
+                    // decoration: BoxDecorationStyles.fadingGlory,
+                    child: Center(
+                      child: Text(
+                        "${(progress * 100).toStringAsFixed(2)}%",
+                        style:
+                            const TextStyle(fontSize: 15, color: Colors.white),
+                      ),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
+              OutlinedButtonWithText(
                 onPressed: () {
                   if (!fileExists && isDowLoading) {
                     cancelDownload();
@@ -245,16 +279,22 @@ class _TestDownloadState extends State<TestDownload> {
                     }
                   }
                 },
-                child: const Text("Cancel"),
-              ),
+                content: "الغاء",
+                width: 80,
+              )
             ],
           )
         : Container(
             width: 50,
             height: 50,
+            // decoration: BoxDecorationStyles.fadingGlory,
             child: TextButton(
               onPressed: () {
                 confige == true ? openFile() : startDownload();
+
+                // (await File("${widget.bookDownload.pdfUrl}").exists() == true
+                //     ? openFile()
+                //     : startDownload());
               },
               child: Container(
                   decoration: BoxDecoration(

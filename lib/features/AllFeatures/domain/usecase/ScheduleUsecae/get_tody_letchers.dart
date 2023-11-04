@@ -9,7 +9,7 @@ class GetLetchersUsecase {
 
   GetLetchersUsecase({required this.rerpository});
 
-  Future<Either<Failure, List<Schedule>>> call() async {
-    return await rerpository.getLetchersToday();
+  Future<Either<Failure, List<Schedule>>> call(String dateDay) async {
+    return await rerpository.getLetchersToday(dateDay);
   }
 }

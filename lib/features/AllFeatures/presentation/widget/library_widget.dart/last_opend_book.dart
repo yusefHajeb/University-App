@@ -23,14 +23,12 @@
 //                 context,
 //                 MaterialPageRoute(
 //                     builder: (context) => ReadingBook(
-//                           pdfPath: "assets/pdf/harry_potter.pdf",
+//                            file: ,
 //                         )),
 //               );
 //             },
 //             child: BookCover3D(
-//               url:
-//                   "https://m.media-amazon.com/images/I/418HLIXlxCL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg",
-//               confige: true,
+//                book: , confige: true,
 //             ),
 //           ),
 //         ),

@@ -103,7 +103,7 @@ class BooksDownloaded extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                   boxShadow: const [
                     BoxShadow(
-                      color: Colors.black26,
+                      color: Color.fromARGB(96, 185, 185, 185),
                       offset: Offset(2.0, 4.0),
                       blurRadius: 3.0,
                     ),
@@ -112,7 +112,8 @@ class BooksDownloaded extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: CachedNetworkImage(
-                    imageUrl: favorite.imgBook.toString(),
+                    imageUrl:
+                        Constants.imageBooksRoute + favorite.imgBook.toString(),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -198,6 +199,7 @@ class BooksDownloaded extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (_) => ReadingBook(
                         file: filePath,
+                        fileName: favorite.bookName,
                       ),
                     ),
                   );
@@ -214,7 +216,7 @@ class BooksDownloaded extends StatelessWidget {
                 onTap: () {
                   context
                       .read<DownloadBooksBloc>()
-                      .add(DeleteFavorites(index: favorite.course_id ?? 0));
+                      .add(DeleteFavorites(index: favorite.tId ?? 0));
                 },
                 child: Container(
                   child: RoundedBorderWithIcon(

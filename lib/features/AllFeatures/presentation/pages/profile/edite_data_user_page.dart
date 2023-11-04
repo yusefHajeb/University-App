@@ -1,7 +1,8 @@
 import 'dart:convert';
-
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:university/core/Utils/utiles.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/value/app_space.dart';
 import 'package:university/core/value/global.dart';
@@ -50,6 +51,13 @@ class _EditeUserDataState extends State<EditeUserData> {
   @override
   Widget build(BuildContext context) {
     // TextEditingController _p = TextEditingController();
+    Uint8List? _image;
+    void selectedImage() async {
+      Uint8List img = imagePickar();
+      setState(() {
+        _image = img;
+      });
+    }
 
     return Scaffold(
       backgroundColor: AppColors.backgroundPages,
@@ -78,12 +86,22 @@ class _EditeUserDataState extends State<EditeUserData> {
                               child: const DefaultNav(
                                   type: ProfileDummyType.image,
                                   title: "\t\t\t تعديل الملف الشخصي")),
+
+                          InkWell(
+                            onTap: () {
+                              selectedImage();
+                            },
+                            child: _image != null
+                                ? Image.memory(_image!)
+                                : ProfileDummyNet(
+                                    color: HexColor.fromHex("94F0F1"),
+                                    dummyType: ProfileDummyTypeNet.image,
+                                    scale: 3.0,
+                                    image: Constants.imageRoute +
+                                        student.image.toString()),
+                          ),
                           AppSpaces.verticalSpace20,
-                          // ProfileDummyNet(
-                          //     color: HexColor.fromHex("94F0F1"),
-                          //     dummyType: ProfileDummyTypeNet.image,
-                          //     scale: 4.0,
-                          //     image: student.image),
+
                           LabelledFormInput(
                               hint: student.name ?? "",
                               controller: _name,

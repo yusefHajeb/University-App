@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../color/app_color.dart';
 
 // ignore: must_be_immutable
@@ -7,7 +6,8 @@ class DarkRadialBackground extends StatelessWidget {
   final String position;
   final Color color;
   var list = List.generate(3, (index) => AppColors.darkRadialBackground);
-  DarkRadialBackground({required this.color, required this.position});
+  DarkRadialBackground(
+      {super.key, required this.color, required this.position});
   @override
   Widget build(BuildContext context) {
     return Center(

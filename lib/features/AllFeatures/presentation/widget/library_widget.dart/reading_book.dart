@@ -8,7 +8,7 @@ import '../../../../../core/widget/buttons/button_back.dart';
 
 // ignore: must_be_immutable
 class ReadingBook extends StatefulWidget {
-  final File file;
+  File file;
   String? fileName;
   ReadingBook({required this.file, this.fileName = ""});
 
@@ -30,7 +30,10 @@ class _ReadingBookState extends State<ReadingBook> {
 
   @override
   void dispose() {
+    widget.fileName = "";
+
     _pdfViewerController.dispose();
+
     super.dispose();
   }
 
@@ -48,7 +51,7 @@ class _ReadingBookState extends State<ReadingBook> {
           spacing: 60,
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            AppBackButton(),
+            InkWell(onTap: () {}, child: AppBackButton()),
             Text("${widget.fileName?.toString()}"),
             AppSpaces.horizontalSpace10,
           ],

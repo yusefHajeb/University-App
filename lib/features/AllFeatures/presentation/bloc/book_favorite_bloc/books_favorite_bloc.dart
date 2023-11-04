@@ -51,7 +51,7 @@ class DownloadBooksBloc extends Bloc<DownloadBooksEvent, DownlaodBooksState> {
           .map<BookModel>((jsonData) => BookModel.formJson(jsonData))
           .toList();
       for (var element in localBook) {
-        if (element.course_id != event.index) {
+        if (element.tId != event.index) {
           books.add(element);
         }
       }

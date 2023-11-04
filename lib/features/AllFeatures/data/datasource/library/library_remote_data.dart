@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'package:university/core/error/failure.dart';
 import 'package:university/features/AllFeatures/data/models/library_models/library_model.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../../../core/constant/varibal.dart';
+import '../data_access.dart';
 
 abstract class LibraryRemoteDataSource {
   Future<Library> getAllBooks();
@@ -66,7 +70,7 @@ class LibraryRemoteDataSourceImp implements LibraryRemoteDataSource {
 }
 """;
 
-    var jsonData = await jsonDecode(respone);
+    // var jsonData = await jsonDecode(respone);
 
 // localCash.cachBooks(jsonDecode(respone));
 
@@ -79,41 +83,44 @@ class LibraryRemoteDataSourceImp implements LibraryRemoteDataSource {
     //     .map((e) => BookTitleModel.formJson(e))
     //     .toList();
 
-    final List<BookModel> books = (jsonData['data'] as List)
-        .map((jsonPostModel) => BookModel.formJson(jsonPostModel))
-        .toList();
-    final List<BookTitleModel> courseModel = (jsonData['Headers'] as List)
-        .map((jsonPostModel) => BookTitleModel.formJson(jsonPostModel))
-        .toList();
+    // final List<BookModel> books = (jsonData['data'] as List)
+    //     .map((jsonPostModel) => BookModel.formJson(jsonPostModel))
+    //     .toList();
+    // final List<BookTitleModel> courseModel = (jsonData['Headers'] as List)
+    //     .map((jsonPostModel) => BookTitleModel.formJson(jsonPostModel))
+    //     .toList();
 
-    // Library(libraryModel: books, bookTitleModel: courseModel);
-    return Library(libraryModel: books, bookTitleModel: courseModel);
+    // // Library(libraryModel: books, bookTitleModel: courseModel);
+    // return Library(libraryModel: books, bookTitleModel: courseModel);
 //=================================================================
     // print(" ===============");
 
-    // Crud curd = new Crud();
+    Crud curd = new Crud();
 
-    // var response = await curd.PostRequset(Constants.libraryLink, {
-    //   "batch_id": '${12}',
-    // });
-    // if (response["status"] == "success") {
-    //   final List dataBook = response["data"];
-    //   final List<BookModel> booksModel = dataBook
-    //       .map((jsonPostModel) => BookModel.formJson(jsonPostModel))
-    //       .toList();
+    var response = await curd.PostRequset(Constants.libraryLink, {
+      "batch_id": '${12}',
+    });
+    print("response[status]");
+    print(response["status"]);
 
-    //   //=========header
-    //   List dataCourse = response['headers'];
-    //   final List<BookTitleModel> courseModel = dataCourse
-    //       .map((jsonPostModel) => BookTitleModel.formJson(jsonPostModel))
-    //       .toList();
-    //   Library courseAndBooks =
-    //       Library(libraryModel: booksModel, bookTitleModel: courseModel);
-    //   return courseAndBooks;
-    // } else {
-    //   print("no respons? ");
-    //   throw ServerFailure();
-    // }
+    if (response["status"] == "success") {
+      final List dataBook = response["data"];
+      final List<BookModel> booksModel = dataBook
+          .map((jsonPostModel) => BookModel.formJson(jsonPostModel))
+          .toList();
+
+      //=========header
+      List dataCourse = response['headers'];
+      final List<BookTitleModel> courseModel = dataCourse
+          .map((jsonPostModel) => BookTitleModel.formJson(jsonPostModel))
+          .toList();
+      Library courseAndBooks =
+          Library(libraryModel: booksModel, bookTitleModel: courseModel);
+      return courseAndBooks;
+    } else {
+      print("no respons? ");
+      throw ServerFailure();
+    }
 
     ///================ with conection enternet
     // final responce = await client.post(Uri.parse(Constants.library), body: {});

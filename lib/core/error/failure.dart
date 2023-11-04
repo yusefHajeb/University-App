@@ -28,3 +28,9 @@ class SingUpFailure extends Failure {
   @override
   List<Object?> get props => [];
 }
+
+class NotFountLetchersFailure extends Failure {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}

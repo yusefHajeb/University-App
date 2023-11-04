@@ -1,20 +1,22 @@
 import '../../../domain/entites/header_books_entites.dart';
 
 class BookModel extends Book {
-  BookModel(
+  const BookModel(
       {int? courseId,
+      int? tId,
       String? type,
       String? imgBook,
       String? bookName,
       String? bookAuther,
       String? pdfUrl})
       : super(
-          course_id: courseId,
+          courseId: courseId,
           imgBook: imgBook,
           pdfUrl: pdfUrl,
           bookName: bookName,
           bookAuthor: bookAuther,
           bookType: type,
+          tId: tId,
         );
 
   BookModel copyWith({
@@ -24,34 +26,39 @@ class BookModel extends Book {
     String? bookName,
     String? pdfUrl,
     String? bookType,
+    int? tId,
   }) {
     return BookModel(
         type: bookType ?? this.bookType,
         bookAuther: bookAuther ?? this.bookAuthor,
-        courseId: courseId ?? this.course_id,
+        courseId: courseId ?? this.courseId,
         imgBook: bookImage ?? this.imgBook,
         bookName: bookName ?? this.bookName,
-        pdfUrl: pdfUrl ?? this.pdfUrl);
+        pdfUrl: pdfUrl ?? this.pdfUrl,
+        tId: tId ?? this.tId);
   }
 
   factory BookModel.formJson(Map<String, dynamic> data) {
     return BookModel(
-        courseId: data[LibraryKeys.courseId] as int?,
-        imgBook: data[LibraryKeys.bookImage] as String?,
-        bookName: data[LibraryKeys.bookName] as String?,
-        pdfUrl: data[LibraryKeys.bookUrl] as String?,
-        bookAuther: data[LibraryKeys.bookAuthor] as String?,
-        type: data[LibraryKeys.bookType] as String?);
+      courseId: data[LibraryKeys.courseId] as int?,
+      imgBook: data[LibraryKeys.bookImage] as String?,
+      bookName: data[LibraryKeys.bookName] as String?,
+      pdfUrl: data[LibraryKeys.bookUrl] as String?,
+      bookAuther: data[LibraryKeys.bookAuthor] as String?,
+      type: data[LibraryKeys.bookType] as String?,
+      tId: data[LibraryKeys.tId] as int?,
+    );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      LibraryKeys.courseId: course_id,
+      LibraryKeys.courseId: courseId,
       LibraryKeys.bookImage: imgBook,
       LibraryKeys.bookName: bookName,
       LibraryKeys.bookUrl: pdfUrl,
       LibraryKeys.bookAuthor: bookAuthor,
       LibraryKeys.bookType: bookType,
+      LibraryKeys.tId: tId,
     };
   }
 }
@@ -86,6 +93,7 @@ class LibraryKeys {
   static const String bookImage = "book_img";
   static const String bookAuthor = "book_author";
   static const String bookUrl = "book_url";
+  static const String tId = "t_id";
 }
 
 

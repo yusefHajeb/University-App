@@ -15,12 +15,11 @@ import '../../../../../core/color/app_color.dart';
 import '../../../../../core/fonts/app_fonts.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
+import '../../../../../core/widget/custom_drawer.dart';
 import '../../../../../core/widget/fade_effect.dart';
-import '../../../data/models/user_data.dart';
 import '../../bloc/library_bloc/library_bloc.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
 import '../../widget/library_widget.dart/show_loading.dart';
-import '../application_page.dart';
 
 class LibraryPage extends StatefulWidget {
   LibraryPage({
@@ -57,7 +56,7 @@ class _LibraryPageState extends State<LibraryPage> {
     return Scaffold(
       key: _scaffoldKey,
       drawerEnableOpenDragGesture: true,
-      drawer: DrawerWidget(context),
+      drawer: DrawerWidget(),
       backgroundColor: AppColors.backgroundPages,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -85,20 +84,16 @@ class _LibraryPageState extends State<LibraryPage> {
                       onTap: () {
                         context.read<LadingPageBloc>().add(TabChange(4));
                       },
-                      // child: ProfileDummyNet(
-                      //     color: HexColor.fromHex("94F0F1"),
-                      //     dummyType: ProfileDummyTypeNet.image,
-                      //     scale: 1,
-                      //     image: userDataModel().image),
+                      child: ProfileDummyNet(
+                        color: HexColor.fromHex("94F0F1"),
+                        dummyType: ProfileDummyTypeNet.icon,
+                        scale: 1,
+
+                        // image: userDataModel().image,
+                        icon: Icons.person,
+                      ),
                     ),
                   ),
-                  // IconButton(
-                  //     onPressed: () {},
-                  //     icon: Icon(
-                  //       Icons.notifications_none_rounded,
-                  //       color: AppColors.backgrounfContent,
-                  //       size: 29,
-                  //     )),
                 ],
               ),
             ),
@@ -200,11 +195,18 @@ class _LibraryPageState extends State<LibraryPage> {
                                         return InkWell(
                                           onTap: () {
                                             print(
-                                                "${state.header[index].book_id} ===== $index");
+                                                "${state.header[index].book_id} :header books || index is : $index");
+
+                                            print(state.books
+                                                .where((element) =>
+                                                    element.courseId ==
+                                                    state.header[index].book_id)
+                                                .toList());
                                             BlocProvider.of<LibraryBloc>(
                                                     context)
-                                                .add(GetHeaderBooksLibraryEvent(
-                                                    index));
+                                                .add(
+                                              GetHeaderBooksLibraryEvent(index),
+                                            );
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(
@@ -255,19 +257,28 @@ class _LibraryPageState extends State<LibraryPage> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: GridView.builder(
-                                  itemCount: stateSearch.books.isEmpty
-                                      ? state.index != 0
-                                          ? state.books
-                                              .where(
-                                                (element) =>
-                                                    element.course_id ==
-                                                    state.index,
-                                              )
-                                              .toList()
-                                              .length
-                                          : state.books.length
-                                      : stateSearch.books.length,
                                   shrinkWrap: true,
+                                  itemCount: stateSearch.books.isEmpty
+                                      ? state.books
+                                          .where((element) =>
+                                              element.courseId ==
+                                              state.header[state.index].book_id)
+                                          .toList()
+                                          .length
+                                      : stateSearch.books.length,
+                                  //             .length
+                                  //  stateSearch.books.isEmpty
+                                  //     ? state.index != 0
+                                  //         ? state.books
+                                  //             .where(
+                                  //               (element) =>
+                                  //                   element.course_id ==
+                                  //                   state.index,
+                                  //             )
+                                  //             .toList()
+                                  //             .length
+                                  //         : state.books.length
+                                  //     : stateSearch.books.length,
                                   physics: const NeverScrollableScrollPhysics(),
                                   scrollDirection: Axis.vertical,
                                   gridDelegate:
@@ -276,39 +287,23 @@ class _LibraryPageState extends State<LibraryPage> {
                                           crossAxisSpacing: 10,
                                           childAspectRatio: 0.8,
                                           mainAxisSpacing: 10),
-                                  itemBuilder: (context, index) {
+                                  itemBuilder: (context, i) {
                                     return AnimateInEffect(
                                       keepAlive: true,
                                       child: InkWell(
-                                          onTap: () async {
-                                            print("state.books.toList()");
-                                            print(state.books.toList());
-                                            // funcShow(
-                                            //     context, state.books[index]);
-                                            // Either<Failure, BookDetaile> x= await downloadPDF(
-                                            //     pdfUrl, pdfFilename, books[index]);
-                                            // x.fold(( failure) =>  , (loaded) => null)
-                                            //       Navigator.push(
-                                            //           context,
-                                            //           MaterialPageRoute(
-                                            //             builder: (_) => ReadingBook(
-                                            //                 pdfPath:
-                                            //                     libraryDirectory.path +
-                                            //                         "/sample.pdf"),
-                                            //           ));
-                                            //     });
-                                          },
+                                          onTap: () async {},
                                           child: FadeInEffect(
                                             child: BookCover3D(
                                               book: stateSearch.books.isEmpty
-                                                  ? state.books[index]
-
-                                                  // Constants.pdfRoute +
-                                                  //     "/" +
-                                                  //     state.books[index]
-                                                  //         .pdfUrl
-                                                  //         .toString())
-                                                  : stateSearch.books[index],
+                                                  ? state.books
+                                                      .where((element) =>
+                                                          element.courseId ==
+                                                          state
+                                                              .header[
+                                                                  state.index]
+                                                              .book_id)
+                                                      .toList()[i]
+                                                  : stateSearch.books[i],
                                               confige: true,
                                             ),
                                           )),

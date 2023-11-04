@@ -12,7 +12,9 @@ SingUpModel userDataModel() {
   if (jsonString != null) {
     final decodeJsonData = json.decode(jsonString);
     student = SingUpModel.formJson(decodeJsonData);
+    return student;
   }
 
-  return student;
+  return SingUpModel(
+      name: "name", image: "", username: "username", phone: "771274299");
 }

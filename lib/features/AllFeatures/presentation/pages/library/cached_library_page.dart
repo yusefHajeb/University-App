@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:university/core/constant/varibal.dart';
-import 'package:university/core/widget/dummy/image_net.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/search_books/search_books_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/widget/library_widget.dart/convert_book_3d.dart';
@@ -14,12 +13,11 @@ import '../../../../../core/color/app_color.dart';
 import '../../../../../core/fonts/app_fonts.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
+import '../../../../../core/widget/custom_drawer.dart';
 import '../../../../../core/widget/fade_effect.dart';
-import '../../../data/models/user_data.dart';
 import '../../bloc/library_bloc/library_bloc.dart';
 import '../../widget/library_widget.dart/custom_search.dart';
 import '../../widget/library_widget.dart/show_loading.dart';
-import '../application_page.dart';
 
 final CarouselController carouselController = CarouselController();
 
@@ -41,7 +39,7 @@ class LibraryCashed extends StatelessWidget {
 
     return Scaffold(
       drawerEnableOpenDragGesture: true,
-      drawer: DrawerWidget(context),
+      drawer: DrawerWidget(),
       backgroundColor: AppColors.backgroundPages,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -244,22 +242,7 @@ class LibraryCashed extends StatelessWidget {
                                     return AnimateInEffect(
                                       keepAlive: true,
                                       child: InkWell(
-                                          onTap: () async {
-                                            // funcShow(
-                                            //     context, state.books[index]);
-                                            // Either<Failure, BookDetaile> x= await downloadPDF(
-                                            //     pdfUrl, pdfFilename, books[index]);
-                                            // x.fold(( failure) =>  , (loaded) => null)
-                                            //       Navigator.push(
-                                            //           context,
-                                            //           MaterialPageRoute(
-                                            //             builder: (_) => ReadingBook(
-                                            //                 pdfPath:
-                                            //                     libraryDirectory.path +
-                                            //                         "/sample.pdf"),
-                                            //           ));
-                                            //     });
-                                          },
+                                          onTap: () async {},
                                           child: FadeInEffect(
                                             child: BookCover3D(
                                               book: stateSearch.books.isEmpty

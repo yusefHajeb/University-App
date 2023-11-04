@@ -9,7 +9,6 @@ import 'package:university/features/AllFeatures/presentation/pages/profile/edite
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/app_space.dart';
 import '../../../../../core/widget/bakground_dark.dart';
-import '../../../../../core/widget/dummy/image_net.dart';
 import '../../../data/models/user_data.dart';
 import '../../widget/profile_widget/prfile_text.dart';
 import '../../widget/profile_widget/text_autline.dart';

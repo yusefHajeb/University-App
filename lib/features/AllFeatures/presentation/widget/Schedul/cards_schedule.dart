@@ -10,6 +10,7 @@ import '../../../../../core/value/style_manager.dart';
 import '../../../../../core/widget/animate_in_effect.dart';
 import '../../pages/notification/notification_all.dart';
 
+// ignore: must_be_immutable
 class CardSchedule extends StatelessWidget {
   final List<Schedule> data;
   bool check;

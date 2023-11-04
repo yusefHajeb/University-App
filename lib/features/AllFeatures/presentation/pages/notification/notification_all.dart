@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:university/core/Utils/box_decoration.dart';
 import 'package:university/core/constant/varibal.dart';
-import 'package:university/core/fonts/app_fonts.dart';
 import 'package:university/core/value/app_space.dart';
-import 'package:university/core/widget/buttons/custom_button_with_icon.dart';
 import 'package:university/core/widget/flutter_toast.dart';
 import 'package:university/features/AllFeatures/domain/entites/schedule.dart';
-import 'package:university/features/AllFeatures/presentation/resources/assets_mananger.dart';
 import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/style_manager.dart';
 import '../../../../../core/widget/bakground_dark.dart';
@@ -46,69 +43,31 @@ class NotificationPage extends StatelessWidget {
           ),
           Padding(
               padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-              child:
-
-                  // NoteLetcher(
-                  //   schedul: Schedule(
-                  //     classroom: "الرازي",
-                  //     instructorName: "ندى الحميدي",
-                  //     status: "Assured",
-                  //     time: "الاولى",
-                  //     days: "",
-                  //   ),
-                  // ),
-
-                  Column(
-                      // shrinkWrap: true,
-                      // mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                    AppSpaces.verticalSpace20,
-                    Text(
-                      "الاشعارات",
-                      style: getFontNormal(
-                        17,
-                        FontWeight.bold,
-                        AppColors.bottomHeaderColor,
-                      ),
-                    ),
-                    AppSpaces.verticalSpace20,
-                    NotificationCard(
-                      date: "${DateTime.now().day} / ${DateTime.now().month}",
-                      // imageBackground: "#181a1f",
-                      mentioned: false,
-                      mention: "8",
-                      image: Constants.imageRoute +
-                          userDataModel().image.toString(),
-                      message: "schedul.note ?? " "",
-                      read: false,
-                      userOnline: true,
-                      userName: "${userDataModel().name}",
-                    ),
-                    // CardLetchers(
-                    //     Schedule(
-                    //       classroom: "الرازي",
-                    //       instructorName: "ندى الحميدي",
-                    //       status: "Assured",
-                    //       time: "الاولى",
-                    //       days: "",
-                    //     ),
-                    //     false),
-                    AppSpaces.verticalSpace10,
-                    // NoteLetcher(
-                    //     schedul: Schedule(
-                    //       classroom: "الرازي",
-                    //       instructorName: "ندى الحميدي",
-                    //       status: "Assured",
-                    //       time: "الاولى",
-                    //       days: "",
-                    //     ),
-                    //     showStyleOld: false),
-                  ])
-              //     AppSpaces.verticalSpace20,
-              //     // ...notificationCards,
-              //   ],
-              // ),
-              )
+              child: Column(children: [
+                AppSpaces.verticalSpace20,
+                Text(
+                  "الاشعارات",
+                  style: getFontNormal(
+                    17,
+                    FontWeight.bold,
+                    AppColors.bottomHeaderColor,
+                  ),
+                ),
+                AppSpaces.verticalSpace20,
+                NotificationCard(
+                  date: "${DateTime.now().day} / ${DateTime.now().month}",
+                  // imageBackground: "#181a1f",
+                  mentioned: false,
+                  mention: "8",
+                  image:
+                      Constants.imageRoute + userDataModel().image.toString(),
+                  message: "schedul.note ?? " "",
+                  read: false,
+                  userOnline: true,
+                  userName: "${userDataModel().name}",
+                ),
+                AppSpaces.verticalSpace10,
+              ]))
         ],
       ),
     );

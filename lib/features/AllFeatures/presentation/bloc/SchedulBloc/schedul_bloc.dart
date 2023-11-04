@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -93,6 +92,8 @@ class ScheduleBloc extends Bloc<SchedulEvent, ScheduleState> {
   ) async {
     emit(LoadingSchedulState());
     schedulOrError = await getAllScheduleUsecase();
+    newletchersOrOld =
+        await getLetchersUsecase(DateFormat('dd').format(DateTime.now()));
     final now = DateTime.now();
     final currentHour = now.hour;
     print("hour is $currentHour");

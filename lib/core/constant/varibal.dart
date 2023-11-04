@@ -30,36 +30,41 @@ class Constants {
   static const savedBooks = "DOWNLOAD_BOOKS";
   static const cachedSchedule = "CACHED_SCHEDUL";
   static const cachedLetchers = "CACHED_LETCHERS";
-
   static const userData = "STUDEN_DATA";
+  static const cachedNotifications = "CACHED_NOTIFICATIONS";
   // static const baseUrl = "https://q97wg.wiremockapi.cloud";
-
   // static const singin = "$baseUrl/auth/singup.php";
   static const singin = "$baseUrl/login/student";
-
   static const schedule = "$baseUrl/test.php";
   static const library = "$baseUrl/university/library";
-
 //this is Linls
-  static const String serverIp = "http://192.168.1.10";
+  // static const String serverIp = "http://192.168.1.10";
+  static const String serverIp = "http://10.0.2.2";
 // const String ServerIp = "http://10.0.2.2";
   static const String linkPuplicNodeServerName = "${serverIp}:3000";
   static const String singInLink = "$linkPuplicNodeServerName/signIn";
   static const String test = "$linkPuplicNodeServerName/getsignIn";
-  static const String imageRoute = "$serverIp/UniversitySystem/StudentsImage";
+  static const String imageRoute =
+      "$serverIp/university-app/UniversitySystem/StudentsImage/";
   static const String scheduleLink =
       "$linkPuplicNodeServerName/getAllLectuerForAppStudent";
-
+  static const String updageStudentData =
+      "$linkPuplicNodeServerName/uploadImageStudent";
   static const String letchersLinks =
       "$linkPuplicNodeServerName/getLectuerForAppstudentEquleDay";
 
   static const String libraryLink =
       "$linkPuplicNodeServerName/getcouresForAppstudent";
+  static const String notificationsLink =
+      "$linkPuplicNodeServerName/getcouresForAppstudent";
 
   static const String imageBooksRoute =
-      "$serverIp/UniversitySystem/booksImage/";
+      "$serverIp/university-app/UniversitySystem/booksImage/";
 
-  static const String pdfRoute = "$serverIp/UniversitySystem/booksDocument";
+  static const String imageInstractor =
+      "$serverIp/university-app/UniversitySystem/instructorProfile/";
+  static const String pdfRoute =
+      "$serverIp/university-app/UniversitySystem/booksDocument/";
   static String apiUser = """[
     {
         "t_id": "47",
