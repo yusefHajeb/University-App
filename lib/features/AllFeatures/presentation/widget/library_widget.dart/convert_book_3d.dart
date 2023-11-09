@@ -45,9 +45,9 @@ class BookCover3D extends StatelessWidget {
               ),
             ),
             Positioned(
-                left: 12,
+                left: 15,
                 // bottom: -8,
-                bottom: 2,
+                bottom: -4,
                 child: TestDownload(
                   bookDownload: book,
                 ))

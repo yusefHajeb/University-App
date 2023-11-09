@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart' as path;
+import 'package:university/core/Utils/box_decoration.dart';
 import 'package:university/core/constant/varibal.dart';
 import '../../../../../app/enjection_container.dart' as di;
 import 'package:path_provider/path_provider.dart';
@@ -160,16 +161,6 @@ class _TestDownloadState extends State<TestDownload> {
     });
   }
 
-  // checkFileExist() async {
-  //   String storePath = await pathes!.path;
-
-  //   filePath = "$storePath/$fileName";
-  //   bool isFileExist = await File(filePath).exists();
-  //   setState(() {
-  //     fileExists = isFileExist;
-  //   });
-  // }
-
   openFile() async {
     localBook = [];
     print("widget.bookDownload ==== ");
@@ -243,7 +234,10 @@ class _TestDownloadState extends State<TestDownload> {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  SizedBox(
+                  Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.bottomHeaderColor),
                     height: 50,
                     width: 50,
                     child: CircularProgressIndicator(
@@ -254,16 +248,10 @@ class _TestDownloadState extends State<TestDownload> {
                           const AlwaysStoppedAnimation<Color>(Colors.green),
                     ),
                   ),
-                  CircleAvatar(
-                    backgroundColor: AppColors.backgrounfContent,
-                    radius: 45,
-                    // decoration: BoxDecorationStyles.fadingGlory,
-                    child: Center(
-                      child: Text(
-                        "${(progress * 100).toStringAsFixed(2)}%",
-                        style:
-                            const TextStyle(fontSize: 15, color: Colors.white),
-                      ),
+                  Container(
+                    child: Text(
+                      "${(progress * 100).toStringAsFixed(2)}%",
+                      style: const TextStyle(fontSize: 15, color: Colors.white),
                     ),
                   ),
                 ],
@@ -280,7 +268,7 @@ class _TestDownloadState extends State<TestDownload> {
                   }
                 },
                 content: "الغاء",
-                width: 80,
+                width: 60,
               )
             ],
           )

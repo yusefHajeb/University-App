@@ -40,6 +40,16 @@ class HeaderBooksLibraryState extends LibraryState {
 
   HeaderBooksLibraryState(
       {required this.index, required this.header, required this.books});
+
+  HeaderBooksLibraryState copyWith(
+      {List<BookTitleModel>? header, int? index, List<BookModel>? books}) {
+    return HeaderBooksLibraryState(
+      header: header ?? this.header,
+      index: index ?? this.index,
+      books: books ?? this.books,
+    );
+  }
+
   @override
   List<Object> get props => [header, index, books];
 }

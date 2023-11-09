@@ -5,7 +5,6 @@ import 'package:university/features/AllFeatures/data/models/user_data.dart';
 import 'package:university/features/AllFeatures/presentation/resources/assets_mananger.dart';
 
 import '../../color/app_color.dart';
-import '../../constant/varibal.dart';
 import '../../value/app_space.dart';
 import 'profile_dummy.dart';
 

@@ -6,6 +6,7 @@ import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:university/features/AllFeatures/presentation/bloc/notifications/notefications_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/search_books/search_books_bloc.dart';
 import 'core/Utils/lang/app_localization.dart';
 import 'app/enjection_container.dart' as di;
@@ -70,7 +71,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => di.sl<SearchBooksBloc>()),
         BlocProvider(
             create: (context) =>
-                di.sl<DownloadBooksBloc>()..add(StartDownloadEvent()))
+                di.sl<DownloadBooksBloc>()..add(StartDownloadEvent())),
+        BlocProvider(
+            create: (context) =>
+                di.sl<NotificationsBloc>()..add(GetNotifications())),
       ],
       child:
           BlocBuilder<LocaleCubit, ChangeLocalState>(builder: (context, state) {

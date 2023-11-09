@@ -8,8 +8,8 @@ import '../../../../../core/constant/varibal.dart';
 part 'books_favorite_event.dart';
 part 'books_favorite_state.dart';
 
-class DownloadBooksBloc extends Bloc<DownloadBooksEvent, DownlaodBooksState> {
-  DownloadBooksBloc() : super((DownlaodBooksState(favrit: []))) {
+class DownloadBooksBloc extends Bloc<DownloadBooksEvent, DownloadBooksState> {
+  DownloadBooksBloc() : super((DownloadBooksState(favrit: []))) {
     on<StartDownloadEvent>(_booksFavoriteEvent);
     on<DeleteFavorites>(_deleteFavorites);
     // on<GetAllBooksDownloadEvent>(_showAllBooksSavedState);
@@ -24,7 +24,7 @@ class DownloadBooksBloc extends Bloc<DownloadBooksEvent, DownlaodBooksState> {
   }
 
   Future<void> _booksFavoriteEvent(
-      StartDownloadEvent event, Emitter<DownlaodBooksState> emit) async {
+      StartDownloadEvent event, Emitter<DownloadBooksState> emit) async {
     print('-------------------------- bloc');
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final decodeJsonData = sharedPreferences.getString(Constants.savedBooks);
@@ -40,7 +40,7 @@ class DownloadBooksBloc extends Bloc<DownloadBooksEvent, DownlaodBooksState> {
   }
 
   Future<void> _deleteFavorites(
-      DeleteFavorites event, Emitter<DownlaodBooksState> emit) async {
+      DeleteFavorites event, Emitter<DownloadBooksState> emit) async {
     List<Book> books = [];
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final decodeJsonData = sharedPreferences.getString(Constants.savedBooks);

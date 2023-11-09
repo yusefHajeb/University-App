@@ -23,12 +23,14 @@ class NotificationsBloc extends Bloc<NoteficationsEvent, NotificationsState> {
     GetNotifications event,
     Emitter<NotificationsState> emit,
   ) async {
-    emit(LoadingNotifications());
+    // emit(LoadingNotifications());
     dataOrFailuer = await getAllNotifications();
     dataOrFailuer.fold((failure) {
-      return ErrorNotifications(errorMessage: failureToMessage(failure));
+      print("----------failure");
+      return emit(ErrorNotifications(errorMessage: failureToMessage(failure)));
     }, (response) {
-      return LoadedNotifications(notifications: response);
+      print("response -------");
+      return emit(LoadedNotifications(notifications: response));
     });
   }
 }

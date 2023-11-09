@@ -56,9 +56,9 @@ class BooksDownloaded extends StatelessWidget {
                         AppColors.bottomHeaderColor,
                       )),
                   AppSpaces.verticalSpace20,
-                  BlocBuilder<DownloadBooksBloc, DownlaodBooksState>(
+                  BlocBuilder<DownloadBooksBloc, DownloadBooksState>(
                     builder: (context, state) {
-                      if (state is LoadingBookSatate) {
+                      if (state is LoadingDownloadBook) {
                         return LoadingCircularProgress();
                       }
                       return ListView.builder(

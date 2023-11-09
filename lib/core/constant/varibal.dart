@@ -56,7 +56,7 @@ class Constants {
   static const String libraryLink =
       "$linkPuplicNodeServerName/getcouresForAppstudent";
   static const String notificationsLink =
-      "$linkPuplicNodeServerName/getcouresForAppstudent";
+      "$linkPuplicNodeServerName/GetAllNotifictionToInstructor";
 
   static const String imageBooksRoute =
       "$serverIp/university-app/UniversitySystem/booksImage/";

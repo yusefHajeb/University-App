@@ -2,9 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:university/core/Utils/box_decoration.dart';
-import 'package:university/core/fonts/app_fonts.dart';
 import 'package:university/core/value/app_space.dart';
 import 'package:university/core/Utils/lang/app_localization.dart';
 import 'package:university/core/value/style_manager.dart';
@@ -12,8 +10,6 @@ import 'package:university/core/widget/flutter_toast.dart';
 import 'package:university/features/AllFeatures/domain/entites/auth_entites/singin.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/pages/application_page.dart';
-import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/custom_textfiled.dart';
-import 'package:university/features/AllFeatures/presentation/widget/Auth%20Widget/submet_login.dart';
 import 'package:university/main.dart';
 
 import '../../../../../core/color/app_color.dart';
@@ -109,16 +105,16 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                                   15, FontWeight.w600, AppColors.white)),
                           AppSpaces.verticalSpace10,
                           LabelledFormInput(
-                              hint: "ادخل رقم القيد هنا",
+                              hint: "ادخل رقم القيد الجامعي",
                               controller: _recordStd,
-                              label: "القيد",
+                              label: " رقم القيد :",
                               isNumber: true,
                               placeholder: ""),
 
                           LabelledFormInput(
                               hint: " ادخل كلمة المرور",
                               controller: _passwordStd,
-                              label: "كلمة المرور",
+                              label: "كلمة المرور :",
                               placeholder: ""),
                           // CustomTextFilde(
                           //     controller: _recordStd,
@@ -170,41 +166,41 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                             ],
                           ),
                           SizedBox(),
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (_) => ApplicationPage()),
-                              );
-                              // return BlocProvider.of<AuthenticationBloc>(
-                              //         context)
-                              //     .add(SingUpEvent());
+                          // InkWell(
+                          //   onTap: () {
+                          //     Navigator.of(context).pushReplacement(
+                          //       MaterialPageRoute(
+                          //           builder: (_) => ApplicationPage()),
+                          //     );
+                          //     // return BlocProvider.of<AuthenticationBloc>(
+                          //     //         context)
+                          //     //     .add(SingUpEvent());
 
-                              // Navigator.of(context).pushAndRemoveUntil(
-                              //     MaterialPageRoute(
-                              //         builder: (_) => SingUpPage()),
-                              //     (route) => false);
-                            },
-                            child: RichText(
-                              text: TextSpan(
-                                text: 'Create a new Account',
-                                style: getFontNormal(15, FontWeightManager.bold,
-                                    AppColors.underLine),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    BlocProvider.of<AuthenticationBloc>(context)
-                                        .add(SingUpEvent());
-                                    // Navigator.of(context).pushAndRemoveUntil(
-                                    //     MaterialPageRoute(
-                                    //         builder: (_) => SingUpPage()),
-                                    //     (route) => false);
-                                    Fluttertoast.showToast(
-                                      msg: 'Create a new SingUp Now ',
-                                    );
-                                  },
-                              ),
-                            ),
-                          ),
+                          //     // Navigator.of(context).pushAndRemoveUntil(
+                          //     //     MaterialPageRoute(
+                          //     //         builder: (_) => SingUpPage()),
+                          //     //     (route) => false);
+                          //   },
+                          //   child: RichText(
+                          //     text: TextSpan(
+                          //       text: 'Create a new Account',
+                          //       style: getFontNormal(15, FontWeightManager.bold,
+                          //           AppColors.underLine),
+                          //       recognizer: TapGestureRecognizer()
+                          //         ..onTap = () {
+                          //           BlocProvider.of<AuthenticationBloc>(context)
+                          //               .add(SingUpEvent());
+                          //           // Navigator.of(context).pushAndRemoveUntil(
+                          //           //     MaterialPageRoute(
+                          //           //         builder: (_) => SingUpPage()),
+                          //           //     (route) => false);
+                          //           Fluttertoast.showToast(
+                          //             msg: 'Create a new SingUp Now ',
+                          //           );
+                          //         },
+                          //     ),
+                          //   ),
+                          // ),
                           SizedBox(),
                         ])))));
   }

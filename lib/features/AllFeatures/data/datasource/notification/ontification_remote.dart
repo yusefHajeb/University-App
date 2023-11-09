@@ -13,6 +13,7 @@ abstract class NotificationsRemote {
 class NotificationsRemoteImp implements NotificationsRemote {
   @override
   Future<List<NotificationModel>> getNotification() async {
+    print("notifications remote");
     final responce = await http.get(
       Uri.parse(Constants.notificationsLink),
     );

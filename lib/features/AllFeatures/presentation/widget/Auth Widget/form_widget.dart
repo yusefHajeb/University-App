@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/fonts/app_fonts.dart';
@@ -14,7 +11,6 @@ import '../../../../../core/widget/custom_input.dart';
 import '../../../domain/entites/auth_entites/singin.dart';
 import '../../bloc/form_bloc/form_login_bloc.dart';
 import '../../pages/application_page.dart';
-import 'custom_textfiled.dart';
 
 class FormeSingIn extends StatelessWidget {
   const FormeSingIn({super.key});

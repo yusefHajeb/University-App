@@ -38,7 +38,6 @@ class SingInPage extends StatelessWidget {
                       end: Alignment.bottomRight,
                       colors: [
                         AppColors.backgroundPages,
-
                         // AppColors.backgroundPages,
                         AppColors.darkRadialBackground,
                       ],
@@ -55,11 +54,7 @@ class SingInPage extends StatelessWidget {
                       if (state is SingUpState) {
                         print("======== you in state singup ==============");
                         // return SizedBox();
-                      }
-                      // else if (state is AuthSuccessState) {
-                      // return LoadingCircularProgress();
-                      // }
-                      else if (state is AuthErrorState) {
+                      } else if (state is AuthErrorState) {
                         return FormLoginWidget();
                       }
                       return LoadingCircularProgress();

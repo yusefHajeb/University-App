@@ -196,12 +196,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                           onTap: () {
                                             print(
                                                 "${state.header[index].book_id} :header books || index is : $index");
-
-                                            print(state.books
-                                                .where((element) =>
-                                                    element.courseId ==
-                                                    state.header[index].book_id)
-                                                .toList());
+                                            state.copyWith(index: index);
                                             BlocProvider.of<LibraryBloc>(
                                                     context)
                                                 .add(

@@ -18,88 +18,6 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
   SchedulRemoteDataSourceImp({required this.client});
   @override
   Future<List<SchedulModel>> getAllSchedul() async {
-    // String jsonStr =
-//     String respone = """
-//   [{
-//     "t_id": "9" ,
-//     "coures_name": "شبكات",
-//     "instructor_name": " د / ندى الحميدي",
-//     "dept_name": "IT",
-//     "level_name": "2",
-//     "classroom_name": "الرازي",
-//     "time_name": "10:00 AM",
-//     "day_id": "السبت",
-//     "batch_name": "3",
-//     "state_lectuer": "مؤكدة",
-//     " note": "لاجديد"
-//   },
-// {
-//     "t_id": "5" ,
-//     "coures_name": "تطبيقات ذكاء اصطناعي",
-//     "instructor_name": "د/اكرم الصباري",
-//     "dept_name": "IT",
-//     "level_name": "2",
-//     "classroom_name": "ابن الهيثم",
-//     "time_name": "10:00 AM",
-//     "day_id": "السبت",
-//     "batch_name": "3",
-//     "state_lectuer": "قيد الإنتظار",
-//     " note": "لاجديد"
-//   },
-//     {
-//     "t_id": "5" ,
-//     "coures_name": "تطبيقات ويب",
-//     "instructor _name": "د/ عائض الشباطي",
-//     "dept_name": "IT",
-//     "level_name": "2",
-//     "classroom_name": "الرازي",
-//     "time_name": "10:00 AM",
-//     "day_id": "الإثنين",
-//     "batch_name": "3",
-//     "state_lectuer": "ملغي",
-//     " note": "لاجديد"
-//   },
-//   {
-//     "t_id": "5" ,
-//     "coures_name": "تطبيقات ويب",
-//     "instructor_name": "د/ عائض الشباطي",
-//     "dept_name": "IT",
-//     "level_name": "2",
-//     "classroom_name": "الرازي",
-//     "time_name": "10:00 AM",
-//     "day_id": "الخميس",
-//     "batch_name": "3",
-//     "state_lectuer": "قيد الإنتظار",
-//     " note": "لاجديد"
-//   },
-//   {
-//     "t_id": "5" ,
-//     "coures_name": "برمجة ",
-//     "instructor _name": "د/ عمر الشريفي",
-//     "dept_name": "IT",
-//     "level_name": "2",
-//     "classroom_name": "الرازي",
-//     "time_name": "10:00 AM",
-//     "day_id": "الإثنين",
-//     "batch_name": "3",
-//     "state_lectuer": "قيد الإنتظار",
-//     " note": "لاجديد"
-//   }
-
-// ]
-// """;
-//  ----------------------------------------------""";
-
-    // final List<dynamic> jsonData = jsonDecode(respone);
-    // List<SchedulModel> schedules = [];
-    //----------------------------------------------
-    // List<SchedulModel> schedules =
-    //     (jsonData as List).map((e) => SchedulModel.formJson(e)).toList();
-    //-----------------------------------------
-    // for (var item in jsonData) {
-    //   schedules.add(SchedulModel.formJson(item));
-    // }
-
     print("---------- remote");
     final response = await http
         .post(Uri.parse(Constants.scheduleLink), body: {"batch_id": '${12}'});
@@ -117,10 +35,6 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
           .toList();
 
       return scheduleModel;
-      // } else {
-      //   print("error =====in remote sechudal in no states200");
-      //   throw ServerException();
-      // }
     }
     throw ServerException();
   }
@@ -149,6 +63,8 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
   @override
   Future<List<SchedulModel>> getLetchersToday(String date) async {
     print("---------- getLetchers");
+    print("---------- getLetchers");
+
     final now = DateTime.now();
     String? today;
     if (int.parse(date) < 10) {
@@ -156,6 +72,9 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
     } else {
       today = date;
     }
+
+    print("---------- getLetchers : ${now.year}-${now.month}-${today}");
+
     try {
       final response = await http.post(Uri.parse(Constants.letchersLinks),
           body: {

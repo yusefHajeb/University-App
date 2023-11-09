@@ -120,7 +120,7 @@ showSchedule(int? changeDate, String foramtDateToDay) {
                                   DateFormat('EEEE', 'ar').format(now) ||
                               state.day.toString() ==
                                   DateFormat('EEEE', 'ar').format(tomorrow)) &&
-                          state.index > 7) {
+                          state.index >= 5) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           scrollToSelectedData(state.index);
                         });
