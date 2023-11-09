@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../../../core/color/app_color.dart';
 
 // ignore: must_be_immutable
 class ProfileTextOption extends StatelessWidget {
   final String label;
-
   final IconData icon;
   final double? margin;
 
