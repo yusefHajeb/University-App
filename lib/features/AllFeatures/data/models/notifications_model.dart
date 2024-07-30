@@ -7,14 +7,15 @@ class NotificationModel extends Notifications {
             title: title, contant: contact, instructor: instructor, date: date);
 
   factory NotificationModel.formJson(Map<String, dynamic> data) {
+    print("notifications");
+    print(data[NotificationModelKeys.content]);
     return NotificationModel(
-      title: data[NotificationModelKeys.title],
-      contact: data[NotificationModelKeys.content],
-      date: data[NotificationModelKeys.date],
-      instructor: data[NotificationModelKeys.instructor],
+      title: data[NotificationModelKeys.title]?.toString() ?? "",
+      contact: data["notification_contant"]?.toString() ?? "",
+      date: data[NotificationModelKeys.date]?.toString() ?? "",
+      instructor: data[NotificationModelKeys.instructor]?.toString() ?? "",
     );
   }
-
   Map<String, dynamic> toJson() {
     return {
       NotificationModelKeys.title: title,
@@ -26,8 +27,8 @@ class NotificationModel extends Notifications {
 }
 
 class NotificationModelKeys {
-  static const String title = "notification_title";
-  static const String instructor = "instructor_name";
-  static const String date = "date_send";
-  static const String content = "	notification_contant";
+  static String title = "notification_title";
+  static String instructor = "instructor_name";
+  static String date = "date_send";
+  static String content = "	notification_contant";
 }

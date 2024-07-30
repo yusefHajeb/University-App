@@ -1,8 +1,41 @@
+// import 'package:dartz/dartz_streaming.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:university/chat/data/remote/data_sources/DataAccess.dart';
+import 'package:university/chat/data/remote/data_sources/Database_Remote_Data_Source.dart';
+import 'package:university/chat/data/remote/data_sources/Database_Remote_Data_Source_Impl.dart';
+import 'package:university/chat/data/repositories/Database_Remote_Repository.dart';
+import 'package:university/chat/domain/repositories/database_Repositorys.dart';
+import 'package:university/chat/domain/use_cases/count_number_noseen_usecase.dart';
+import 'package:university/chat/domain/use_cases/delete_message_usecase.dart';
+import 'package:university/chat/domain/use_cases/forgot_password_usecase.dart';
+import 'package:university/chat/domain/use_cases/get_all_group_usecase.dart';
+import 'package:university/chat/domain/use_cases/get_all_users_usecase.dart';
+import 'package:university/chat/domain/use_cases/get_create_current_user_usecase.dart';
+import 'package:university/chat/domain/use_cases/get_current_uid_usecase.dart';
+import 'package:university/chat/domain/use_cases/get_messages_usecase.dart';
+import 'package:university/chat/domain/use_cases/get_update_user_usecase.dart';
+import 'package:university/chat/domain/use_cases/is_sign_in_usecase.dart';
+import 'package:university/chat/domain/use_cases/send_file_messag_usecase.dart';
+import 'package:university/chat/domain/use_cases/send_text_message_usecase.dart';
+import 'package:university/chat/domain/use_cases/sign_in_usecase.dart';
+import 'package:university/chat/domain/use_cases/sign_out_usecase.dart';
+import 'package:university/chat/domain/use_cases/sign_up_usecase.dart';
+import 'package:university/chat/domain/use_cases/store_token_student.dart';
+import 'package:university/chat/domain/use_cases/update_group_usecase.dart';
+import 'package:university/chat/domain/use_cases/update_text_message.dart';
+import 'package:university/chat/presentation/cubit/auth/auth_cubit.dart';
+import 'package:university/chat/presentation/cubit/bottom_chat/bottom_chat_cubit.dart';
+import 'package:university/chat/presentation/cubit/chat/chat_cubit.dart';
+import 'package:university/chat/presentation/cubit/count_new_message/count_new_message_cubit.dart';
+import 'package:university/chat/presentation/cubit/credential/credential_cubit.dart';
+import 'package:university/chat/presentation/cubit/group/group_cubit.dart';
+import 'package:university/chat/presentation/cubit/image_cubit/image_cubit.dart';
+import 'package:university/chat/presentation/cubit/user/user_cubit.dart';
+import 'package:university/core/network/check_network.dart';
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/schedul_local_data_source.dart';
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/shedul_remote_datasource.dart';
 import 'package:university/features/AllFeatures/data/datasource/library/library_local_data.dart';
@@ -22,12 +55,12 @@ import 'package:university/features/AllFeatures/domain/usecase/library_usecase/b
 import 'package:university/features/AllFeatures/domain/usecase/library_usecase/curse_usecase.dart';
 import 'package:university/features/AllFeatures/domain/usecase/library_usecase/library_usecase.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/schedul_bloc.dart';
-import 'package:university/core/network/check_network.dart';
 import 'package:http/http.dart' as http;
 import 'package:university/features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/notifications/notefications_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/search_books/search_books_bloc.dart';
+import 'package:university/generated/Links.dart';
 import '../features/AllFeatures/data/datasource/AuthDatatSource/auth_remote_database.dart';
 import '../features/AllFeatures/data/repositories/auth/singin_singup_repository_imp.dart';
 import '../features/AllFeatures/data/repositories/schudul_repository_imp.dart';
@@ -41,6 +74,8 @@ import '../features/AllFeatures/presentation/bloc/form_bloc/form_login_bloc.dart
 import '../features/AllFeatures/presentation/bloc/library_bloc/library_bloc.dart';
 import '../features/AllFeatures/presentation/bloc/onboarding_bloc/on_boarding_bloc_bloc.dart';
 import '../features/AllFeatures/presentation/helpers/bloc_observer.dart';
+import '../generated/Netwrok.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 final sl = GetIt.instance;
 
@@ -58,6 +93,40 @@ Future<void> init() async {
       updateUserData: sl(), singInUsecase: sl(), singUpUsecase: sl()));
   sl.registerFactory(() => LibraryBloc(
       getAllBooksUsecase: sl(), getBookUsecase: sl(), getCoursesUsecase: sl()));
+
+  sl.registerFactory<AuthCubit>(() => AuthCubit(
+      isSignInUseCase: sl.call(),
+      signOutUseCase: sl.call(),
+      storeTokenUseCase: sl.call(),
+      getCurrentUIDUseCase: sl.call(),
+      prefs: sl.call()));
+  sl.registerFactory<CredentialCubit>(() => CredentialCubit(
+        forgotPasswordUseCase: sl.call(),
+        getCreateCurrentUserUseCase: sl.call(),
+        signInUseCase: sl.call(),
+        signUpUseCase: sl.call(),
+      ));
+  sl.registerFactory<UserCubit>(() => UserCubit(
+        getAllUsersUseCase: sl.call(),
+        getUpdateUserUseCase: sl.call(),
+      ));
+
+  sl.registerFactory<GroupCubit>(() => GroupCubit(
+        getAllGroupsUseCase: sl.call(),
+        groupUseCase: sl.call(),
+      ));
+  sl.registerFactory<BottomChatCubit>(() => BottomChatCubit());
+  sl.registerFactory<ChatCubit>(() => ChatCubit(
+      getMessageUseCase: sl.call(),
+      sendTextMessageUseCase: sl.call(),
+      sendfileMessageUseCase: sl.call(),
+      updateMyTextMessage: sl.call(),
+      deleteMyTextMessage: sl.call()));
+
+  sl.registerFactory<ImageCubit>(() => ImageCubit());
+  sl.registerFactory<CountNewMessageCubit>(() => CountNewMessageCubit(
+      countnumberNoseenUsecase: sl.call(), prefs: sl.call()));
+
   // sl.registerFactory(() => LibraryBloc());
 
   sl.registerFactory(() => ValidateBloc());
@@ -127,6 +196,7 @@ Future<void> init() async {
   // Core ===========================
 
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImp(sl()));
+
   sl.registerLazySingleton<NetworkInfoImp>(() => NetworkInfoImp(sl()));
 
   //ext
@@ -143,4 +213,69 @@ Future<void> init() async {
   sl.registerLazySingleton(() => BuildContext);
 
   sl.registerLazySingleton<GlobalKey<FormState>>(() => GlobalKey<FormState>());
+
+  //==========================
+  //UseCases
+  sl.registerLazySingleton<SendFileMessageUseCase>(
+      () => SendFileMessageUseCase(repository: sl.call()));
+  sl.registerLazySingleton<UpdateMyTextMessage>(
+      () => UpdateMyTextMessage(repository: sl.call()));
+  sl.registerLazySingleton<DeleteMyTextMessage>(
+      () => DeleteMyTextMessage(repository: sl.call()));
+  sl.registerLazySingleton<StoreTokenUseCase>(
+      () => StoreTokenUseCase(repository: sl.call()));
+  sl.registerLazySingleton<ForgotPasswordUseCase>(
+      () => ForgotPasswordUseCase(repository: sl.call()));
+  sl.registerLazySingleton<GetCreateCurrentUserUseCase>(
+      () => GetCreateCurrentUserUseCase(repository: sl.call()));
+  sl.registerLazySingleton<GetCurrentUIDUseCase>(
+      () => GetCurrentUIDUseCase(repository: sl.call()));
+  sl.registerLazySingleton<IsSignInUseCase>(
+      () => IsSignInUseCase(repository: sl.call()));
+  sl.registerLazySingleton<SignInUseCase>(
+      () => SignInUseCase(repository: sl.call()));
+  sl.registerLazySingleton<SignUpUseCase>(
+      () => SignUpUseCase(repository: sl.call()));
+  sl.registerLazySingleton<SignOutUseCase>(
+      () => SignOutUseCase(repository: sl.call()));
+  sl.registerLazySingleton<GetAllUsersUseCase>(
+      () => GetAllUsersUseCase(repository: sl.call()));
+  sl.registerLazySingleton<GetUpdateUserUseCase>(
+      () => GetUpdateUserUseCase(repository: sl.call()));
+  sl.registerLazySingleton<GetAllGroupsUseCase>(
+      () => GetAllGroupsUseCase(repository: sl.call()));
+  sl.registerLazySingleton<UpdateGroupUseCase>(
+      () => UpdateGroupUseCase(repository: sl.call()));
+  sl.registerLazySingleton<GetMessageUseCase>(
+      () => GetMessageUseCase(repository: sl.call()));
+  sl.registerLazySingleton<SendTextMessageUseCase>(
+      () => SendTextMessageUseCase(repository: sl.call()));
+  sl.registerLazySingleton<CountnumberNoseenUsecase>(
+      () => CountnumberNoseenUsecase(repository: sl.call()));
+  sl.registerLazySingleton<DatabaseRepository>(
+      () => DatabaseRemoteDataSourceImpl(remoteDataSource: sl.call()));
+
+  // sl.registerLazySingleton<SocketInfoImpl>(() => SocketInfoImpl(sl()));
+
+  // sl.registerLazySingleton<NetworkInfoSocket>(() => SocketInfoImpl(sl()));
+
+  //Remote DataSource
+  sl.registerLazySingleton<DatabaseRemoteDataSource>(
+      () => databaseRemoteDataSourceImpl(
+            crud: sl.call(),
+            prefs: sl.call(),
+            networkinfo: sl.call(),
+            socket: sl.call(),
+          ));
+  final Crud = DataAccessCrud();
+  var socket = IO.io('${ServerIp}:3000', <String, dynamic>{
+    'transports': ['websocket'],
+    'autoConnect': false,
+  });
+
+  sl.registerLazySingleton<NetworkInfoSocket>(
+      () => SocketInfoImpl(socket: sl()));
+
+  sl.registerLazySingleton<IO.Socket>(() => socket.connect());
+  sl.registerLazySingleton(() => Crud);
 }

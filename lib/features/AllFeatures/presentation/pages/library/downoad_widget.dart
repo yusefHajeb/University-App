@@ -287,7 +287,7 @@ class _TestDownloadState extends State<TestDownload> {
               child: Container(
                   decoration: BoxDecoration(
                     color: confige == true
-                        ? Colors.green
+                        ? AppColors.green
                         : AppColors.backgroundPages,
                     borderRadius: BorderRadius.circular(5.0),
                   ),

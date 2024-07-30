@@ -35,6 +35,7 @@ class NotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       height: appSize(context).height,
       color: AppColors.backgroundPages,
       child: Stack(
@@ -68,18 +69,35 @@ class NotificationPage extends StatelessWidget {
                     } else if (state is LoadedNotifications) {
                       print("LoadedNotifications");
 
-                      return NotificationCard(
-                        date: "${DateTime.now().day} / ${DateTime.now().month}",
-                        // imageBackground: "#181a1f",
-                        mentioned: false,
-                        mention: "8",
-                        image: Constants.imageRoute +
-                            userDataModel().image.toString(),
-                        message: "schedul.note ?? " "",
-                        read: false,
-                        userOnline: true,
-                        userName: "${userDataModel().name}",
-                      );
+                      return ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: state.notifications.length,
+                          separatorBuilder: (context, index) {
+                            return Divider(
+                              color: AppColors.greyColor,
+                              height: 0.8,
+                            );
+                          },
+                          itemBuilder: (context, index) {
+                            return NotificationCard(
+                              date: "${state.notifications[index].date}",
+                              // imageBackground: "#181a1f",
+                              mentioned: true,
+                              mention: "8",
+                              imageBackground: "B0FFE1",
+                              // image: Constants.imageRoute +
+                              //     userDataModel().image.toString(),
+                              message: " ${state.notifications[index].contant}",
+                              read: false,
+                              userOnline: true,
+                              userName: "${state.notifications[index].title}",
+
+                              // onTap: () {
+                              //   shareFile(
+                              // state.notifications[index].file.toString());
+                              // },
+                            );
+                          });
                     } else if (state is ErrorNotifications) {
                       return Container(
                         child: Text(state.errorMessage),

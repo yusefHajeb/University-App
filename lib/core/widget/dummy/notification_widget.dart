@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:university/core/value/style_manager.dart';
 import 'package:university/core/widget/dummy/image_net.dart';
 import 'package:university/features/AllFeatures/data/models/user_data.dart';
 import 'package:university/features/AllFeatures/presentation/resources/assets_mananger.dart';
@@ -42,10 +43,6 @@ class NotificationCard extends StatelessWidget {
             physics: NeverScrollableScrollPhysics(),
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Text('$userName mentioned you in $mention',
-              //     style: GoogleFonts.lato(
-              //         color: HexColor.fromHex("666A7B"),
-              //         fontWeight: FontWeight.w500)),
               AppSpaces.verticalSpace10,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,8 +94,8 @@ class NotificationCard extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(userName,
-                                    style:
-                                        GoogleFonts.lato(color: Colors.white)),
+                                    style: GoogleFonts.almarai(
+                                        color: Colors.white)),
                                 Text(date,
                                     style: GoogleFonts.lato(
                                         color: read
@@ -110,7 +107,7 @@ class NotificationCard extends StatelessWidget {
                             mentioned
                                 ? RichText(
                                     text: TextSpan(
-                                      text: 'Hello ',
+                                      text: 'مرحبا ',
                                       style: GoogleFonts.lato(
                                         fontSize: 16,
                                         color: HexColor.fromHex("666A7B"),
@@ -118,10 +115,10 @@ class NotificationCard extends StatelessWidget {
                                       children: <TextSpan>[
                                         TextSpan(
                                             text: '${userDataModel().name}',
-                                            style: GoogleFonts.lato(
-                                                color:
-                                                    HexColor.fromHex("EF9EF1"),
-                                                fontWeight: FontWeight.bold)),
+                                            style: getFontNormal(
+                                                15,
+                                                FontWeight.bold,
+                                                HexColor.fromHex("EF9EF1"))),
                                         TextSpan(
                                             text: ', $message',
                                             style: GoogleFonts.lato(

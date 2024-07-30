@@ -19,7 +19,7 @@ class StorgeServece {
     // await Hive.initFlutter();
 
     await di.init();
-    _network = di.sl<NetworkInfoImp>();
+    // _network = di.sl<NetworkInfoImp>();
     _pref = di.sl<SharedPreferences>();
     // context = di.sl<BuildContext>();
     // _pref = await SharedPreferences.getInstance();

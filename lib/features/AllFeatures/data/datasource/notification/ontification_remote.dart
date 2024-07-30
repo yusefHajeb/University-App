@@ -14,13 +14,15 @@ class NotificationsRemoteImp implements NotificationsRemote {
   @override
   Future<List<NotificationModel>> getNotification() async {
     print("notifications remote");
-    final responce = await http.get(
-      Uri.parse(Constants.notificationsLink),
-    );
+    final responce = await http.post(Uri.parse(Constants.notificationsLink),
+        body: {"instructor_id": '${1}'});
+    print(responce.body);
     if (responce.statusCode == 200) {
-      final List responseData = jsonDecode(responce.body) as List;
-
-      final List<NotificationModel> modelNotification = responseData
+      print("status success notifications");
+      var responseData = jsonDecode(responce.body);
+      final List decodedJson = responseData["data"];
+      print(decodedJson);
+      final List<NotificationModel> modelNotification = decodedJson
           .map((jsonNotification) =>
               NotificationModel.formJson(jsonNotification))
           .toList();

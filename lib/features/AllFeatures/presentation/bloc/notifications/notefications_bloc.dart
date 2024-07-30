@@ -30,6 +30,7 @@ class NotificationsBloc extends Bloc<NoteficationsEvent, NotificationsState> {
       return emit(ErrorNotifications(errorMessage: failureToMessage(failure)));
     }, (response) {
       print("response -------");
+      print(response);
       return emit(LoadedNotifications(notifications: response));
     });
   }
