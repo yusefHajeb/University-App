@@ -67,6 +67,8 @@ class SingInPage extends StatelessWidget {
                         );
                         Global.storgeServece
                             .setBool(Constants.STORGE_USER_LOGED_FIRST, true);
+                        Global.storgeServece
+                            .setBool(Constants.STORGE_USER_LOGED_FIRST, true);
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(

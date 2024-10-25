@@ -15,7 +15,7 @@ class OutlinedButtonWithText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: this.width,
-        height: 45,
+        height: 40,
         child: ElevatedButton(
             onPressed: onPressed,
             style: ButtonStyle(
@@ -30,7 +30,7 @@ class OutlinedButtonWithText extends StatelessWidget {
             // color: HexColor.fromHex("246EFE"), width: 2)))),
             child: Center(
                 child: Text(content,
-                    style: getFontNormal(
-                        15, FontWeight.normal, AppColors.white)))));
+                    style:
+                        getFontNormal(13, FontWeight.bold, AppColors.white)))));
   }
 }

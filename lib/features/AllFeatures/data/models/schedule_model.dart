@@ -82,7 +82,7 @@ class SchedulModelKeys {
   static const status = "state_lectuer";
   static const note = "note_lectuer";
   static const String date = "";
-  static const String imageInstractor = "image_profile";
+  static const String imageInstractor = "instructor_img";
   static const String dateLectue = "date_lectuer";
 }
 

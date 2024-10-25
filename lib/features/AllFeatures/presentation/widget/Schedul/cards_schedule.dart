@@ -38,7 +38,7 @@ class CardSchedule extends StatelessWidget {
               },
               itemBuilder: ((context, index) {
                 print("you are in list show data");
-                print(data[index].note);
+                print(data[index].imageInstractor);
                 if (data[index].note != "") {
                   return NoteLetcher(
                     schedul: data[index],

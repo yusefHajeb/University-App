@@ -100,7 +100,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const SizedBox(),
-                          Text('SignUp'.tr(context),
+                          Text("تسجيل دخول",
                               style: getFontNormal(
                                   15, FontWeight.w600, AppColors.white)),
                           AppSpaces.verticalSpace10,
@@ -128,7 +128,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               OutlinedButtonWithText(
-                                content: 'LOGIN'.tr(context),
+                                content: "تسجيل الدخول",
                                 width: 146,
                                 onPressed: validateFormLogin,
                               ),

@@ -11,7 +11,7 @@ PreferredSize appBarSceduleWidget(BuildContext context) {
     //Container Photo Home Pag..
     child: Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
+        // color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(50.0),
       ),
       child: Column(

@@ -13,7 +13,6 @@ import '../../../../../core/color/app_color.dart';
 import '../../../../../core/value/style_manager.dart';
 import '../../../../../core/widget/bakground_dark.dart';
 import '../../../../../core/widget/dummy/notification_widget.dart';
-import '../../../data/models/user_data.dart';
 import '../../widget/Schedul/cards_schedule.dart';
 // import '../../bloc/book_favorite_bloc/books_favorite_bloc.dart';
 
@@ -24,7 +23,7 @@ class NotificationPage extends StatelessWidget {
     // print(filePath);
     String path = File(filePath).path;
     print(path);
-    final result = await Share.shareXFiles([XFile('${filePath}')],
+    final result = await Share.shareXFiles([XFile(filePath)],
         subject: "ملف من تطبيق جامعتي");
 
     if (result.status == ShareResultStatus.success) {
@@ -34,93 +33,109 @@ class NotificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: appSize(context).height,
-      color: AppColors.backgroundPages,
-      child: Stack(
-        children: [
-          DarkRadialBackground(
-            color: AppColors.backgroundPages,
-            position: "topLeft",
-          ),
-          Padding(
-              padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-              child: Column(children: [
-                AppSpaces.verticalSpace20,
-                Text(
-                  "الاشعارات",
-                  style: getFontNormal(
-                    17,
-                    FontWeight.bold,
-                    AppColors.bottomHeaderColor,
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+        width: double.infinity,
+        height: appSize(context).height,
+        color: AppColors.backgroundPages,
+        child: Stack(
+          children: [
+            DarkRadialBackground(
+              color: AppColors.backgroundPages,
+              position: "topLeft",
+            ),
+            Padding(
+                padding: const EdgeInsets.only(left: 2.0, right: 2.0),
+                child: Column(children: [
+                  AppSpaces.verticalSpace20,
+                  Text(
+                    "الاشعارات",
+                    style: getFontNormal(
+                      17,
+                      FontWeight.bold,
+                      AppColors.bottomHeaderColor,
+                    ),
                   ),
-                ),
-                AppSpaces.verticalSpace20,
-                BlocBuilder<NotificationsBloc, NotificationsState>(
-                  builder: (context, state) {
-                    if (state is LoadingNotifications) {
-                      print("LoadingNotifications");
-                      return Container(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    } else if (state is LoadedNotifications) {
-                      print("LoadedNotifications");
+                  AppSpaces.verticalSpace20,
+                  BlocBuilder<NotificationsBloc, NotificationsState>(
+                    builder: (context, state) {
+                      if (state is LoadingNotifications) {
+                        print("LoadingNotifications");
+                        return Container(
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      } else if (state is LoadedNotifications) {
+                        print("LoadedNotifications");
 
-                      return ListView.separated(
-                          shrinkWrap: true,
-                          itemCount: state.notifications.length,
-                          separatorBuilder: (context, index) {
-                            return Divider(
-                              color: AppColors.greyColor,
-                              height: 0.8,
-                            );
-                          },
-                          itemBuilder: (context, index) {
-                            return NotificationCard(
-                              date: "${state.notifications[index].date}",
-                              // imageBackground: "#181a1f",
-                              mentioned: true,
-                              mention: "8",
-                              imageBackground: "B0FFE1",
-                              // image: Constants.imageRoute +
-                              //     userDataModel().image.toString(),
-                              message: " ${state.notifications[index].contant}",
-                              read: false,
-                              userOnline: true,
-                              userName: "${state.notifications[index].title}",
+                        return ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: state.notifications.length,
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(
+                                height: 10,
+                                // child: Divider(
+                                //   color: AppColors.greyColor,
+                                //   height: 0.8,
+                                // ),
+                              );
+                            },
+                            itemBuilder: (context, index) {
+                              return Container(
+                                decoration: BoxDecorationStyles.headerTab,
+                                child: NotificationCard(
+                                  date: "${state.notifications[index].date}",
+                                  // imageBackground: "#181a1f",
+                                  mentioned:
+                                      state.notifications[index].note ?? false,
+                                  mention: "8",
+                                  newsImage: Constants.imageNews +
+                                      state.notifications[index].image
+                                          .toString(),
+                                  imageBackground: "B0FFE1",
+                                  // image: Constants.imageRoute +
+                                  //     userDataModel().image.toString(),
+                                  message:
+                                      " ${state.notifications[index].content}",
+                                  read: false,
+                                  userOnline: true,
+                                  userName:
+                                      "${state.notifications[index].title}",
 
-                              // onTap: () {
-                              //   shareFile(
-                              // state.notifications[index].file.toString());
-                              // },
-                            );
-                          });
-                    } else if (state is ErrorNotifications) {
-                      return Container(
-                        child: Text(state.errorMessage),
-                      );
-                    }
-                    return const CircularProgressIndicator();
-                  },
-                ),
-                // NotificationCard(
-                //   date: "${DateTime.now().day} / ${DateTime.now().month}",
-                //   // imageBackground: "#181a1f",
-                //   mentioned: false,
-                //   mention: "8",
-                //   image:
-                //       Constants.imageRoute + userDataModel().image.toString(),
-                //   message: "schedul.note ?? " "",
-                //   read: false,
-                //   userOnline: true,
-                //   userName: "${userDataModel().name}",
-                // ),
-                AppSpaces.verticalSpace10,
-              ]))
-        ],
+                                  // onTap: () {
+                                  //   shareFile(
+                                  // state.notifications[index].file.toString());
+                                  // },
+                                ),
+                              );
+                            });
+                      } else if (state is ErrorNotifications) {
+                        return Container(
+                          child: Text(state.errorMessage),
+                        );
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  ),
+                  // NotificationCard(
+                  //   date: "${DateTime.now().day} / ${DateTime.now().month}",
+                  //   // imageBackground: "#181a1f",
+                  //   mentioned: false,
+                  //   mention: "8",
+                  //   image:
+                  //       Constants.imageRoute + userDataModel().image.toString(),
+                  //   message: "schedul.note ?? " "",
+                  //   read: false,
+                  //   userOnline: true,
+                  //   userName: "${userDataModel().name}",
+                  // ),
+                  AppSpaces.verticalSpace10,
+                ]))
+          ],
+        ),
       ),
     );
   }
@@ -130,7 +145,7 @@ class NotificationPage extends StatelessWidget {
 class NoteLetcher extends StatelessWidget {
   Schedule schedul;
   bool showStyleOld;
-  NoteLetcher({required this.schedul, required this.showStyleOld});
+  NoteLetcher({super.key, required this.schedul, required this.showStyleOld});
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +183,7 @@ class NoteLetcher extends StatelessWidget {
                   userOnline: showStyleOld,
                   userName: "${schedul.instructorName}",
                 )
-              : SizedBox(),
+              : const SizedBox(),
         ],
       ),
     );

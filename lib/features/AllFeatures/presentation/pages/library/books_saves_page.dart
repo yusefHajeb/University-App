@@ -138,11 +138,13 @@ class BooksDownloaded extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
+                  Wrap(
+                    direction: Axis.horizontal,
+                    // textDirection: Axis.horizontal,
                     children: [
-                      Text("اسم الكتاب",
+                      Text(favorite.bookName.toString(),
                           style: getFontNormal(
-                              17, FontWeight.w600, AppColors.white)),
+                              15, FontWeight.w600, AppColors.white)),
                     ],
                   ),
                   AppSpaces.verticalSpace10,

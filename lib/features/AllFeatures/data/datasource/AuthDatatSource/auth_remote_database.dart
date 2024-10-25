@@ -79,6 +79,7 @@ class SingInOrSingUpRemoteDataSourceImp
     print(res);
     if (res["status"] == "success") {
       print(res["data"]);
+
       singinModel = SingUpModel.formJson(res["data"]);
       Global.storgeServece.setString(
         Constants.userData,

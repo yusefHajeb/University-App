@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart' as path;
-import 'package:university/core/Utils/box_decoration.dart';
 import 'package:university/core/constant/varibal.dart';
 import '../../../../../app/enjection_container.dart' as di;
 import 'package:path_provider/path_provider.dart';
@@ -75,7 +74,7 @@ class _TestDownloadState extends State<TestDownload> {
       for (int x = 1; x < folders.length; x++) {
         String folder = folders[x];
         if (folder != "Android") {
-          storePath += "/" + folder;
+          storePath += "/$folder";
         } else {
           folder = "University";
           break;
@@ -179,6 +178,7 @@ class _TestDownloadState extends State<TestDownload> {
         bool isFileExist = await File("${element.pdfUrl}").exists();
         if (isFileExist) {
           File filePath = File("${element.pdfUrl}");
+          // ignore: use_build_context_synchronously
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -218,13 +218,11 @@ class _TestDownloadState extends State<TestDownload> {
           .toList();
     }
     if (lib.isNotEmpty) {
-      lib.forEach(
-        (element) {
-          if (widget.bookDownload.tId == element.tId) {
-            confige = true;
-          }
-        },
-      );
+      for (var element in lib) {
+        if (widget.bookDownload.tId == element.tId) {
+          confige = true;
+        }
+      }
     }
 
     return isDowLoading
@@ -272,7 +270,7 @@ class _TestDownloadState extends State<TestDownload> {
               )
             ],
           )
-        : Container(
+        : SizedBox(
             width: 50,
             height: 50,
             // decoration: BoxDecorationStyles.fadingGlory,

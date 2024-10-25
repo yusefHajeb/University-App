@@ -40,18 +40,20 @@ class Constants {
 //this is Linls
   // static const String serverIp = "http://192.168.1.10";
   static const String serverIp = "http://10.0.2.2";
-// const String ServerIp = "http://10.0.2.2";
+// const String serverIp = "http://10.0.2.2";
   static const String linkPuplicNodeServerName = "${serverIp}:3000";
   static const String singInLink = "$linkPuplicNodeServerName/signIn";
   static const String test = "$linkPuplicNodeServerName/getsignIn";
-  static const String imageRoute =
-      "$serverIp/university-app/UniversitySystem/StudentsImage/";
+  static const String imageRoute = "$serverIp/UniversitySystem/StudentsImage/";
   static const String scheduleLink =
       "$linkPuplicNodeServerName/getAllLectuerForAppStudent";
   static const String updageStudentData =
       "$linkPuplicNodeServerName/uploadImageStudent";
   static const String letchersLinks =
       "$linkPuplicNodeServerName/getLectuerForAppstudentEquleDay";
+  static const String linkgetAllGoups =
+      "$linkPuplicNodeServerName/group/getGroups.php";
+//  static const String linkImageRootImageChat = "$ServerIp/UniversitySystem/ChatMadia";
 
   static const String libraryLink =
       "$linkPuplicNodeServerName/getcouresForAppstudent";
@@ -59,12 +61,34 @@ class Constants {
       "$linkPuplicNodeServerName/GetAllNotifictionToInstructor";
 
   static const String imageBooksRoute =
-      "$serverIp/university-app/UniversitySystem/booksImage/";
+      "$serverIp/UniversitySystem/StudentsImage/";
+  static const String imageNews = "$serverIp/UniversitySystem/imageNews/";
 
   static const String imageInstractor =
-      "$serverIp/university-app/UniversitySystem/instructorProfile/";
-  static const String pdfRoute =
-      "$serverIp/university-app/UniversitySystem/booksDocument/";
+      "$serverIp/UniversitySystem/instructorProfile/";
+  static const String pdfRoute = "$serverIp/UniversitySystem/StudentsImage/";
+
+  static const String linkgetMessageGoups =
+      "$linkPuplicNodeServerName/group/getMessage.php";
+  static const String linkHome = "$linkPuplicNodeServerName/image.php";
+  static const String linkNews = "$linkPuplicNodeServerName/GetNews";
+  static const String linkImageRootImageChat =
+      "$serverIp/UniversitySystem/ChatMadia/";
+  static const String linksendMessageGoups =
+      "$linkPuplicNodeServerName/group/messageGroup/add_message.php";
+  static const String linklastMessageGoups =
+      "$serverIp/group/messageGroup/last_message_group.php";
+
+  static const String link_update_state =
+      "$linkPuplicNodeServerName/update_on_stateLecture.php";
+  static const String link_select_notific =
+      "$linkPuplicNodeServerName/Notification/GetNotific.php";
+  static const String linkCountNewMessageGoups =
+      "$linkPuplicNodeServerName/group/messageGroup/count_message_new.php";
+
+  static const String linkImageRootImage =
+      "$serverIp/UniversitySystem/StudentsImage";
+
   static String apiUser = """[
     {
         "t_id": "47",

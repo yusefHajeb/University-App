@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:university/chat/data/remote/models/student_model.dart';
 import 'package:university/core/error/execptions.dart';
 import 'package:university/core/value/global.dart';
 import 'package:university/features/AllFeatures/data/models/auth_models/singin_model.dart';
@@ -9,11 +10,13 @@ import 'package:university/features/AllFeatures/domain/entites/auth_entites/sing
 import 'package:university/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:university/core/network/check_network.dart';
+import '../../../../../chat/domain/entities/student_entity.dart';
 import '../../../../../core/constant/varibal.dart';
 import '../../../domain/repositories/auth_repositories/student_repository.dart';
 import '../../datasource/AuthDatatSource/auth_remote_database.dart';
 
 typedef SingInOrSingUpStudent = Future<Unit> Function();
+StudentEntity? dataStudentEntity;
 
 class StudentRepositoryImp implements StudentRepository {
   final SingInOrSingUpRemoteDataSource remoteData;
@@ -34,6 +37,7 @@ class StudentRepositoryImp implements StudentRepository {
       );
 
       SingUpModel? remote = await remoteData.singinStudent(singInModel);
+
       print("===========================$singInModel  repository");
       // return await _getMessage(() => remoteData.singinStudent(singInModel));
       if (remote == null) {
@@ -45,6 +49,16 @@ class StudentRepositoryImp implements StudentRepository {
       Global.storgeServece
           .setString(Constants.userData, json.encode(remote.toJson()));
       Global.storgeServece.setBool(Constants.STORGE_USER_LOGED_FIRST, true);
+      // final data = jsonDecode(
+      //     Global.storgeServece.getStringData(Constants.userData).toString());
+      // final StudentEntity d = StudentModel.fromJson(data);
+      dataStudentEntity = new StudentEntity(
+          std_image: remote.image ?? "",
+          std_name: remote.name ?? "",
+          batch_id: int.parse(remote.batchId ?? "12"),
+          t_id: int.parse(remote.tId ?? "12"),
+          std_email: remote.email.toString());
+      print('تم تحميل البيانات بنجاح');
 
       return Right(remote);
     } on ServerException {

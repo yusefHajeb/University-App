@@ -24,6 +24,7 @@ class DrawerWidget extends StatelessWidget {
     SingUpModel student = userDataModel();
     return Drawer(
       child: ListView(
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         children: <Widget>[
@@ -35,6 +36,10 @@ class DrawerWidget extends StatelessWidget {
               curve: Curves.easeIn,
               child: SizedBox(
                 child: Column(
+                  // alignment: WrapAlignment.center,
+                  // crossAxisAlignment: WrapCrossAlignment.center,
+                  // direction: Axis.vertical,
+                  textDirection: TextDirection.rtl,
                   children: [
                     ProfileDummyNet(
                         color: HexColor.fromHex("94F0F1"),
@@ -43,21 +48,22 @@ class DrawerWidget extends StatelessWidget {
                         image: Constants.imageRoute + student.image.toString()),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: Text("${student.name}",
-                          style: GoogleFonts.almarai(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold)),
+                      child: Text(
+                        "${student.name}",
+                        style: GoogleFonts.almarai(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-
                     Text("${student.email}",
                         style: GoogleFonts.lato(
                             color: HexColor.fromHex("B0FFE1"), fontSize: 14)),
                     AppSpaces.verticalSpace5,
                     Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: OutlinedButtonWithText(
-                          width: 74,
+                          width: 90,
                           content: "تعديل",
                           onPressed: () {
                             Navigator.push(
@@ -68,14 +74,6 @@ class DrawerWidget extends StatelessWidget {
                             // Get.to(() => EditProfilePage());
                           }),
                     ),
-                    // AppSpaces.verticalSpace20,
-                    // Container(
-                    //   child: Center(
-                    //     child: Text(student.name.toString(),
-                    //         style:
-                    //             getFontNormal(23, FontWeight.bold, AppColors.green)),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -83,7 +81,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           Container(
             height: appSize(context).height / 1.3,
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecorationStyles.fadingGlory,
             child: SizedBox(
               // height: 300,
@@ -183,8 +181,12 @@ class DrawerWidget extends StatelessWidget {
                     ),
                     onTap: () {
                       Navigator.pop(context);
-                      Global.storgeServece
-                          .setBool(Constants.STORGE_USER_LOGED_FIRST, false);
+
+                      Global.storgeServece.setBool(
+                          Constants.STORGE_DEVICE_OPEN_FIRST_TIME, false);
+                      // Global.storgeServece
+                      //     .setBool(Constants.STORGE_USER_LOGED_FIRST, false);
+                      Global.storgeServece.clear();
                       context.read<AuthenticationBloc>().add(AuthGetStart());
                       // .add(SetValueChange(value: 0));
                       Navigator.pushAndRemoveUntil(

@@ -48,9 +48,11 @@ class BookCover3D extends StatelessWidget {
                 left: 15,
                 // bottom: -8,
                 bottom: -4,
-                child: TestDownload(
-                  bookDownload: book,
-                ))
+                child: Wrap(children: [
+                  TestDownload(
+                    bookDownload: book,
+                  ),
+                ]))
           ],
         ),
       ),

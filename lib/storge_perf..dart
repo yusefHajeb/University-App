@@ -36,6 +36,10 @@ class StorgeServece {
     return await _pref.setBool(key, value);
   }
 
+  Future<bool> clear() async {
+    return await _pref.clear();
+  }
+
   Future<bool> getBool(String key) async {
     return await _pref.getBool(key) ?? false;
   }

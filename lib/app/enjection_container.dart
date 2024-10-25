@@ -35,6 +35,7 @@ import 'package:university/chat/presentation/cubit/credential/credential_cubit.d
 import 'package:university/chat/presentation/cubit/group/group_cubit.dart';
 import 'package:university/chat/presentation/cubit/image_cubit/image_cubit.dart';
 import 'package:university/chat/presentation/cubit/user/user_cubit.dart';
+import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/network/check_network.dart';
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/schedul_local_data_source.dart';
 import 'package:university/features/AllFeatures/data/datasource/ScheduleDataSource/shedul_remote_datasource.dart';
@@ -60,7 +61,6 @@ import 'package:university/features/AllFeatures/presentation/bloc/authentication
 import 'package:university/features/AllFeatures/presentation/bloc/lading_page/lading_page_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/notifications/notefications_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/search_books/search_books_bloc.dart';
-import 'package:university/generated/Links.dart';
 import '../features/AllFeatures/data/datasource/AuthDatatSource/auth_remote_database.dart';
 import '../features/AllFeatures/data/repositories/auth/singin_singup_repository_imp.dart';
 import '../features/AllFeatures/data/repositories/schudul_repository_imp.dart';
@@ -124,8 +124,8 @@ Future<void> init() async {
       deleteMyTextMessage: sl.call()));
 
   sl.registerFactory<ImageCubit>(() => ImageCubit());
-  sl.registerFactory<CountNewMessageCubit>(() => CountNewMessageCubit(
-      countnumberNoseenUsecase: sl.call(), prefs: sl.call()));
+  sl.registerFactory<CountNewMessageCubit>(() =>
+      CountNewMessageCubit(countnumberNoseenUsecase: sl(), prefs: sl.call()));
 
   // sl.registerFactory(() => LibraryBloc());
 
@@ -157,6 +157,7 @@ Future<void> init() async {
       localSource: sl(), remoteDataSource: sl(), networkInfo: sl()));
   sl.registerLazySingleton<NotificationRepository>(() =>
       NotificationRepositoryImp(remote: sl(), local: sl(), networkInfo: sl()));
+
   //Database =======================
   sl.registerLazySingleton<SchedulRemoteDataSource>(
     () => SchedulRemoteDataSourceImp(
@@ -255,24 +256,23 @@ Future<void> init() async {
   sl.registerLazySingleton<DatabaseRepository>(
       () => DatabaseRemoteDataSourceImpl(remoteDataSource: sl.call()));
 
-  // sl.registerLazySingleton<SocketInfoImpl>(() => SocketInfoImpl(sl()));
-
+  sl.registerLazySingleton<SocketInfoImpl>(() => SocketInfoImpl(socket: sl()));
   // sl.registerLazySingleton<NetworkInfoSocket>(() => SocketInfoImpl(sl()));
 
   //Remote DataSource
   sl.registerLazySingleton<DatabaseRemoteDataSource>(
       () => databaseRemoteDataSourceImpl(
-            crud: sl.call(),
-            prefs: sl.call(),
-            networkinfo: sl.call(),
-            socket: sl.call(),
+            crud: sl(),
+            prefs: sl(),
+            networkinfo: sl(),
+            socket: sl(),
           ));
   final Crud = DataAccessCrud();
-  var socket = IO.io('${ServerIp}:3000', <String, dynamic>{
+  var socket = IO.io('${Constants.serverIp}:3000', <String, dynamic>{
     'transports': ['websocket'],
     'autoConnect': false,
   });
-
+  final NetworkInfoSocket network;
   sl.registerLazySingleton<NetworkInfoSocket>(
       () => SocketInfoImpl(socket: sl()));
 

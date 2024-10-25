@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:university/chat/presentation/cubit/bottom_chat/bottom_chat_cubit.dart';
+import 'package:university/chat/presentation/cubit/chat/chat_cubit.dart';
+import 'package:university/chat/presentation/cubit/count_new_message/count_new_message_cubit.dart';
+import 'package:university/chat/presentation/cubit/credential/credential_cubit.dart';
+import 'package:university/chat/presentation/cubit/group/group_cubit.dart';
+import 'package:university/chat/presentation/cubit/image_cubit/image_cubit.dart';
+import 'package:university/chat/presentation/cubit/user/user_cubit.dart';
 import 'package:university/core/color/app_color.dart';
 import 'package:university/core/constant/varibal.dart';
 import 'package:university/core/value/global.dart';
@@ -8,6 +15,7 @@ import 'package:university/features/AllFeatures/presentation/bloc/SchedulBloc/sc
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/notifications/notefications_bloc.dart';
 import 'package:university/features/AllFeatures/presentation/bloc/search_books/search_books_bloc.dart';
+import 'chat/presentation/cubit/auth/auth_cubit.dart';
 import 'core/Utils/lang/app_localization.dart';
 import 'app/enjection_container.dart' as di;
 import 'features/AllFeatures/presentation/bloc/authentication/authentication_bloc.dart';
@@ -45,9 +53,10 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    onTap:
+    () => FocusScope.of(context).unfocus();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -75,6 +84,31 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 di.sl<NotificationsBloc>()..add(GetNotifications())),
+        //===========================
+        BlocProvider<AuthCubit>(
+          create: (_) => di.sl<AuthCubit>()..appStarted(),
+        ),
+        BlocProvider<CredentialCubit>(
+          create: (_) => di.sl<CredentialCubit>(),
+        ),
+        BlocProvider<UserCubit>(
+          create: (_) => di.sl<UserCubit>(),
+        ),
+        BlocProvider<GroupCubit>(
+          create: (_) => di.sl<GroupCubit>(),
+        ),
+        BlocProvider<ChatCubit>(
+          create: (_) => di.sl<ChatCubit>(),
+        ),
+        BlocProvider<ImageCubit>(
+          create: (_) => di.sl<ImageCubit>(),
+        ),
+        BlocProvider<CountNewMessageCubit>(
+          create: (_) => di.sl<CountNewMessageCubit>(),
+        ),
+        BlocProvider<BottomChatCubit>(
+          create: (_) => di.sl<BottomChatCubit>(),
+        ),
       ],
       child:
           BlocBuilder<LocaleCubit, ChangeLocalState>(builder: (context, state) {

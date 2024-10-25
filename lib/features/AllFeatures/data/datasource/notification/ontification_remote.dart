@@ -14,8 +14,8 @@ class NotificationsRemoteImp implements NotificationsRemote {
   @override
   Future<List<NotificationModel>> getNotification() async {
     print("notifications remote");
-    final responce = await http.post(Uri.parse(Constants.notificationsLink),
-        body: {"instructor_id": '${1}'});
+    final responce = await http
+        .post(Uri.parse(Constants.linkNews), body: {"instructor_id": '${1}'});
     print(responce.body);
     if (responce.statusCode == 200) {
       print("status success notifications");

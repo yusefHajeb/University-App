@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:university/core/error/execptions.dart';
 import 'package:university/features/AllFeatures/data/models/schedule_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:university/features/AllFeatures/data/models/user_data.dart';
 import '../../../../../core/constant/varibal.dart';
 
 abstract class SchedulRemoteDataSource {
@@ -20,7 +21,7 @@ class SchedulRemoteDataSourceImp implements SchedulRemoteDataSource {
   Future<List<SchedulModel>> getAllSchedul() async {
     print("---------- remote");
     final response = await http
-        .post(Uri.parse(Constants.scheduleLink), body: {"batch_id": '${12}'});
+        .post(Uri.parse(Constants.scheduleLink), body: {"batch_id": '12'});
     print("response");
     print(response.body);
     if (response.statusCode == 200) {

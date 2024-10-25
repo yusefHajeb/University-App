@@ -40,7 +40,8 @@ dependencies:
 
   
   dartz: ^0.10.1
-  get_it: ^7.6.4
+  # get_it: ^7.6.4
+  get_it: ^7.0.0
   internet_connection_checker: 
   # shared_preferences: ^2.1.2
   equatable: ^2.0.5
@@ -60,7 +61,6 @@ dependencies:
   simple_animations: ^5.0.2
   scrollable_positioned_list: ^0.3.8
   # intl: ^0.17.0
-  intl: ^0.18.1
   flutter_shapes: ^0.3.0
   flutter_bloc: ^8.1.3
   # flutter_localizations:
@@ -73,9 +73,9 @@ dependencies:
   shared_preferences: ^2.2.1
   google_fonts: ^6.1.0
   # hive: ^2.2.3
-  flutter_localization: ^0.1.14
+  # flutter_localization: ^0.1.14
   font_awesome_flutter: ^10.5.0
-  syncfusion_flutter_pdfviewer: ^23.1.36
+  # syncfusion_flutter_pdfviewer: ^26.2.5
   path_provider: ^2.1.1
   dio: ^5.3.3
   permission_handler: ^11.0.0
@@ -88,6 +88,17 @@ dependencies:
   giphy_get: ^3.5.2
   image_cropper: ^5.0.0
   camera: ^0.10.5+5
+  video_player: ^2.6.0
+  audio_waveforms: ^1.0.4
+  schedulers: ^1.0.1
+  audioplayers: ^5.2.0
+  onesignal_flutter: ^3.5.1
+  file_picker: ^6.1.1
+  open_file: ^3.3.2
+  shimmer: ^3.0.0
+  bubble: ^1.2.1
+  syncfusion_flutter_pdfviewer: ^26.2.5
+  flutter_localization: ^0.2.1
   # flutter_blurhash: ^0.7.0
   # percent_indicator: ^4.2.3
   # awesome_dialog: ^3.1.0

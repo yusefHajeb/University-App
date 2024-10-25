@@ -36,18 +36,18 @@ ThemeData getAppTheme() {
         style: ElevatedButton.styleFrom(
             textStyle: getRegularStyleEn(
                 color: AppColors.white, fontSize: FontSize.s18),
-            primary: AppColors.primaryColor,
+            backgroundColor: AppColors.primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppSize.s12),
             )),
       ),
       textTheme: TextTheme(
-          headline1: getSemiBoldStyleEn(
+          displayLarge: getSemiBoldStyleEn(
               color: AppColors.darkGrey, fontSize: AppSize.s16),
-          subtitle1: getMediumStyleEn(
+          titleMedium: getMediumStyleEn(
               color: AppColors.lightGrey, fontSize: AppSize.s14),
-          caption: getRegularStyleEn(color: AppColors.greyColor),
-          bodyText1: getRegularStyleEn(color: AppColors.lightGrey)),
+          bodySmall: getRegularStyleEn(color: AppColors.greyColor),
+          bodyLarge: getRegularStyleEn(color: AppColors.lightGrey)),
       inputDecorationTheme: InputDecorationTheme(
           contentPadding: EdgeInsets.all(AppPadding.p8),
           hintStyle: getRegularStyleEn(
